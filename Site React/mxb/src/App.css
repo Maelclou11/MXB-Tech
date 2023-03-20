@@ -1,0 +1,179 @@
+@import url("https://fonts.googleapis.com/css2?family=Exo+2:wght@100;200;300;400;500;600;700&family=Roboto:wght@100;300;400;500;700&family=Sanchez&display=swap");
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+  font-family: "Roboto", sans-serif;
+}
+
+:root {
+  font-size: 62.5%;
+  --bg-main-color-: #080010;
+  --bg-secondary-color-: #db5afb;
+  --main-color-: #420983;
+  --padding-main-: calc(2rem + 5vw);
+}
+
+/*#region   Accueil  */
+.home {
+  background: url(./img/bg_home.png);
+  background-size: cover;
+  background-color: var(--bg-main-color-);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: white;
+  padding: 100px var(--padding-main-) 0 var(--padding-main-);
+  width: 100%;
+}
+/* .home::after {
+  content: "";
+  position: absolute;
+  right: 10%;
+  top: calc(15rem + 10vh);
+  width: calc(15rem + 10vw);
+  height: calc(15rem + 10vw);
+  background-color: var(--bg-secondary-color-);
+  filter: blur(200px);
+  border-radius: 217px;
+  opacity: 0.7;
+}
+.home::before {
+  content: "";
+  position: absolute;
+  left: 10%;
+  top: calc(10rem + 10vh);
+  width: calc(6rem + 6vw);
+  height: calc(6rem + 6vw);
+  background-color: var(--bg-secondary-color-);
+  filter: blur(200px);
+  border-radius: 217px;
+  opacity: 0.7;
+} */
+.home .home-content {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.home .home-content .home--text {
+  max-width: 500px;
+}
+.home .home-content .home--text .home-bande {
+  font-size: calc(0.6rem + 0.5vw);
+  padding: 0.5rem 2rem;
+  background: linear-gradient(
+    90deg,
+    rgba(217, 217, 217, 0.31) 0%,
+    rgba(217, 217, 217, 0) 104.17%
+  );
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+}
+.home .home-content .home--text .home-bande span {
+  font-size: calc(1rem + 0.8vw);
+  color: var(--main-color-);
+}
+.home .home-content .home--text h1 {
+  font-size: calc(1.6rem + 3vw);
+  font-weight: 400;
+  font-family: "Exo 2", sans-serif;
+  line-height: 83px;
+  margin-bottom: 2rem;
+}
+.home .home-content .home--text h1 span {
+  background: linear-gradient(81.41deg, #8e48de 15.31%, #ffffff 110.79%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.home .home-content .home--text p {
+  font-size: calc(1rem + 0.4vw);
+  line-height: 154.02%;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  color: #b5b5b5;
+}
+.home .home-content .home--btn {
+  padding: 0 2rem;
+  position: relative;
+}
+.home .home-content .home--btn a:after {
+  content: "";
+  position: absolute;
+  width: calc(6rem + 5vw);
+  height: calc(6rem + 5vw);
+  background: linear-gradient(
+    38.3deg,
+    rgb(91, 4, 190) 3.79%,
+    rgb(169, 93, 255) 86.72%
+  );
+  border-radius: 50%;
+  z-index: -1;
+  bottom: -10px;
+  right: -10px;
+  transition: all 0.5s ease;
+}
+.home .home-content .home--btn a:hover:after {
+  bottom: -2px;
+  right: -2px;
+}
+.home .home-content .home--btn a {
+  text-decoration: none;
+  color: white;
+  font-size: calc(1rem + 0.6vw);
+  background: linear-gradient(
+    38.3deg,
+    rgb(62, 3, 129) 3.79%,
+    rgb(122, 36, 221) 86.72%
+  );
+  backdrop-filter: blur(15.5px);
+  width: calc(6rem + 5vw);
+  height: calc(6rem + 5vw);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: calc(1rem + 3vw);
+  border-radius: 50%;
+  /* box-shadow: 0 0 10px 0px rgba(255, 255, 255, 0.466); */
+  transition: all 0.3s ease;
+  margin-bottom: 50%;
+}
+.home .home-content .home--btn a span {
+  margin-top: 1rem;
+  margin-left: 1rem;
+}
+.home .home-content .home--btn a svg {
+  font-size: 3rem !important;
+  min-width: none;
+  max-width: unset;
+  height: auto;
+  margin-left: 1rem;
+}
+.home .home-content .home--btn a:hover {
+  box-shadow: 0 0 20px 0px rgba(255, 255, 255, 0.603);
+}
+.home .home-img {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 0 3vw;
+  width: 50%;
+}
+.home .home-img img {
+  width: 100%;
+}
+.home .stat {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+/* #endregion */
+/*#region   3 Statistiques  */
+
+/* #endregion */
