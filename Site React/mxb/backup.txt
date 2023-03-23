@@ -1,0 +1,5 @@
+<div className="service-container">
+    <IconBox icon={webDesignIcon} title='Web Design' description='Vous méritez un site web qui représente pleinement votre entreprise et attire des clients potentiels.' textButton='Voir Web Design' />
+    <IconBox icon={developpementIcon} title='Développement' description='Un sites web performants et fonctionnels qui utilise les dernières technologies pour offrir une expérience utilisateur optimale.' textButton='Voir Développement' />
+    <IconBox icon={seoIcon} title='SEO' description='Attirez plus de traffic et augmentez votre rendement en optimisant votre contenu ainsi que la structure de votre site web.' textButton='Voir SEO' />
+</div>
