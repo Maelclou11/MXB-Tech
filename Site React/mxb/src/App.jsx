@@ -14,18 +14,87 @@ import seoIcon from './img/seo_icon.svg';
 import demoPlaneteGym from './img/demo_planetegym.png';
 import demoEntretienGrondin from './img/demo_entretien_grondin1.png';
 import demoCoteCour from './img/demo_restaurant_cote_cour.png';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowsTurnRight, faPenNib } from '@fortawesome/free-solid-svg-icons';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { useEffect } from 'react';
 
 function App(){
-
     const [activePage, setActivePage] = useState(1);
 
     const handlePageButtonClick = (event) => {
       const pageNumber = parseInt(event.target.getAttribute('data-page-number'));
       setActivePage(pageNumber);
     }
+
+    /*#region   Animation étape */
+    const handleScroll = () => {
+        // Calculer la position verticale du centre de l'écran
+        const centerY = window.pageYOffset + window.innerHeight / 2;
+      
+        // Sélectionner les éléments en fonction de leurs classes
+        const elements = [
+          document.querySelector('.step-1'),
+          document.querySelector('.step-2'),
+          document.querySelector('.step-3'),
+        ];
+      
+        // Trouver l'élément le plus proche du centre de l'écran
+        const closestIdx = elements.reduce((minIdx, el, idx) => {
+          const currRect = el.getBoundingClientRect();
+          const minRect = elements[minIdx].getBoundingClientRect();
+          const currCenterY = window.pageYOffset + currRect.top + currRect.height / 2;
+          const minCenterY = window.pageYOffset + minRect.top + minRect.height / 2;
+      
+          return Math.abs(centerY - currCenterY) < Math.abs(centerY - minCenterY) ? idx : minIdx;
+        }, 0);
+      
+        // Définir un seuil pour déterminer si un élément est suffisamment proche du centre de l'écran
+        const threshold = window.innerHeight / 4; // Ajustez cette valeur en fonction de vos besoins
+      
+        // Appliquer l'effet d'illumination à l'élément le plus proche s'il est suffisamment proche du centre de l'écran
+        // et le retirer des autres
+        elements.forEach((el, idx) => {
+          const elRect = el.getBoundingClientRect();
+          const elCenterY = window.pageYOffset + elRect.top + elRect.height / 2;
+          const distanceFromCenter = Math.abs(centerY - elCenterY);
+      
+          if (idx === closestIdx && distanceFromCenter <= threshold) {
+            el.classList.add('illuminated');
+          } else {
+            el.classList.remove('illuminated');
+          }
+        });
+      };
+      
+      
+      
+      
+
+      useEffect(() => {
+        // Ajouter l'écouteur d'événements
+        window.addEventListener('scroll', handleScroll);
+      
+        // Supprimer l'écouteur d'événements lors du nettoyage
+        return () => {
+          window.removeEventListener('scroll', handleScroll);
+        };
+      }, []);
+    /* #endregion */
+    /*#region   Animation Reveal   */
+    useEffect(() => {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            console.log(entry);
+            if (entry.isIntersecting) {
+              entry.target.classList.add('show');
+            }
+          });
+        });
+        const hiddenElements = document.querySelectorAll('.hidden');
+        hiddenElements.forEach((el) => observer.observe(el));
+    
+        const hiddenElementsNumbers = document.querySelectorAll('.hidden_number');
+        hiddenElementsNumbers.forEach((el) => observer.observe(el));
+      }, []);
+    /* #endregion */
 
 
   return (
@@ -36,19 +105,19 @@ function App(){
                 <div className="home-content">
                     <div className="home--textContainer">
                         <div className="home--text">
-                            <p className='home-bande'><span>%</span> &nbsp; &nbsp;  90% Des Entreprise On Un Site Web</p>
-                            <h1>Renouvler <span className='gradient-word'>Votre Façade</span> En Ligne.</h1>
-                            <p>Avoir un site web de nos jour est devenu une norme et peut sembler compliquer. Chez MXB Tech, nous nous efforcons à rendre cela le plus simple possible pour vous créer un site web qui sauras vous épatez sans tous autant être dispendieux !</p>
+                            <p className='home-bande hidden'><span>%</span> &nbsp; &nbsp;  90% Des Entreprise On Un Site Web</p>
+                            <h1><span className='hidden'>Renouvler</span> <span className='gradient-word hidden'>Votre Façade</span> <span className='hidden'>En Ligne.</span></h1>
+                            <p className='texte hidden'>Avoir un site web de nos jour est devenu une norme et peut sembler compliquer. Chez MXB Tech, nous nous efforcons à rendre cela le plus simple possible pour vous créer un site web qui sauras vous épatez sans tous autant être dispendieux !</p>
                         </div>
                         <div className="home--btn">
-                            <a className="button" href="#contactUs">
+                            <a className="button hidden" href="#contactUs">
                                 <img src={upRightArrow} alt="icon flèche" />
                                 <span>Commencer</span>
                             </a>
                         </div>
                     </div>
 
-                    <div className="home-img">
+                    <div className="home-img hidden">
                         <img src={Layout3D} alt="Image 3D d'un cellulaire" />
                     </div>
                 </div>
@@ -73,13 +142,13 @@ function App(){
                 <div className="process">
                     <h2 className='title-h2-l'>Notre manière de faire</h2>
                     <div className="process_content">
-                        <StepTitle number="1" title="Planifier" text="Afin de représenter correctement votre entreprise, nous cherchons d'abord à discuter avec vous afin de vous connaitre vous, ainsi que votre entreprise et sont objectif principale avec nos services pour être certain de satisfaire vos attentes et vous donner le résultat escompté." />
+                        <StepTitle number="1" title="Planifier" text="Afin de représenter correctement votre entreprise, nous cherchons d'abord à discuter avec vous afin de vous connaitre vous, ainsi que votre entreprise et sont objectif principale avec nos services pour être certain de satisfaire vos attentes et vous donner le résultat escompté." className="step-1" />
                         
 
-                        <StepTitle number="2" title="Créer" text="Cette phase consiste à vous créer ainsi que vous développer un site web sur mesure tout en s'assurant de votre satisfaction. À tous moments du processus nous nous assurons que votre avis sois pris en compte afin d'arriver à un résultat concluant ensemble." />
+                        <StepTitle number="2" title="Créer" text="Cette phase consiste à vous créer ainsi que vous développer un site web sur mesure tout en s'assurant de votre satisfaction. À tous moments du processus nous nous assurons que votre avis sois pris en compte afin d'arriver à un résultat concluant ensemble." className="step-2" />
                         
 
-                        <StepTitle number="3" title="Tester" text="Lorsque le site web arrive à sa phase final, nous le testons sur une multitude d'appareils afin de s'assurer qu'il n'aille aucune mauvaise surprise. Nous optimisons la performance au maximum afin d'assurer une expérience utilisateur optimale." />
+                        <StepTitle number="3" title="Tester" text="Lorsque le site web arrive à sa phase final, nous le testons sur une multitude d'appareils afin de s'assurer qu'il n'aille aucune mauvaise surprise. Nous optimisons la performance au maximum afin d'assurer une expérience utilisateur optimale." className="step-3" />
                     </div>
                 </div>
 

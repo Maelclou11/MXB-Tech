@@ -1,7 +1,6 @@
-import React from 'react'
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 
-function StepTitle({number, title, text}) {
+function StepTitle({ className, number, title, text }) {
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -9,6 +8,9 @@ function StepTitle({number, title, text}) {
         console.log(entry);
         if (entry.isIntersecting) {
           entry.target.classList.add('show');
+          entry.target.classList.add('inView');
+        } else {
+          entry.target.classList.remove('inView');
         }
       });
     });
@@ -20,7 +22,7 @@ function StepTitle({number, title, text}) {
   }, []);
 
   return (
-    <div className='step'>
+    <div className={`${className || ''} step`}>
         <div className="step--number">
             <span className='hidden_span'></span>
             <p className='hidden_number'>{number}</p>
@@ -31,6 +33,6 @@ function StepTitle({number, title, text}) {
         </div>
     </div>
   )
-}
+};
 
-export default StepTitle
+export default StepTitle;

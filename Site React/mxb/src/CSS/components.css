@@ -29,6 +29,9 @@
   padding: 0.5rem 1.3vw;
   white-space: nowrap;
 }
+.navbar .navbar-list li:hover {
+  cursor: pointer;
+}
 .navbar .navbar-list li:last-child {
   background-color: white;
   color: var(--main-color-);
@@ -315,6 +318,7 @@
   align-items: center;
   flex-wrap: wrap;
   position: relative;
+  transition: all 0.5s ease;
 }
 .step--number {
   display: flex;
@@ -366,28 +370,36 @@
 }
 .step--text p {
   color: white;
-  font-size: var(--p-main-);
+  font-size: calc(var(--p-main-) + 0.2vw);
   line-height: 1.5;
 }
 .hidden_span {
   transform-origin: top;
   transform: scaleY(0);
-  transition: all 0.5s ease 0.2s;
+  transition: all 0.6s ease 0.2s;
 }
 .hidden_span.show {
   transform: scaleY(100%);
 }
 .hidden_number {
   opacity: 0;
-  transition: all 0.5s ease 1s;
+  transition: all 0.5s ease 0.6s;
+  filter: blur(5px);
 }
 .hidden_number.show {
   opacity: 1;
+  filter: blur(0);
   transition: all 0.5s ease 0.6s;
+  box-shadow: 0 0 0px 0px rgba(255, 255, 255, 0.281);
+}
+.step.illuminated {
+  transition: all 0.5s ease;
+  /* box-shadow: 0 0 15px 2px rgba(255, 255, 255, 0.151); */
+  transform: scale(1.1);
 }
 /* #endregion */
 
-/*#region Media-1156px */
+/*#region   Media-1156px */
 @media screen and (max-width: 1156px) {
   .step--text {
     text-align: center;
@@ -405,7 +417,7 @@
   }
 }
 /* #endregion */
-/*#region Media-450px */
+/*#region   Media-450px */
 @media screen and (max-width: 450px) {
   .step--text {
     min-width: unset;
