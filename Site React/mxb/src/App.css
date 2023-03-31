@@ -154,6 +154,7 @@ body {
   /* padding: 0 3vw; */
   min-width: 350px;
   position: relative;
+  padding-bottom: 10rem;
 }
 .home .home-img img {
   min-width: 300px;
@@ -676,7 +677,7 @@ input:-webkit-autofill:active {
 .iconBox.hidden .icon-title {
   opacity: 0;
   transform: translateY(-50%);
-  transition: all 0.5s ease 0.9s;
+  transition: all 0.5s cubic-bezier(0.47, 1.55, 0.66, 0.95) 0.9s;
 }
 .iconBox.hidden.show .icon-title {
   opacity: 1;
@@ -685,7 +686,7 @@ input:-webkit-autofill:active {
 .iconBox.hidden .icon-desc {
   opacity: 0;
   transform: translateY(-100%);
-  transition: all 0.5s ease 0.9s;
+  transition: all 0.5s cubic-bezier(0.47, 1.55, 0.66, 0.95) 0.9s;
 }
 .iconBox.hidden.show .icon-desc {
   opacity: 1;
@@ -822,16 +823,6 @@ input:-webkit-autofill:active {
   opacity: 1;
   transform: translateX(0);
 }
-#contactUs .contact--content .form.hidden {
-  opacity: 0;
-  transform: translateX(50px) rotate(40deg) scale(0);
-  transition: all 0.5s ease 0.5s;
-}
-#contactUs .contact--content .form.hidden.show {
-  opacity: 1;
-  transform: translateX(0) rotate(0) scale(1);
-  transition: all 0.5s ease 0.5s;
-}
 #contactUs .contact--content .contact--text.hidden {
   opacity: 0;
   transform: translateX(50%);
@@ -840,6 +831,47 @@ input:-webkit-autofill:active {
 #contactUs .contact--content .contact--text.hidden.show {
   opacity: 1;
   transform: translateX(0);
+}
+.button-servicesContainer label.hidden {
+  opacity: 0;
+  transition: all 0.5s ease 0.7s;
+}
+.button-servicesContainer label.hidden:nth-child(2) {
+  transform: translateX(-50%);
+  transition: all 1s cubic-bezier(0.47, 1.55, 0.66, 0.95) 1s;
+}
+.button-servicesContainer label.hidden:last-child {
+  transform: translateX(-100%);
+  transition: all 1s cubic-bezier(0.47, 1.55, 0.66, 0.95) 1s;
+}
+.button-servicesContainer label.hidden.show {
+  opacity: 1;
+}
+.button-servicesContainer label.hidden.show:nth-child(2) {
+  transform: translateX(0);
+}
+.button-servicesContainer label.hidden.show:last-child {
+  transform: translateX(0);
+}
+.label-btn-services.hidden {
+  transform: translateY(50%);
+  opacity: 0;
+  transition: all 0.5s cubic-bezier(0.47, 1.55, 0.66, 0.95) 0.5s;
+}
+.label-btn-services.hidden.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+.form .input.hidden,
+.form .btn-send.hidden {
+  transform: translateY(50%);
+  opacity: 0;
+  transition: all 0.5s cubic-bezier(0.47, 1.55, 0.66, 0.95) 1s;
+}
+.form .input.hidden.show,
+.form .btn-send.hidden.show {
+  transform: translateY(0);
+  opacity: 1;
 }
 /* #endregion */
 /* #endregion */

@@ -252,43 +252,43 @@ function App(){
                     <h3>———— Une idée de projet ?</h3>
                 </div>
                 <div className="contact--content">
-                    <div className="form hidden">
+                    <div className="form">
                         <form action="">
                             <div className="button-services">
-                                <p className='label-btn-services'>Que peut on faire pour vous ?</p>
+                                <p className='label-btn-services hidden'>Que peut on faire pour vous ?</p>
                                 <div className="button-servicesContainer">
-                                    <label htmlFor='Design'>
+                                    <label htmlFor='Design' className='hidden'>
                                         <input type="checkbox" name='service Design' id='Design'/>
                                         <span>Design</span>
                                     </label>
-                                    <label htmlFor='developpement'>
+                                    <label htmlFor='developpement' className='hidden'>
                                         <input type="checkbox" name='service développement' id='developpement'/>
                                         <span>Développement</span>
                                     </label>
-                                    <label htmlFor='SEO'>
+                                    <label htmlFor='SEO' className='hidden'>
                                         <input type="checkbox" name='service SEO' id='SEO'/>
                                         <span>SEO</span>
                                     </label>
                                 </div>
                             </div>
                             <div className="row">
-                                <div className="input">
+                                <div className="input hidden">
                                     <label htmlFor="nom">Votre Nom</label>
                                     <input type="name" name='nom' id='nom' required/>
                                 </div>
-                                <div className="input">
+                                <div className="input hidden">
                                     <label htmlFor="courriel">Votre Courriel</label>
                                     <input type="email" name='courriel' id='courriel' required/>
                                 </div>
                             </div>
 
-                            <div className='input'>
+                            <div className='input hidden'>
                                 <label htmlFor="message">Résumé du projet</label>
                                 <textarea name="Message" id="message" required></textarea>
                             </div>
 
-                            <div className='btn-send'>
-                                <input type="submit" value="Envoyer la demande " />
+                            <div className='btn-send hidden'>
+                                <input type="submit" value="Envoyer la demande" />
                                 <img src={upRightArrowPurple} alt="icon flèche" />
                             </div>
                         </form>
