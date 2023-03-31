@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 import Navbar from './components/Navbar';
 import StatCircle from './components/StatCircle';
@@ -14,7 +14,8 @@ import seoIcon from './img/seo_icon.svg';
 import demoPlaneteGym from './img/demo_planetegym.png';
 import demoEntretienGrondin from './img/demo_entretien_grondin1.png';
 import demoCoteCour from './img/demo_restaurant_cote_cour.png';
-import { useEffect } from 'react';
+import ScrollProgressBar from 'react-scroll-progress-bar';
+import ArrowUp from './components/ArrowUp';
 
 function App(){
     const [activePage, setActivePage] = useState(1);
@@ -99,6 +100,8 @@ function App(){
 
   return (
     <div>
+        <ScrollProgressBar height="5px" bgcolor="#420983" />
+        <ArrowUp />
         <Navbar />
         <main>
             <div className="home">
@@ -118,14 +121,14 @@ function App(){
                     </div>
 
                     <div className="home-img hidden">
-                        <img src={Layout3D} alt="Image 3D d'un cellulaire" />
+                        <img src={Layout3D} alt="3D d'un cellulaire" />
                     </div>
                 </div>
 
-                <div className='stat'>
-                    <StatCircle stat="93%" text="Des Clients Satisfaits"/>
-                    <StatCircle stat="93%" text="Des Clients Satisfaits"/>
+                <div className='stat hidden'>
                     <StatCircle stat="100%" text="Des Clients Satisfaits"/>
+                    <StatCircle stat="100%" text="Des projets réussis"/>
+                    <StatCircle stat="100%" text="Adapté pour mobile"/>
                 </div>
 
             </div>
@@ -140,15 +143,15 @@ function App(){
 
 
                 <div className="process">
-                    <h2 className='title-h2-l'>Notre manière de faire</h2>
+                    <h2 className='title-h2-l hidden'>Notre manière de faire</h2>
                     <div className="process_content">
                         <StepTitle number="1" title="Planifier" text="Afin de représenter correctement votre entreprise, nous cherchons d'abord à discuter avec vous afin de vous connaitre vous, ainsi que votre entreprise et sont objectif principale avec nos services pour être certain de satisfaire vos attentes et vous donner le résultat escompté." className="step-1" />
                         
 
-                        <StepTitle number="2" title="Créer" text="Cette phase consiste à vous créer ainsi que vous développer un site web sur mesure tout en s'assurant de votre satisfaction. À tous moments du processus nous nous assurons que votre avis sois pris en compte afin d'arriver à un résultat concluant ensemble." className="step-2" />
+                        <StepTitle number="2" title="Créer" text="Cette phase consiste à vous créer ainsi que vous développer un site web sur mesure tout en s'assurant de votre satisfaction. À tous moments du processus nous nous assurons que votre avis sois pris en compte afin d'arriver à un résultat qui vous " className="step-2" />
                         
 
-                        <StepTitle number="3" title="Tester" text="Lorsque le site web arrive à sa phase final, nous le testons sur une multitude d'appareils afin de s'assurer qu'il n'aille aucune mauvaise surprise. Nous optimisons la performance au maximum afin d'assurer une expérience utilisateur optimale." className="step-3" />
+                        <StepTitle number="3" title="Tester" text="Lorsque le site web arrive à sa phase final, nous le testons sur une multitude d'appareils afin de s'assurer qu'il n'aille aucune mauvaise surprise. Nous optimisons la performance au maximum afin d'assurer une expérience utilisateur optimale ainsi qu'un bon référencement dans les moteurs de recherche." className="step-3" />
                     </div>
                 </div>
 
@@ -156,9 +159,9 @@ function App(){
 
             <section id='portfolio'>
                 <TitleSection aboveTitle='Portfolio' title="Projets Réalisés"/>
-                <p className='portfolio--text'>Notre portfolio de clients comprend une variété d'entreprises pour lesquelles nous avons réalisé des sites web sur mesure, allant des petites start-ups aux grandes entreprises internationales. Chaque projet a été conçu avec une approche unique pour répondre aux besoins spécifiques de chaque client.</p>
+                <p className='portfolio--text hidden'>Notre portfolio de clients comprend une variété d'entreprises pour lesquelles nous avons réalisé des sites web sur mesure, allant des petites start-ups aux grandes entreprises internationales. Chaque projet a été conçu avec une approche unique pour répondre aux besoins spécifiques de chaque client.</p>
 
-                <div className='pageSelector'>
+                <div className='pageSelector hidden'>
                     <a className={activePage === 1 ? 'page page1 active' : 'page page1'} data-page-number="1" onClick={handlePageButtonClick} onTouchStart={handlePageButtonClick}>Page 1</a>
                     <a className={activePage === 2 ? 'middle-page page page2 active' : 'middle-page page page2'} data-page-number="2" onClick={handlePageButtonClick} onTouchStart={handlePageButtonClick}>Page 2</a>
                     <a className={activePage === 3 ? 'page page3 active' : 'page page3'} data-page-number="3" onClick={handlePageButtonClick} onTouchStart={handlePageButtonClick}>Page 3</a>
@@ -166,26 +169,28 @@ function App(){
 
                 <div className="demo-work">
                     <div className={activePage === 1 ? 'pagework pagework1 active' : 'pagework pagework1'}>
-                        <div className="imgContainer">
+                        <div className="imgContainer hidden">
                             <img src={demoPlaneteGym} alt="planete fitness gym" />
                             <div className='text-image'>
                                 <h3>Planète Fitness Gym</h3>
                                 <p>Design & Développement</p>
-                                <a href="">Visiter le site</a>
+                                <a href="https://planetefitnessgym.qc.ca/">Visiter le site</a>
                             </div>
                         </div>
-                        <div className="imgContainer">
+                        <div className="imgContainer hidden">
                             <img src={demoEntretienGrondin} alt="Entretien Grondin" />
                             <div className='text-image'>
                                 <h3>Entretien Grondin</h3>
                                 <p>Design & Développement</p>
+                                <a href="https://entretiensgouttieresrivesud.ca/">Visiter le site</a>
                             </div>
                         </div>
-                        <div className="imgContainer">
+                        <div className="imgContainer hidden">
                             <img src={demoCoteCour} alt="Restaurant Côté-Cour" />
                             <div className='text-image'>
                                 <h3>Restaurant Côté-Cour</h3>
                                 <p>Design & Développement</p>
+                                <a>À venir</a>
                             </div>
                         </div>
                     </div>
@@ -194,22 +199,22 @@ function App(){
                         <div className="imgContainer">
                             <img src={demoPlaneteGym} alt="planete fitness gym" />
                             <div className='text-image'>
-                                <h3>Planète Fitness Gym</h3>
-                                <p>Design & Développement</p>
+                                <h3 className='coming-soon'>À Venir</h3>
+                                <p></p>
                             </div>
                         </div>
                         <div className="imgContainer">
                             <img src={demoPlaneteGym} alt="planete fitness gym" />
                             <div className='text-image'>
-                                <h3>Planète Fitness Gym</h3>
-                                <p>Design & Développement</p>
+                            <h3 className='coming-soon'>À Venir</h3>
+                                <p></p>
                             </div>
                         </div>
                         <div className="imgContainer">
                             <img src={demoPlaneteGym} alt="planete fitness gym" />
                             <div className='text-image'>
-                                <h3>Planète Fitness Gym</h3>
-                                <p>Design & Développement</p>
+                            <h3 className='coming-soon'>À Venir</h3>
+                                <p></p>
                             </div>
                         </div>
                     </div>
@@ -218,22 +223,22 @@ function App(){
                         <div className="imgContainer">
                             <img src={demoPlaneteGym} alt="planete fitness gym" />
                             <div className='text-image'>
-                                <h3>Planète Fitness Gym</h3>
-                                <p>Design & Développement</p>
+                            <h3 className='coming-soon'>À Venir</h3>
+                                <p></p>
                             </div>
                         </div>
                         <div className="imgContainer">
                             <img src={demoPlaneteGym} alt="planete fitness gym" />
                             <div className='text-image'>
-                                <h3>Planète Fitness Gym</h3>
-                                <p>Design & Développement</p>
+                            <h3 className='coming-soon'>À Venir</h3>
+                                <p></p>
                             </div>
                         </div>
                         <div className="imgContainer">
                             <img src={demoPlaneteGym} alt="planete fitness gym" />
                             <div className='text-image'>
-                                <h3>Planète Fitness Gym</h3>
-                                <p>Design & Développement</p>
+                            <h3 className='coming-soon'>À Venir</h3>
+                                <p></p>
                             </div>
                         </div>
                     </div>
@@ -242,12 +247,12 @@ function App(){
             </section>
 
             <section id="contactUs">
-                <div className="contact--title">
+                <div className="contact--title hidden">
                     <h2>Nous Joindre</h2>
                     <h3>———— Une idée de projet ?</h3>
                 </div>
                 <div className="contact--content">
-                    <div className="form">
+                    <div className="form hidden">
                         <form action="">
                             <div className="button-services">
                                 <p className='label-btn-services'>Que peut on faire pour vous ?</p>
@@ -288,7 +293,7 @@ function App(){
                             </div>
                         </form>
                     </div>
-                    <div className="contact--text">
+                    <div className="contact--text hidden">
                         <p>Chez MXB, nous sommes passionnés par la création de sites web exceptionnels qui reflètent l'image de votre entreprise et attirent votre public cible. Nous nous engageons à fournir des solutions de conception de sites web de qualité supérieure à des prix abordables, tout en offrant un service à la clientèle de premier ordre. Nous avons hâte de collaborer avec vous pour créer un site web sur mesure qui vous aidera à atteindre vos objectifs commerciaux. Contactez-nous dès maintenant pour discuter de vos besoins en matière de site web !</p>
 
                     </div>

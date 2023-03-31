@@ -22,6 +22,7 @@
 body {
   background: url("./img/body-bg-2-3.webp");
   background-size: cover;
+  overflow-x: hidden;
 }
 
 /*#region   Accueil  */
@@ -177,6 +178,7 @@ body {
 .home .stat .circleStat {
   margin: 1rem 0;
 }
+
 /* #endregion */
 /*#region   Nos Services  */
 #services {
@@ -206,14 +208,14 @@ body {
   font-weight: 400;
   color: white;
 }
-.process .process_content .step:nth-child(2) .step--number .hidden_span,
+/* .process .process_content .step:nth-child(2) .step--number .hidden_span,
 .process .process_content .step:nth-child(2) .step--number .hidden_number {
   transition-delay: 600ms;
 }
 .process .process_content .step:nth-child(3) .step--number .hidden_span,
 .process .process_content .step:nth-child(3) .step--number .hidden_number {
   transition-delay: 1000ms;
-}
+} */
 
 /* #endregion */
 /*#region   Portfolio  */
@@ -285,7 +287,6 @@ body {
   bottom: 0;
   opacity: 0;
   transform: translateY(100%);
-  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
   flex-wrap: wrap;
   z-index: -1;
   visibility: 0;
@@ -298,6 +299,7 @@ body {
   visibility: 1;
   width: 100%;
   z-index: 1;
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
 }
 #portfolio .demo-work .pagework img {
   max-width: 300px;
@@ -340,11 +342,31 @@ body {
   opacity: 0;
   transition: all 0.5s ease;
 }
+#portfolio .demo-work .pagework2 .imgContainer .text-image,
+#portfolio .demo-work .pagework3 .imgContainer .text-image {
+  opacity: 1;
+}
 #portfolio .demo-work .pagework .imgContainer .text-image h3 {
-  font-size: calc(0.8rem + 0.6vw);
+  font-size: calc(1rem + 0.6vw);
+  margin-bottom: 0.5rem;
+}
+#portfolio .demo-work .pagework .imgContainer .text-image h3.coming-soon {
+  font-size: calc(1.5rem + 0.8vw);
 }
 #portfolio .demo-work .pagework .imgContainer .text-image p {
-  font-size: calc(0.8rem + 0.6vw);
+  font-size: calc(1rem + 0.6vw);
+}
+#portfolio .demo-work .pagework .imgContainer .text-image a {
+  font-size: calc(1.2rem + 0.6vw);
+  color: white;
+  position: absolute;
+  bottom: 30px;
+  width: 100%;
+  padding: 0.5rem 0;
+  transition: all 0.5s ease;
+}
+#portfolio .demo-work .pagework .imgContainer .text-image a:hover {
+  color: #a5a5a5;
 }
 /* #endregion */
 /*#region   Contact-Us  */
@@ -544,6 +566,7 @@ input:-webkit-autofill:active {
 /* #endregion */
 
 /*#region   Animation  */
+/*#region   Accueil  */
 .home .home-content .home--text h1 span.hidden {
   transition: transform 0.5s ease, opacity 1s ease;
   opacity: 0;
@@ -592,7 +615,8 @@ input:-webkit-autofill:active {
 .home .home-content .home--btn .button.hidden {
   opacity: 0;
   transform: rotate(90deg) scale(0);
-  transition: all 0.3s ease 1.6s;
+  transition: opacity 0.3s ease 1.6s, transform 0.3s ease 1.6s,
+    box-shadow 0.3s ease;
 }
 .home .home-content .home--btn .button.hidden.show {
   opacity: 1;
@@ -607,6 +631,216 @@ input:-webkit-autofill:active {
   opacity: 1;
   filter: blur(0);
 }
+.home .stat.hidden .circleStat {
+  transform: translateY(70%);
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+.home .stat.hidden.show .circleStat {
+  transform: translateY(0);
+  transition: all 0.5s ease 0.6s;
+  opacity: 1;
+}
+/* #endregion */
+/*#region   Service */
+.title-section .above-title.hidden {
+  opacity: 0;
+  filter: blur(10px);
+  transition: all 0.5s ease 0.2s;
+}
+.title-section .above-title.hidden.show {
+  opacity: 1;
+  filter: blur(0);
+}
+.title-section .title-h2.hidden {
+  opacity: 0;
+  filter: blur(10px);
+  transform: translateY(50%);
+  transition: all 0.5s ease 0.3s;
+}
+.title-section .title-h2.hidden.show {
+  opacity: 1;
+  filter: blur(0);
+  transform: translateY(0);
+}
+.iconBox.hidden .icon-circle {
+  opacity: 0;
+  transform: translateY(50%);
+  transition: all 0.5s ease 0.6s;
+}
+.iconBox.hidden.show .icon-circle {
+  opacity: 1;
+  transform: translateY(0);
+}
+.iconBox.hidden .icon-title {
+  opacity: 0;
+  transform: translateY(-50%);
+  transition: all 0.5s ease 0.9s;
+}
+.iconBox.hidden.show .icon-title {
+  opacity: 1;
+  transform: translateY(0);
+}
+.iconBox.hidden .icon-desc {
+  opacity: 0;
+  transform: translateY(-100%);
+  transition: all 0.5s ease 0.9s;
+}
+.iconBox.hidden.show .icon-desc {
+  opacity: 1;
+  transform: translateY(0);
+}
+.title-h2-l.hidden {
+  opacity: 0;
+  transform: translateX(-30%);
+  transition: all 0.5s ease;
+}
+.title-h2-l.hidden.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+.step.hidden .step--title {
+  opacity: 0;
+  filter: blur(10px);
+  transition: all 0.5s ease 1s;
+}
+.process_content .step.hidden:nth-child(2) .step--title {
+  transition: all 0.5s ease 1.2s;
+}
+.process_content .step.hidden:nth-child(3) .step--title {
+  transition: all 0.5s ease 1.2s;
+}
+.step.hidden.show .step--title {
+  opacity: 1;
+  filter: blur(0);
+}
+.step.hidden .step--text {
+  opacity: 0;
+  transform: translateY(50%);
+  transition: all 0.5s ease 1.2s;
+}
+.process_content .step.hidden:nth-child(2) .step--text {
+  transition: all 0.5s ease 1.4s;
+}
+.process_content .step.hidden:nth-child(3) .step--text {
+  transition: all 0.5s ease 1.4s;
+}
+.step.hidden.show .step--text {
+  opacity: 1;
+  transform: translateY(0);
+}
+.hidden_span {
+  transform-origin: top;
+  transform: scaleY(0);
+  transition: all 0.4s ease 0.1s;
+}
+.process_content .step:nth-child(2) .hidden_span {
+  transition: all 0.4s ease 0.3s;
+}
+.process_content .step:nth-child(3) .hidden_span {
+  transition: all 0.4s ease 0.5s;
+}
+.hidden_span.show {
+  transform: scaleY(100%);
+}
+.hidden_number {
+  opacity: 0;
+  transition: opacity 0.5s ease 0.6s, filter 0.5s ease 0.6s;
+  transition: box-shadow 0.3s ease 0s;
+  filter: blur(5px);
+}
+.process_content .step:nth-child(2) .hidden_number {
+  transition: opacity 0.5s ease 0.8s, filter 0.5s ease 0.8s;
+}
+.process_content .step:nth-child(3) .hidden_number {
+  transition: opacity 0.5s ease 1s, filter 0.5s ease 1s;
+}
+.hidden_number.show {
+  opacity: 1;
+  filter: blur(0);
+  transition: opacity 0.5s ease 0.6s, filter 0.5s ease 0.6s,
+    box-shadow 0.3s ease 0s;
+  box-shadow: 0 0 0px 0px rgba(255, 255, 255, 0.281);
+}
+.step.illuminated {
+  transition: opacity 0.5s ease 0.6s, filter 0.5s ease 0.6s,
+    transform 0.5s ease 0, box-shadow 0.3s ease 0s;
+  /* box-shadow: 0 0 15px 2px rgba(255, 255, 255, 0.151); */
+  transform: scale(1.1);
+}
+.step.illuminated .step--number .hidden_number.show {
+  transition: box-shadow 0.3s ease 0s;
+  box-shadow: 0 0 15px 2px rgba(255, 255, 255, 0.151);
+}
+/* #endregion */
+/*#region   Portfolio */
+#portfolio .portfolio--text.hidden {
+  opacity: 0;
+  transform: translateY(50%);
+  transition: all 0.5s ease 0.6s;
+}
+#portfolio .portfolio--text.hidden.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+#portfolio .pageSelector.hidden {
+  opacity: 0;
+  transform: translateY(100%);
+  transition: all 0.5s ease 0.8s;
+}
+#portfolio .pageSelector.hidden.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+#portfolio .demo-work .pagework1 .imgContainer.hidden {
+  opacity: 0;
+  transform: scale(0);
+  transition: all 0.5s ease 1s;
+}
+#portfolio .demo-work .pagework1 .imgContainer.hidden.show {
+  opacity: 1;
+  transform: scale(1);
+}
+/* #endregion */
+/*#region   Contact */
+#contactUs .contact--title.hidden h2 {
+  opacity: 0;
+  transform: translateY(100%);
+  transition: all 0.5s ease 0.2s;
+}
+#contactUs .contact--title.hidden.show h2 {
+  opacity: 1;
+  transform: translateY(0);
+}
+#contactUs .contact--title.hidden h3 {
+  opacity: 0;
+  transform: translateX(-20%);
+  transition: all 0.5s ease 0.5s;
+}
+#contactUs .contact--title.hidden.show h3 {
+  opacity: 1;
+  transform: translateX(0);
+}
+#contactUs .contact--content .form.hidden {
+  opacity: 0;
+  transform: translateX(50px) rotate(40deg) scale(0);
+  transition: all 0.5s ease 0.5s;
+}
+#contactUs .contact--content .form.hidden.show {
+  opacity: 1;
+  transform: translateX(0) rotate(0) scale(1);
+  transition: all 0.5s ease 0.5s;
+}
+#contactUs .contact--content .contact--text.hidden {
+  opacity: 0;
+  transform: translateX(50%);
+  transition: all 0.5s ease 0.9s;
+}
+#contactUs .contact--content .contact--text.hidden.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+/* #endregion */
 /* #endregion */
 
 /*#region Media-1160px */
@@ -646,6 +880,9 @@ input:-webkit-autofill:active {
   .home .home-content .home--btn {
     transform: translateX(0);
     margin-top: 4rem;
+  }
+  .home .home-img.hidden {
+    transition: all 0.5s ease 0.2s;
   }
 }
 /* #endregion */

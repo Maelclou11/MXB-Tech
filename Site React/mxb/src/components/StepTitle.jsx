@@ -22,7 +22,7 @@ function StepTitle({ className, number, title, text }) {
   }, []);
 
   return (
-    <div className={`${className || ''} step`}>
+    <div className={`${className || ''} step hidden`}>
         <div className="step--number">
             <span className='hidden_span'></span>
             <p className='hidden_number'>{number}</p>

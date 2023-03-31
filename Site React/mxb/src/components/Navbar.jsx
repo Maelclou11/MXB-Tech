@@ -1,7 +1,9 @@
+import React, { useState, useEffect } from 'react';
 import '../CSS/components.css';
 import logo from '../img/Logo.png';
 
 function Navbar() {
+    const [isSticky, setIsSticky] = useState(false);
 
     const toggleMenu = () => {
         document.querySelector('.menu-hamburger').classList.toggle('is-open');
@@ -10,11 +12,25 @@ function Navbar() {
         links.forEach((link) => {
             link.classList.toggle('fade');
         });
-
     };
 
+    const handleScroll = () => {
+        if (window.scrollY > 20) {
+            setIsSticky(true);
+        } else {
+            setIsSticky(false);
+        }
+    };
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
+
     return (
-        <nav className='navbar'>
+        <nav className={`navbar ${isSticky ? 'sticky' : ''}`}>
             <img src={logo} alt="Logo MXB Tech" />
             <ul className="navbar-list">
                 <li>ACCUEIL</li>
