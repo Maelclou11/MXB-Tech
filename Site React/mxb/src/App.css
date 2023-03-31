@@ -23,6 +23,7 @@ body {
   background: url("./img/body-bg-2-3.webp");
   background-size: cover;
   overflow-x: hidden;
+  background-color: #080010;
 }
 
 /*#region   Accueil  */
