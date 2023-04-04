@@ -16,6 +16,7 @@
   --padding-main-: calc(2rem + 5vw);
   --padding-second-: calc(6rem + 4vw);
   --secondary-color-: #dec0fd;
+  --secondary-color-hover-: #ba74ff;
   --h2-main-: calc(2rem + 2.5vw);
   --p-main-: calc(1.2rem + 0.5vw);
 }
@@ -203,22 +204,40 @@ body {
   gap: 50px;
   padding-top: 40px;
 }
-.title-h2-l {
-  font-size: calc(var(--h2-main-) + 1vw);
-  text-align: left;
-  font-family: "Exo 2", sans-serif;
-  font-weight: 400;
-  color: white;
+/* #endregion */
+/*#region   Besoin d'aide  */
+#besoindaide {
+  padding: var(--padding-second-) var(--padding-main-);
 }
-/* .process .process_content .step:nth-child(2) .step--number .hidden_span,
-.process .process_content .step:nth-child(2) .step--number .hidden_number {
-  transition-delay: 600ms;
+#besoindaide .besoindaide__content {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: calc(2.3rem + 2vw);
 }
-.process .process_content .step:nth-child(3) .step--number .hidden_span,
-.process .process_content .step:nth-child(3) .step--number .hidden_number {
-  transition-delay: 1000ms;
-} */
-
+#besoindaide .besoindaide__content ul {
+  list-style: square;
+  display: flex;
+  flex-direction: column;
+  gap: calc(1.5rem + 1vw);
+  padding-left: 2rem;
+  margin-top: 2rem;
+}
+#besoindaide .besoindaide__content ul li {
+  color: var(--secondary-color-);
+  font-size: calc(var(--p-main-) + 1rem);
+  line-height: 1.5;
+}
+#besoindaide .besoindaide__content img {
+  margin-left: 1rem;
+  width: 100%;
+  max-width: 480px;
+}
+#besoindaide .btn-devis {
+  display: flex;
+  justify-content: flex-end;
+}
 /* #endregion */
 /*#region   Portfolio  */
 #portfolio {
@@ -876,6 +895,17 @@ input:-webkit-autofill:active {
 /* #endregion */
 /* #endregion */
 
+/*#region Media-1590px */
+@media screen and (max-width: 1590px) {
+  #besoindaide .besoindaide__content {
+    justify-content: center;
+  }
+  #besoindaide .besoindaide__content img {
+    margin-left: 0;
+    margin-bottom: 4rem;
+  }
+}
+/* #endregion */
 /*#region Media-1160px */
 @media screen and (max-width: 1160px) {
   #contactUs .contact--content .contact--text {
@@ -916,6 +946,10 @@ input:-webkit-autofill:active {
   }
   .home .home-img.hidden {
     transition: all 0.5s ease 0.2s;
+  }
+  #besoindaide .btn-devis {
+    display: flex;
+    justify-content: center;
   }
 }
 /* #endregion */

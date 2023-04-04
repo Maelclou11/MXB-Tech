@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import Navbar from './components/Navbar';
 import StatCircle from './components/StatCircle';
@@ -16,6 +16,9 @@ import demoEntretienGrondin from './img/demo_entretien_grondin1.png';
 import demoCoteCour from './img/demo_restaurant_cote_cour.png';
 import ScrollProgressBar from 'react-scroll-progress-bar';
 import ArrowUp from './components/ArrowUp';
+import TitleLeft from './components/TitleLeft';
+import DevisGratuit from './components/DevisGratuit';
+import computerIcon from './img/computer_icon.png';
 
 function App(){
     const [activePage, setActivePage] = useState(1);
@@ -143,7 +146,7 @@ function App(){
 
 
                 <div className="process">
-                    <h2 className='title-h2-l hidden'>Notre manière de faire</h2>
+                    <TitleLeft title="Notre manière de faire" />
                     <div className="process_content">
                         <StepTitle number="1" title="Planifier" text="Afin de représenter correctement votre entreprise, nous cherchons d'abord à discuter avec vous afin de vous connaitre vous, ainsi que votre entreprise et sont objectif principale avec nos services pour être certain de satisfaire vos attentes et vous donner le résultat escompté." className="step-1" />
                         
@@ -155,6 +158,23 @@ function App(){
                     </div>
                 </div>
 
+            </section>
+
+            <section id="besoindaide">
+                <TitleLeft title="Besoin d'aide pour " />
+                <div className='besoindaide__content'>
+                    <img src={computerIcon} alt="un ordinateur" />
+                    <ul>
+                        <li>attirer de nouveaux clients avec votre site web actuel?</li>
+                        <li>mettre à jour et optimisé votre site pour les moteurs de recherche?</li>
+                        <li>donner un coup de jeune à votre site web? </li>
+                        <li>augmenter la visibilité de votre site à votre audience cible?</li>
+                        <li>à vous démarquer dans un marché encombré ?</li>
+                    </ul>
+                </div>
+                <div className="btn-devis">
+                    <DevisGratuit />
+                </div>
             </section>
 
             <section id='portfolio'>
@@ -303,5 +323,4 @@ function App(){
     </div>
   )
 };
-
 export default App

@@ -405,6 +405,32 @@
   transform: translateY(-5px) rotate(-45deg);
 }
 /* #endregion */
+/*#region       TitleLeft  */
+.title-h2-l {
+  font-size: calc(var(--h2-main-) + 1vw);
+  text-align: left;
+  font-family: "Exo 2", sans-serif;
+  font-weight: 400;
+  color: white;
+}
+/* #endregion */
+/*#region       DevisGratuit  */
+.devis-gratuit a {
+  display: block;
+  font-size: calc(var(--p-main-) + 0.5rem);
+  color: var(--bg-main-color-);
+  text-decoration: none;
+  background-color: var(--secondary-color-);
+  padding: 0.6rem 2rem;
+  border-radius: 10px;
+  margin-top: 5rem;
+  width: fit-content;
+  transition: all 0.5s ease;
+}
+.devis-gratuit a:hover {
+  background-color: var(--secondary-color-hover-);
+}
+/* #endregion */
 
 /*#region   Media-1156px */
 @media screen and (max-width: 1156px) {
