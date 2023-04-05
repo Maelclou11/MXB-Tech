@@ -21,13 +21,14 @@ import DevisGratuit from './components/DevisGratuit';
 import computerIcon from './img/computer_icon.png';
 
 function App(){
+    /*#region   Portfolio */
     const [activePage, setActivePage] = useState(1);
 
     const handlePageButtonClick = (event) => {
       const pageNumber = parseInt(event.target.getAttribute('data-page-number'));
       setActivePage(pageNumber);
     }
-
+    /* #endregion */
     /*#region   Animation étape */
     const handleScroll = () => {
         // Calculer la position verticale du centre de l'écran
@@ -68,10 +69,6 @@ function App(){
         });
       };
       
-      
-      
-      
-
       useEffect(() => {
         // Ajouter l'écouteur d'événements
         window.addEventListener('scroll', handleScroll);
@@ -99,7 +96,36 @@ function App(){
         hiddenElementsNumbers.forEach((el) => observer.observe(el));
       }, []);
     /* #endregion */
-
+    /*#region   Animation lors du rechargement de la page  */
+    useEffect(() => {
+        const storeScrollPosition = () => {
+          localStorage.setItem('scrollPositionBeforeReload', window.pageYOffset);
+        };
+    
+        const removeHiddenClasses = () => {
+          const elements = document.querySelectorAll('.hidden');
+          elements.forEach((element) => {
+            element.classList.remove('hidden');
+          });
+        };
+    
+        // Ajouter un écouteur d'événement pour stocker la position de scroll avant le rechargement
+        window.addEventListener('beforeunload', storeScrollPosition);
+    
+        // Récupérer la position de scroll stockée dans le localStorage
+        const scrollPositionBeforeReload = parseInt(localStorage.getItem('scrollPositionBeforeReload'), 10);
+    
+        // Vérifier si la position de scroll avant le rechargement est en haut de la page
+        if (!isNaN(scrollPositionBeforeReload) && scrollPositionBeforeReload > 500) {
+          removeHiddenClasses();
+        }
+    
+        // Supprimer l'écouteur d'événement lors du démontage du composant
+        return () => {
+          window.removeEventListener('beforeunload', storeScrollPosition);
+        };
+      }, []);
+    /*#endregion  */
 
   return (
     <div>
@@ -111,7 +137,7 @@ function App(){
                 <div className="home-content">
                     <div className="home--textContainer">
                         <div className="home--text">
-                            <p className='home-bande hidden'><span>%</span> &nbsp; &nbsp;  90% Des Entreprise On Un Site Web</p>
+                            <p className='home-bande hidden'><span>%</span> &nbsp; &nbsp;  90% Des Entreprises Ont Un Site Web</p>
                             <h1><span className='hidden'>Renouvler</span> <span className='gradient-word hidden'>Votre Façade</span> <span className='hidden'>En Ligne.</span></h1>
                             <p className='texte hidden'>Avoir un site web de nos jour est devenu une norme et peut sembler compliquer. Chez MXB Tech, nous nous efforcons à rendre cela le plus simple possible pour vous créer un site web qui sauras vous épatez sans tous autant être dispendieux !</p>
                         </div>
@@ -163,16 +189,18 @@ function App(){
             <section id="besoindaide">
                 <TitleLeft title="Besoin d'aide pour " />
                 <div className='besoindaide__content'>
-                    <img src={computerIcon} alt="un ordinateur" />
+                    <div className="imgBox">
+                        <img className="hidden bottom" src={computerIcon} alt="un ordinateur" />
+                    </div>
                     <ul>
-                        <li>attirer de nouveaux clients avec votre site web actuel?</li>
-                        <li>mettre à jour et optimisé votre site pour les moteurs de recherche?</li>
-                        <li>donner un coup de jeune à votre site web? </li>
-                        <li>augmenter la visibilité de votre site à votre audience cible?</li>
-                        <li>à vous démarquer dans un marché encombré ?</li>
+                        <li className='hidden right blur'>attirer de nouveaux clients avec votre site web actuel?</li>
+                        <li className='hidden right blur d1'>mettre à jour et optimisé votre site pour les moteurs de recherche?</li>
+                        <li className='hidden right blur d2'>donner un coup de jeune à votre site web? </li>
+                        <li className='hidden right blur d3'>augmenter la visibilité de votre site à votre audience cible?</li>
+                        <li className='hidden right blur d4'>à vous démarquer dans un marché encombré ?</li>
                     </ul>
                 </div>
-                <div className="btn-devis">
+                <div className="btn-devis hidden right d4">
                     <DevisGratuit />
                 </div>
             </section>
