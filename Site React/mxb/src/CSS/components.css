@@ -279,7 +279,6 @@
 .iconBox {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   max-width: 310px;
   min-width: 250px;
   text-align: center;
@@ -294,7 +293,6 @@
     #a551fa 65.44%,
     rgba(255, 255, 255, 0.67) 87.27%
   );
-  width: fit-content;
   aspect-ratio: 1;
   border-radius: 50%;
   padding: 2rem;
@@ -302,6 +300,9 @@
   justify-content: center;
   align-items: center;
   transition: all 0.3s ease;
+  margin-bottom: 2rem;
+  width: 116px;
+  height: 116px;
 }
 .iconBox:hover .icon-circle {
   transform: translateY(-10px);
@@ -313,10 +314,12 @@
   font-size: calc(1.5rem + 0.7vw);
   color: white;
   font-weight: 400;
+  margin-bottom: 2rem;
 }
 .iconBox .icon-desc {
   color: white;
-  font-size: calc(1.2rem + 0.4vw);
+  font-size: calc(1.2rem + 0.6vw);
+  line-height: 1.7;
   font-weight: 300;
 }
 .iconBox .icon-button {
@@ -527,7 +530,7 @@
   font-size: var(--p-main-bigger-);
   color: white;
   font-weight: 500;
-  line-height: 1.7;
+  line-height: 25px;
 }
 .faq--tab input.revealTarif ~ label h4 {
   position: relative;

@@ -27,13 +27,13 @@ body {
   background-size: cover;
   overflow-x: hidden;
   background-color: #080010;
+  max-width: 100vw;
 }
 
 /*#region   Accueil  */
 .home {
-  /* background: url(./img/bg_home.png); */
   background-size: cover;
-  /* background-color: var(--bg-main-color-); */
+  background-color: #080010;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -716,76 +716,93 @@ input:-webkit-autofill:active {
 .home .home-content .home--text h1 span.hidden {
   transition: transform 0.5s ease, opacity 1s ease;
   opacity: 0;
+  visibility: hidden;
 }
 .home .home-content .home--text h1 span.hidden:nth-child(1) {
   transform: translateY(-100%);
+  visibility: hidden;
 }
 .home .home-content .home--text h1 span.hidden.show:nth-child(1) {
   transform: translateY(0);
   opacity: 1;
+  visibility: visible;
 }
 .home .home-content .home--text h1 span.hidden:nth-child(2) {
   transform: translateX(-100%);
   transition: transform 0.7s ease 0.2s;
+  visibility: hidden;
 }
 .home .home-content .home--text h1 span.hidden.show:nth-child(2) {
   transform: translateX(0);
   opacity: 1;
+  visibility: visible;
 }
 .home .home-content .home--text h1 span.hidden:nth-child(3) {
   transform: translateY(100%);
   transition: transform 0.5s ease 0.6s;
+  visibility: hidden;
 }
 .home .home-content .home--text h1 span.hidden.show:nth-child(3) {
   transform: translateY(0);
   opacity: 1;
+  visibility: visible;
 }
 .home--text .home-bande.hidden {
   opacity: 0;
   transform: translateY(100%);
   transition: all 0.5s ease 1.1s;
+  visibility: hidden;
 }
 .home--text .home-bande.hidden.show {
   opacity: 1;
   transform: translateY(0);
+  visibility: visible;
 }
 .home--text .texte.hidden {
   opacity: 0;
   transform: translateY(-60%);
   transition: all 0.5s ease 1.1s;
+  visibility: hidden;
 }
 .home--text .texte.hidden.show {
   opacity: 1;
   transform: translateY(0);
+  visibility: visible;
 }
 .home .home-content .home--btn .button.hidden {
   opacity: 0;
   transform: rotate(90deg) scale(0);
   transition: opacity 0.3s ease 1.6s, transform 0.3s ease 1.6s,
     box-shadow 0.3s ease;
+  visibility: hidden;
 }
 .home .home-content .home--btn .button.hidden.show {
   opacity: 1;
   transform: rotate(0) scale(1);
+  visibility: visible;
 }
 .home .home-img.hidden {
   opacity: 0;
   filter: blur(10px);
   transition: all 0.5s ease 0s;
+  visibility: hidden;
 }
 .home .home-img.hidden.show {
   opacity: 1;
   filter: blur(0);
+  visibility: visible;
 }
 .home .stat.hidden .circleStat {
   transform: translateY(70%);
   opacity: 0;
   transition: all 0.5s ease;
+  visibility: hidden;
 }
 .home .stat.hidden.show .circleStat {
   transform: translateY(0);
   transition: all 0.5s ease 0.6s;
   opacity: 1;
+  visibility: visible;
 }
 /* #endregion */
 /*#region   Service */
@@ -793,62 +810,75 @@ input:-webkit-autofill:active {
   opacity: 0;
   filter: blur(10px);
   transition: all 0.5s ease 0.2s;
+  visibility: hidden;
 }
 .title-section .above-title.hidden.show {
   opacity: 1;
   filter: blur(0);
+  visibility: visible;
 }
 .title-section .title-h2.hidden {
   opacity: 0;
   filter: blur(10px);
   transform: translateY(50%);
   transition: all 0.5s ease 0.3s;
+  visibility: hidden;
 }
 .title-section .title-h2.hidden.show {
   opacity: 1;
   filter: blur(0);
   transform: translateY(0);
+  visibility: visible;
 }
 .iconBox.hidden .icon-circle {
   opacity: 0;
   transform: translateY(50%);
   transition: all 0.5s ease 0.6s;
+  visibility: hidden;
 }
 .iconBox.hidden.show .icon-circle {
   opacity: 1;
   transform: translateY(0);
+  visibility: visible;
 }
 .iconBox.hidden .icon-title {
   opacity: 0;
   transform: translateY(-50%);
   transition: all 0.5s cubic-bezier(0.47, 1.55, 0.66, 0.95) 0.9s;
+  visibility: hidden;
 }
 .iconBox.hidden.show .icon-title {
   opacity: 1;
   transform: translateY(0);
+  visibility: visible;
 }
 .iconBox.hidden .icon-desc {
   opacity: 0;
   transform: translateY(-100%);
   transition: all 0.5s cubic-bezier(0.47, 1.55, 0.66, 0.95) 0.9s;
+  visibility: hidden;
 }
 .iconBox.hidden.show .icon-desc {
   opacity: 1;
   transform: translateY(0);
+  visibility: visible;
 }
 .title-h2-l.hidden {
   opacity: 0;
   transform: translateX(-30%);
   transition: all 0.5s ease;
+  visibility: hidden;
 }
 .title-h2-l.hidden.show {
   opacity: 1;
   transform: translateX(0);
+  visibility: visible;
 }
 .step.hidden .step--title {
   opacity: 0;
   filter: blur(10px);
   transition: all 0.5s ease 0.8s;
+  visibility: hidden;
 }
 /* .process_content .step.hidden:nth-child(2) .step--title {
   transition: all 0.5s ease 1.2s;
@@ -859,11 +889,13 @@ input:-webkit-autofill:active {
 .step.hidden.show .step--title {
   opacity: 1;
   filter: blur(0);
+  visibility: visible;
 }
 .step.hidden .step--text {
   opacity: 0;
   transform: translateY(50%);
   transition: all 0.5s ease 1s;
+  visibility: hidden;
 }
 /* .process_content .step.hidden:nth-child(2) .step--text {
   transition: all 0.5s ease 1.4s;
@@ -874,11 +906,13 @@ input:-webkit-autofill:active {
 .step.hidden.show .step--text {
   opacity: 1;
   transform: translateY(0);
+  visibility: visible;
 }
 .hidden.span {
   transform-origin: top;
   transform: scaleY(0);
   transition: all 0.5s ease 0.1s;
+  visibility: hidden;
 }
 /* .process_content .step:nth-child(2) .hidden_span {
   transition: all 0.4s ease 0.3s;
@@ -888,6 +922,7 @@ input:-webkit-autofill:active {
 } */
 .hidden.span.show {
   transform: scaleY(100%);
+  visibility: visible;
 }
 .hidden.number {
   opacity: 0;
@@ -895,6 +930,7 @@ input:-webkit-autofill:active {
   /*   transition: opacity 0.5s ease 0.4s, filter 0.5s ease 0.4s;
   transition: box-shadow 0.3s ease 0s; */
   filter: blur(10px);
+  visibility: hidden;
 }
 /* .process_content .step:nth-child(2) .hidden_number {
   transition: opacity 0.5s ease 0.8s, filter 0.5s ease 0.8s;
@@ -906,6 +942,7 @@ input:-webkit-autofill:active {
   opacity: 1;
   filter: blur(0);
   box-shadow: 0 0 0px 0px rgba(255, 255, 255, 0.281);
+  visibility: visible;
 }
 .step.illuminated {
   transition: opacity 0.5s ease 0.6s, filter 0.5s ease 0.6s,
@@ -915,6 +952,7 @@ input:-webkit-autofill:active {
 .step.illuminated .step--number .hidden_number.show {
   transition: box-shadow 0.3s ease 0s;
   box-shadow: 0 0 15px 2px rgba(255, 255, 255, 0.151);
+  visibility: visible;
 }
 /* #endregion */
 /*#region   Portfolio */
@@ -922,28 +960,34 @@ input:-webkit-autofill:active {
   opacity: 0;
   transform: translateY(50%);
   transition: all 0.5s ease 0.4s;
+  visibility: hidden;
 }
 #portfolio .portfolio--text.hidden.show {
   opacity: 1;
   transform: translateY(0);
+  visibility: visible;
 }
 #portfolio .pageSelector.hidden {
   opacity: 0;
   transform: translateY(100%);
   transition: all 0.5s ease 0.6s;
+  visibility: hidden;
 }
 #portfolio .pageSelector.hidden.show {
   opacity: 1;
   transform: translateY(0);
+  visibility: visible;
 }
 #portfolio .demo-work .pagework1 .imgContainer.hidden {
   opacity: 0;
   transform: scale(0);
   transition: all 0.5s ease 0.2s;
+  visibility: hidden;
 }
 #portfolio .demo-work .pagework1 .imgContainer.hidden.show {
   opacity: 1;
   transform: scale(1);
+  visibility: visible;
 }
 /* #endregion */
 /*#region   Contact */
@@ -951,78 +995,96 @@ input:-webkit-autofill:active {
   opacity: 0;
   transform: translateY(100%);
   transition: all 0.5s ease 0.2s;
+  visibility: hidden;
 }
 #contactUs .contact--title.hidden.show h2 {
   opacity: 1;
   transform: translateY(0);
+  visibility: visible;
 }
 #contactUs .contact--title.hidden h3 {
   opacity: 0;
   transform: translateX(-20%);
   transition: all 0.5s ease 0.5s;
+  visibility: hidden;
 }
 #contactUs .contact--title.hidden.show h3 {
   opacity: 1;
   transform: translateX(0);
+  visibility: visible;
 }
 #contactUs .contact--content .contact--text.hidden {
   opacity: 0;
   transform: translateX(50%);
   transition: all 0.5s ease 0.9s;
+  visibility: hidden;
 }
 #contactUs .contact--content .contact--text.hidden.show {
   opacity: 1;
   transform: translateX(0);
+  visibility: visible;
 }
 .button-servicesContainer label.hidden {
   opacity: 0;
   transition: all 0.5s ease 0.7s;
+  visibility: hidden;
 }
 .button-servicesContainer label.hidden:nth-child(2) {
   transform: translateX(-50%);
   transition: all 1s cubic-bezier(0.47, 1.55, 0.66, 0.95) 1s;
+  visibility: hidden;
 }
 .button-servicesContainer label.hidden:last-child {
   transform: translateX(-100%);
   transition: all 1s cubic-bezier(0.47, 1.55, 0.66, 0.95) 1s;
+  visibility: hidden;
 }
 .button-servicesContainer label.hidden.show {
   opacity: 1;
+  visibility: visible;
 }
 .button-servicesContainer label.hidden.show:nth-child(2) {
   transform: translateX(0);
+  visibility: visible;
 }
 .button-servicesContainer label.hidden.show:last-child {
   transform: translateX(0);
+  visibility: visible;
 }
 .label-btn-services.hidden {
   transform: translateY(50%);
   opacity: 0;
   transition: all 0.5s cubic-bezier(0.47, 1.55, 0.66, 0.95) 0.5s;
+  visibility: hidden;
 }
 .label-btn-services.hidden.show {
   transform: translateY(0);
   opacity: 1;
+  visibility: visible;
 }
 .form .input.hidden,
 .form .btn-send.hidden {
   transform: translateY(50%);
   opacity: 0;
   transition: all 0.5s cubic-bezier(0.47, 1.55, 0.66, 0.95) 1s;
+  visibility: hidden;
 }
 .form .input.hidden.show,
 .form .btn-send.hidden.show {
   transform: translateY(0);
   opacity: 1;
+  visibility: visible;
 }
 /* #endregion */
 /*#region   Test  */
 .hidden {
   opacity: 0;
   transition: all 0.5s ease 0.2s;
+  visibility: hidden;
 }
 .hidden.show {
   opacity: 1;
+  visibility: visible;
 }
 
 .hidden.d1 {
@@ -1040,37 +1102,47 @@ input:-webkit-autofill:active {
 
 .hidden.right {
   transform: translateX(30%);
+  visibility: hidden;
 }
 .hidden.right.show {
   transform: translateX(0);
+  visibility: visible;
 }
 
 .hidden.left {
   transform: translateX(-30%);
+  visibility: hidden;
 }
 .hidden.left.show {
   transform: translateX(0);
+  visibility: visible;
 }
 
 .hidden.top {
   transform: translateY(-100px);
+  visibility: hidden;
 }
 .hidden.top.show {
   transform: translateY(0);
+  visibility: visible;
 }
 
 .hidden.bottom {
   transform: translateY(100px);
+  visibility: hidden;
 }
 .hidden.bottom.show {
   transform: translateY(0);
+  visibility: visible;
 }
 
 .hidden.blur {
   filter: blur(10px);
+  visibility: hidden;
 }
 .hidden.blur.show {
   filter: blur(0);
+  visibility: visible;
 }
 /* #endregion */
 /* #endregion */
