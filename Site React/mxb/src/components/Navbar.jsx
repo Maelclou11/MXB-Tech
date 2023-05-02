@@ -31,13 +31,15 @@ function Navbar() {
 
     return (
         <nav className={`navbar ${isSticky ? 'sticky' : ''}`}>
-            <img src={logo} alt="Logo MXB Tech" />
+            <a href="#accueil">
+                <img src={logo} alt="Logo MXB Tech" />
+            </a>
             <ul className="navbar-list">
-                <li>ACCUEIL</li>
-                <li>SERVICES</li>
-                <li>RÉALISATIONS</li>
-                <li>QUESTIONS</li>
-                <li>NOUS JOINDRE</li>
+                <li><a href='#accueil'>ACCUEIL</a></li>
+                <li><a href='#services'>SERVICES</a></li>
+                <li><a href='#portfolio'>RÉALISATIONS</a></li>
+                <li><a href='#questions'>QUESTIONS</a></li>
+                <li><a href='#contactUs'>NOUS JOINDRE</a></li>
             </ul>
 
             <div className='menu-hamburger' onClick={toggleMenu}>
@@ -47,13 +49,15 @@ function Navbar() {
             </div>
 
             <div className="menu-mobile">
-                <img className='menu-mobile-logo' src={logo} alt="Logo MXB Tech" />
+                <a href="#accueil" className='mobile-logo-a'>
+                    <img className='menu-mobile-logo' src={logo} alt="Logo MXB Tech" />
+                </a>
                 <ul className="menu-mobile-list">
-                    <li>ACCUEIL</li>
-                    <li>SERVICES</li>
-                    <li>RÉALISATIONS</li>
-                    <li>QUESTIONS</li>
-                    <li>NOUS JOINDRE</li>
+                    <li><a href='#accueil'>ACCUEIL</a></li>
+                    <li><a href='#services'>SERVICES</a></li>
+                    <li><a href='#portfolio'>RÉALISATIONS</a></li>
+                    <li><a href='#questions'>QUESTIONS</a></li>
+                    <li><a href='#contactUs'>NOUS JOINDRE</a></li>
                 </ul>
             </div>
         </nav>

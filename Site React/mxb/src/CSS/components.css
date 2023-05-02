@@ -33,14 +33,24 @@
   padding: 0.5rem 1.3vw;
   white-space: nowrap;
 }
-.navbar .navbar-list li:hover {
+.navbar .navbar-list li a {
+  text-decoration: none;
+  color: white;
+}
+.navbar .navbar-list li a:hover {
   cursor: pointer;
   font-weight: 500;
 }
-.navbar .navbar-list li:last-child {
+.navbar .navbar-list li:last-child a {
   background-color: white;
   color: var(--main-color-);
   font-weight: 400;
+  padding: 0.5rem 2rem;
+  transition: all 0.3s ease;
+}
+.navbar .navbar-list li:last-child:hover a {
+  background-color: var(--main-color-);
+  color: white;
 }
 /* #endregion */
 /*#region   hamburger  */
@@ -126,6 +136,10 @@
   padding-bottom: 2rem;
   border-bottom: 1px solid white;
 }
+.menu-mobile .mobile-logo-a {
+  display: flex;
+  justify-content: center;
+}
 .menu-mobile .menu-mobile-list {
   color: white;
   list-style: none;
@@ -138,6 +152,10 @@
   font-size: calc(1rem + 1.8vw);
   opacity: 0;
   letter-spacing: 1px;
+}
+.menu-mobile .menu-mobile-list li a {
+  color: white;
+  text-decoration: none;
 }
 .menu-mobile .menu-mobile-list li:nth-child(1) {
   transition: all 0.5s ease-in-out 0.2s;
@@ -429,6 +447,116 @@
 }
 .devis-gratuit a:hover {
   background-color: var(--secondary-color-hover-);
+}
+/* #endregion */
+/*#region       QuestionFaq  */
+.faq--tab {
+  position: relative;
+  padding: 2rem calc(2rem + 4vw) 2rem 2rem;
+  border-radius: 5px;
+  border: 1px solid var(--secondary-color-hover-);
+  overflow: hidden;
+  margin: 10px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+.faq--tab:hover {
+  transform: scale(1.02);
+}
+.faq--tab input {
+  appearance: none;
+  width: 100%;
+}
+.faq--tab label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.faq--tab label::after {
+  /* signe plus (+) */
+  content: "+";
+  position: absolute;
+  right: 20px;
+  font-size: var(--font-size-1-);
+  color: var(--secondary-color-);
+  transition: transform 1s ease;
+}
+.faq--tab:hover label::after {
+  color: var(--secondary-color-hover-);
+}
+.faq--tab input.revealTarif ~ label::after {
+  transform: rotate(135deg);
+  color: #fff;
+  top: 10px;
+}
+.faq--tab label h3 {
+  /*  numero de question  */
+  width: 40px;
+  height: 40px;
+  background: #333;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-size: 1.25em;
+  margin-right: 15px;
+  flex-shrink: 0;
+  font-size: var(--p-main-bigger-);
+  font-weight: 400;
+}
+.faq--tab label h3 {
+  background: linear-gradient(135deg, rgb(173, 109, 247), var(--main-color-));
+}
+.faq--tab input.revealTarif ~ label h3 {
+  /* chiffre lorsque l'on clique  */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  color: rgba(255, 255, 255, 0.2);
+  font-size: 10em;
+  justify-content: flex-end;
+  padding: 20px;
+  border-radius: 0px;
+}
+.faq--tab label h4 {
+  font-size: var(--p-main-bigger-);
+  color: white;
+  font-weight: 500;
+  line-height: 1.7;
+}
+.faq--tab input.revealTarif ~ label h4 {
+  position: relative;
+  font-weight: 500;
+  color: #fff;
+  z-index: 10;
+  margin-bottom: 1rem;
+}
+.faq--tab input.revealTarif ~ .faq--content p {
+  color: #fff;
+  font-size: var(--p-main-);
+  display: block;
+  line-height: 1.7;
+}
+.faq--tab .faq--content {
+  max-height: 0;
+  transition: all 0.5s ease;
+  overflow: hidden;
+}
+.faq--tab input.revealTarif ~ .faq--content {
+  max-height: 100vh;
+}
+.faq--tab .faq--content p {
+  position: relative;
+  padding-inline-start: 10px 0;
+  color: #fff;
+  z-index: 10;
+  margin-left: 1rem;
+  display: none;
 }
 /* #endregion */
 
