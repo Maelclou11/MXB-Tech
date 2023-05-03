@@ -338,7 +338,33 @@ function App(){
             <section id="contactUs">
                 <div className="contact--title hidden">
                     <h2>Nous Joindre</h2>
-                    <h3>———— Une idée de projet ?</h3>
+                    <h3>
+                        <span className='span-1' style={{ '--index': 1 }}>—</span>
+                        <span className='span-2' style={{ '--index': 2 }}>—</span>
+                        <span className='span-3' style={{ '--index': 3 }}>—</span>
+                        <span className='span-4' style={{ '--index': 4 }}>—</span>
+                        &nbsp;
+                        <span className='span-5' style={{ '--index': 5 }}>U</span>
+                        <span className='span-6' style={{ '--index': 6 }}>n</span>
+                        <span className='span-7' style={{ '--index': 7 }}>e</span>
+                        &nbsp;
+                        <span className='span-8' style={{ '--index': 8 }}>i</span>
+                        <span className='span-9' style={{ '--index': 9 }}>d</span>
+                        <span className='span-10' style={{ '--index': 10 }}>é</span>
+                        <span className='span-11' style={{ '--index': 11 }}>e</span>
+                        &nbsp;
+                        <span className='span-12' style={{ '--index': 12 }}>d</span>
+                        <span className='span-13' style={{ '--index': 13 }}>e</span>
+                        &nbsp;
+                        <span className='span-14' style={{ '--index': 14 }}>p</span>
+                        <span className='span-15' style={{ '--index': 15 }}>r</span>
+                        <span className='span-16' style={{ '--index': 16 }}>o</span>
+                        <span className='span-17' style={{ '--index': 17 }}>j</span>
+                        <span className='span-18' style={{ '--index': 18 }}>e</span>
+                        <span className='span-19' style={{ '--index': 19 }}>t</span>
+                        &nbsp;
+                        <span className='span-20' style={{ '--index': 20 }}>?</span>
+                    </h3>
                 </div>
                 <div className="contact--content">
                     <div className="form">

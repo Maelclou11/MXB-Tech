@@ -306,6 +306,7 @@
 }
 .iconBox:hover .icon-circle {
   transform: translateY(-10px);
+  box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, 0.178);
 }
 .iconBox .icon-circle img {
   width: 90%;
@@ -467,10 +468,12 @@
 }
 .faq--tab:hover {
   transform: scale(1.02);
+  box-shadow: 0 0 10px 5px rgba(255, 255, 255, 0.151);
 }
 .faq--tab input {
   appearance: none;
   width: 100%;
+  display: none;
 }
 .faq--tab label {
   display: flex;
