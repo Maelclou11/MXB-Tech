@@ -7,7 +7,7 @@ function Animation() {
 
   useEffect(() => {
     const observerOptions = {
-      rootMargin: "0px 500px -100px 500px",
+      rootMargin: "0px 500px -50px 500px",
     };
 
     const hiddenElements = document.querySelectorAll(".hidden");

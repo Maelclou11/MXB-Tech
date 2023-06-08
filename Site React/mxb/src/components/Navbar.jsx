@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import '../CSS/components.css';
 import logo from '../img/Logo.png';
 
 function Navbar() {
-    const [isSticky, setIsSticky] = useState(false);
 
     const toggleMenu = () => {
         document.querySelector('.menu-hamburger').classList.toggle('is-open');
@@ -16,9 +15,8 @@ function Navbar() {
 
     const handleScroll = () => {
         if (window.scrollY > 20) {
-            setIsSticky(true);
-        } else {
-            setIsSticky(false);
+            document.querySelector('.navbar').classList.add('sticky');
+            window.removeEventListener('scroll', handleScroll);
         }
     };
 
@@ -30,7 +28,7 @@ function Navbar() {
     }, []);
 
     return (
-        <nav className={`navbar ${isSticky ? 'sticky' : ''}`}>
+        <nav className="navbar">
             <a href="#accueil">
                 <img src={logo} alt="Logo MXB Tech" />
             </a>
@@ -49,15 +47,15 @@ function Navbar() {
             </div>
 
             <div className="menu-mobile">
-                <a href="#accueil" className='mobile-logo-a'>
+{/*                 <a href="#accueil" className='mobile-logo-a'>
                     <img className='menu-mobile-logo' src={logo} alt="Logo MXB Tech" />
-                </a>
+                </a> */}
                 <ul className="menu-mobile-list">
-                    <li><a href='#accueil'>ACCUEIL</a></li>
-                    <li><a href='#services'>SERVICES</a></li>
-                    <li><a href='#portfolio'>RÉALISATIONS</a></li>
-                    <li><a href='#questions'>QUESTIONS</a></li>
-                    <li><a href='#contactUs'>NOUS JOINDRE</a></li>
+                    <li><a href='#accueil' onClick={toggleMenu}>ACCUEIL</a></li>
+                    <li><a href='#services' onClick={toggleMenu}>SERVICES</a></li>
+                    <li><a href='#portfolio' onClick={toggleMenu}>RÉALISATIONS</a></li>
+                    <li><a href='#questions' onClick={toggleMenu}>QUESTIONS</a></li>
+                    <li><a href='#contactUs' onClick={toggleMenu}>NOUS JOINDRE</a></li>
                 </ul>
             </div>
         </nav>

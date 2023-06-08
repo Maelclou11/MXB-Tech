@@ -1,0 +1,31 @@
+/* #region BlogTest (tkt mael je vais l'enlever dans le future) */
+.BlogTest {
+  margin: calc(5rem + 5vmin);
+}
+/* #endregion */
+
+/* #region  TitreH2 */
+.blogH2 {
+  font-size: var(--h2-);
+  color: white;
+}
+/* #endregion */
+/* #region  Title */
+.BlogHeader label {
+  font-size: var(--font-size-1-);
+  display: flex;
+  flex-direction: column;
+  color: black;
+}
+.BlogHeader input {
+  font-size: var(--font-size-1-);
+  background: white;
+  padding: 0.5rem 1rem;
+  margin: 1rem 0;
+  border: 2px solid var(--main-color-);
+}
+.BlogHeader h1 {
+  font-size: var(--h1-);
+  color: black;
+}
+/* #endregion */
