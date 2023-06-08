@@ -13,10 +13,12 @@
   --bg-main-color-: #080010;
   --bg-secondary-color-: #db5afb;
   --main-color-: #420983;
-  --padding-main-: calc(2rem + 5vw);
-  --padding-second-: calc(6rem + 4vw);
+  --main-color-hover-: #29093d;
   --secondary-color-: #dec0fd;
   --secondary-color-hover-: #ba74ff;
+  --red-: #ff4949;
+  --padding-main-: calc(2rem + 5vw);
+  --padding-second-: calc(6rem + 4vw);
   --h2-main-: calc(2rem + 2.5vw);
   --p-main-: calc(1.2rem + 0.5vw);
   --p-main-bigger-: calc(1.2rem + 0.8vw);
@@ -24,7 +26,7 @@
   --font-size-1-: calc(1.4rem + 0.4vw);
   --font-size-2-: calc(1.6rem + 0.8vw);
   --font-size-3-: calc(1.7rem + 1.2vw);
-  --h1-: calc(2rem + 2vw);
+  --h1-: calc(2rem + 1.5vw);
   --h2-: calc(2rem + 0.7vmin);
   --h3-: calc(1.6rem + 2vw);
   --delay-base: 2s;
@@ -36,6 +38,23 @@ body {
   background-color: #080010;
   max-width: 100vw;
 }
+
+/* #region  Général */
+.btn-container {
+  display: flex;
+  gap: 10px;
+}
+.red {
+  background: var(--red-) !important;
+}
+.white {
+  color: white;
+}
+.c-main {
+  color: var(--bg-main-color-);
+}
+
+/* #endregion */
 
 /*#region   Accueil  */
 .home {

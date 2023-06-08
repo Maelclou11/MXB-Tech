@@ -7,7 +7,7 @@ function Button({icon, route, className, type, text, onClick}) {
     <div className={`Button`}>
         <Link to={route}>
             <button 
-              className={className} 
+              className={`${className}`} 
               type={type}
               onClick={onClick}>
                 {text}

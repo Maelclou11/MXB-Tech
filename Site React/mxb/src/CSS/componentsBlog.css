@@ -1,9 +1,8 @@
-/* #region BlogTest (tkt mael je vais l'enlever dans le future) */
+/* #region BlogTest (tkt mael je vais l'enlever dans le future) (sa me fait drolement chier bro que tu te permette) */
 .BlogTest {
   margin: calc(5rem + 5vmin);
 }
 /* #endregion */
-
 /* #region  TitreH2 */
 .blogH2 {
   font-size: var(--h2-);
@@ -11,6 +10,14 @@
 }
 /* #endregion */
 /* #region  Title */
+.BlogHeader h1 {
+  color: rgb(10, 10, 10);
+  font-size: var(--h1-);
+  font-weight: 400;
+  font-family: "Inter", sans-serif;
+  color: var(--main-color-hover-);
+  margin-bottom: 1rem;
+}
 .BlogHeader label {
   font-size: var(--font-size-1-);
   display: flex;
@@ -24,8 +31,34 @@
   margin: 1rem 0;
   border: 2px solid var(--main-color-);
 }
-.BlogHeader h1 {
-  font-size: var(--h1-);
-  color: black;
+.BlogHeader .edit-container {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 100%;
+}
+.BlogHeader .edit-container label {
+  width: 100%;
+}
+.BlogHeader .blog-edit-component {
+  position: relative;
+}
+.BlogHeader .blog-edit-component .Button {
+  position: absolute;
+  display: none;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+}
+.BlogHeader .blog-edit-component:hover .Button {
+  display: block;
+}
+.BlogHeader .blog-edit-component .author {
+  font-size: var(--font-size-0-);
+  margin-left: 0.5rem;
+}
+.BlogHeader .blog-edit-component .author span {
+  color: var(--secondary-color-hover-);
 }
 /* #endregion */

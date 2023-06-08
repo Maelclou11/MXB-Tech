@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
-import '../CSS/components.css';
-import logo from '../img/Logo.png';
+import '../../CSS/components.css';
+import logo from '../../img/Logo.png';
+import {Button} from '../indexComponents';
+
 
 function Navbar() {
 
@@ -33,10 +35,10 @@ function Navbar() {
                 <img src={logo} alt="Logo MXB Tech" />
             </a>
             <ul className="navbar-list">
-                <li><a href='#accueil'>ACCUEIL</a></li>
+                <li><Button text="ACCUEIL" className="menu-item" route="/" /></li>
                 <li><a href='#services'>SERVICES</a></li>
                 <li><a href='#portfolio'>RÉALISATIONS</a></li>
-                <li><a href='#questions'>QUESTIONS</a></li>
+                <li><Button text="BLOG" className="menu-item" route="/blogeditor" /></li>
                 <li><a href='#contactUs'>NOUS JOINDRE</a></li>
             </ul>
 
@@ -47,9 +49,6 @@ function Navbar() {
             </div>
 
             <div className="menu-mobile">
-{/*                 <a href="#accueil" className='mobile-logo-a'>
-                    <img className='menu-mobile-logo' src={logo} alt="Logo MXB Tech" />
-                </a> */}
                 <ul className="menu-mobile-list">
                     <li><a href='#accueil' onClick={toggleMenu}>ACCUEIL</a></li>
                     <li><a href='#services' onClick={toggleMenu}>SERVICES</a></li>
