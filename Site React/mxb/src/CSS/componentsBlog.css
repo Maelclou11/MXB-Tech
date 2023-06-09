@@ -4,9 +4,9 @@
 }
 /* #endregion */
 /* #region  TitreH2 */
-.blogH2 {
+.blog-edit-component {
   font-size: var(--h2-);
-  color: white;
+  color: var(--main-color-);
 }
 /* #endregion */
 /* #region  Title */
@@ -17,6 +17,9 @@
   font-family: "Inter", sans-serif;
   color: var(--main-color-hover-);
   margin-bottom: 1rem;
+}
+.blog-components-frame {
+  width: 100%;
 }
 .blog-components-frame label {
   font-size: var(--font-size-1-);
@@ -51,7 +54,7 @@
   right: 0;
   transform: translateY(-50%);
 }
-.blog-components-frame .blog-edit-component:hover .Button {
+.component:hover .blog-edit-component .Button {
   display: block;
 }
 .BlogHeader .blog-edit-component .author {

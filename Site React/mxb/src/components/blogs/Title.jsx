@@ -20,11 +20,11 @@ function Title ({title, author, date, isNew, onDelete}) {
             {isNew && isEditing ?  
                 <div className="edit-container">
                     <label htmlFor="">
-                        Titre :
+                        Titre du blog :
                         <input type="text" value={defaultTitle} onChange={(e) => setDefaultTitle(e.target.value)} />
                     </label>
                     <div className="btn-container">
-                        <Button text="Supprimer" className="red white" onClick={() => {onDelete(); setIsEditing(false)}}/>
+                        {onDelete ? <Button text="Supprimer" className="red white" onClick={() => {onDelete(); setIsEditing(false)}}/> : ''}
                         <Button text="Sauvegarder" className="c-main" onClick={() => setIsEditing(false)}/>
                     </div>
                 </div>

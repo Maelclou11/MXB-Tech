@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Navbar, Dropdown, Paragraphe, Title, Button, TextInput } from '../components/indexComponents';
+import { Navbar, Dropdown, Paragraphe, Title, Button, TextInput, TitreH2 } from '../components/indexComponents';
 import '../CSS/BlogEditor.css';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
@@ -13,8 +13,9 @@ function BlogEditor() {
 
     // Dans un futur fetch de la DB
     const componentsData = [
-        {id: 1, name: 'Title', content: [{titre: ""}]},
-        {id: 2, name: 'Paragraphe', content: [{texte: ""}]}
+        {id: 1, name: 'TitreH2', content: [{titre: ""}]},
+        {id: 2, name: 'Paragraphe', content: [{texte: ""}]},
+        {id: 3, name: 'Liste de liens', content: [{listText: [],  listLink: []}]},
     ];
 
     // Créer les options du dropdown donc   1) ...componentsData fait une copie du tableau componentsData   2) .map pour faire le tour des components   3) (component) sert a identifier du nom que tu veux chaque element du tableau 4) d'habitude on mets juste des parantheses '(component) => ()' mais etant donné qu'ont creer un objet(un tableau avec des champs et des valeur), Tous les objets doivent être dans des accolades donc le tableau qu'ont créer va ressembler a sa [{value: "1", label: "Title"}, {value: "2", label: "Paragraphe"}]
@@ -54,12 +55,16 @@ function BlogEditor() {
             {/* Condition qui verifie si un auteur est défini, si oui on peut creer le blog, sinon il faut entrer un auteur */}
             {isAuthor ?
             <>
+                <div className='component'>
+                    <Title isNew={true} author={author} date="5 Juin 2023"/>
+                </div>
                 {/* Fait le tour du tableau components qui répresentes les components qu'on crées et fait apparaitre le bon component selon le id de l'element */}
                 {components.map((component, index) => {
                     return (
                         <div key={component.id} className='component'>
-                            {component.id === 1 && <Title title={component.title} isNew={true} onDelete={() => deleteComponent(index)} author={author} date="5 Juin 2023"/>}
+                            {component.id === 1 && <TitreH2 title={component.content.titre} isNew={true} onDelete={() => deleteComponent(index)} />}
                             {component.id === 2 && <Paragraphe text={component.content.text} isNew={true} onDelete={() => deleteComponent(index)}/>}
+                            {component.id === 3 && <Paragraphe text={component.content.text} isNew={true} onDelete={() => deleteComponent(index)}/>}
                         </div>
                     );
                 })}
