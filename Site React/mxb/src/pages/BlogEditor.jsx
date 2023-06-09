@@ -5,11 +5,11 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 
 function BlogEditor() {
-    const [componentToAdd, setComponentToAdd] = useState([]); // Contient le component VIDE que l'on a selectionner
-    const [components, setComponents] = useState([]);  // Liste de tous les components créés
+    const [componentToAdd, setComponentToAdd] = useState([]); // Contient le component VIDE que l'on a selectionner dans le dropdown
+    const [components, setComponents] = useState([]);  // Liste de tous les components créés 
     const [addComponent, setAddComponent] = useState(false);  // Bool pour savoir si on a cliqué sur le + afin d'ajouter un component  (Nécessaire pour cacher le dropdown en cliquant sur le + et inversement (pour cacher le + quand on clique sur le dropdown))
-    const [author, setAuthor] = useState('');
-    const [isAuthor, setIsAuthor] = useState(false);
+    const [author, setAuthor] = useState('');   // Le nom de l'auteur
+    const [isAuthor, setIsAuthor] = useState(false);  // Pour faire disparaitre le form d'auteur lorsqu'on enregistre un nom
 
     // Dans un futur fetch de la DB
     const componentsData = [
@@ -17,7 +17,7 @@ function BlogEditor() {
         {id: 2, name: 'Paragraphe', content: [{texte: ""}]}
     ];
 
-    // Créer les options du dropdown
+    // Créer les options du dropdown donc   1) ...componentsData fait une copie du tableau componentsData   2) .map pour faire le tour des components   3) (component) sert a identifier du nom que tu veux chaque element du tableau 4) d'habitude on mets juste des parantheses '(component) => ()' mais etant donné qu'ont creer un objet(un tableau avec des champs et des valeur), Tous les objets doivent être dans des accolades donc le tableau qu'ont créer va ressembler a sa [{value: "1", label: "Title"}, {value: "2", label: "Paragraphe"}]
     const componentsOptions = [
         ...componentsData.map((component) => ({
             value: component.id,
@@ -80,6 +80,7 @@ function BlogEditor() {
                     <TextInput type="text" labelText="Qui écrit ce blog ?" placeholder="Auteur" value={author} onChange={(e) => setAuthor(e.target.value)}/>    {/* Dans le onChange, tu peux mettre des fonctions sans parametre sans avoir a mettre '() => ' mais dès qu'on met des parametre (en gros dès qui a des parenthese faut mettre "() => ") et si on veux faire plusieur fonction faut mettre les fonctions dans des accolades et mettre un point virgule entre les fonctions, exemple : () => {onDelete(); setIsEditing(false)} */}
 
                     <Button text="Commencer" onClick={() => author ? setIsAuthor(true) : setIsAuthor(false)}/>
+                    {/* cela : "author ? setIsAuthor(true) : setIsAuthor(false)" sert juste a verifier que la valeur de author n'est pas nul et si elle l'est, ne pas faire disparaitre le form en cliquant donc oblige de rentrer un nom d'auteur mais en vrai jsp si on le met genre le monde s'en batte les couilles raides de qui l'a ecrit */} 
                 </>
             }
         </div>
