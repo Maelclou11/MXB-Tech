@@ -9,7 +9,7 @@ function Title ({title, author, date, isNew, onDelete}) {
     const [isEditing, setIsEditing] = useState(isNew === true);
 
     return(
-        <div className="BlogHeader">
+        <div className="BlogHeader blog-components-frame">
             {!isNew ? <h1>{title}</h1> : isEditing ? '' : 
             <div className="blog-edit-component">
                 <h1>{defaultTitle}</h1>

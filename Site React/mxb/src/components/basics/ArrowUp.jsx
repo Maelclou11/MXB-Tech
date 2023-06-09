@@ -1,4 +1,4 @@
-import upRightArrow from '../img/up_right_arrow.svg';
+import upRightArrow from '../../img/up_right_arrow.svg';
 import React, { useState, useEffect } from 'react';
 
 const ArrowUp = () => {

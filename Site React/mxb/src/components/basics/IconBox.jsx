@@ -1,5 +1,5 @@
 import React from 'react';
-import '../CSS/components.css';
+import '../../CSS/components.css';
 
 function IconBox({icon, title, description, }) {
   return (

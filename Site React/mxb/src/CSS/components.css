@@ -634,6 +634,22 @@
   width: 100%;
 }
 /* #endregion */
+/* #region  TextArea */
+.text-area {
+  width: 100%;
+}
+.text-area textarea {
+  width: 100%;
+  font-size: var(--font-size-1-);
+  font-weight: 400;
+  border: none;
+  color: black;
+  padding: 0 0.5rem;
+  border-radius: 4px;
+  outline: 2px solid var(--main-color-hover-);
+  resize: vertical;
+}
+/* #endregion */
 
 /* #region   Media-1156px */
 @media screen and (max-width: 1156px) {

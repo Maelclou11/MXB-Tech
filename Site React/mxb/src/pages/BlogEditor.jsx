@@ -11,10 +11,13 @@ function BlogEditor() {
     const [author, setAuthor] = useState('');
     const [isAuthor, setIsAuthor] = useState(false);
 
+    // Dans un futur fetch de la DB
     const componentsData = [
         {id: 1, name: 'Title', content: [{titre: ""}]},
-        {id: 2, name: 'Paragraphe', text: ""}
+        {id: 2, name: 'Paragraphe', content: [{texte: ""}]}
     ];
+
+    // Créer les options du dropdown
     const componentsOptions = [
         ...componentsData.map((component) => ({
             value: component.id,
@@ -22,7 +25,7 @@ function BlogEditor() {
         })),
     ];
 
-    // Lorsqu'on change la valeur du dropdown, il stock le component vide dans le state componentToAdd
+    // Lorsqu'on change la valeur du dropdown, il stock une copie du component vide dans le state componentToAdd et par la suite nous allons modifier sa valeur en le passant comme props au components associer a ce component vide, .find fait comme .map ou .filter sauf qu'il prend le premier component qui remplis la condition et non tous les elements qui la remplisse
     const handleDropdownChange = (selectedOption) => {
         const selectedComponent  = componentsData.find((component) => component.id === selectedOption.value)
         setComponentToAdd({...selectedComponent});
@@ -37,12 +40,12 @@ function BlogEditor() {
     };
 
 
-    // Prend l'id du component a delete et le supprime
+    // Prend l'id du component a delete et le supprime, prevComponents représente l'état précedent de ce state (sa brain mais en vrai c'est l'etat actuel qu'o prend et on la reset dans l'accolade comme ici sa me sert a delete le components selon l'index passer en parametre, le '.filter sert a prendre tous les components qui respecte la conditions et ne met pas ceux qui la brise donc quand l'index de l'element actuel est égale a 'indexToDelete' sa ne le met pas en ensuite sa set la valeur de mon etat components a ce nouveau tableau)
     const deleteComponent = (indexToDelete) => {
-        const tempArray = [...components];
-        tempArray.splice(indexToDelete, 1);
-        setComponents(tempArray);
-    }
+        setComponents(prevComponents => {
+          return prevComponents.filter((_, index) => index !== indexToDelete);
+        });
+      };
 
   return (
     <div className='blog'>
@@ -51,30 +54,31 @@ function BlogEditor() {
             {/* Condition qui verifie si un auteur est défini, si oui on peut creer le blog, sinon il faut entrer un auteur */}
             {isAuthor ?
             <>
-                {/* Fait le tous du tableau components qui répresentes les components qu'on crées */}
+                {/* Fait le tour du tableau components qui répresentes les components qu'on crées et fait apparaitre le bon component selon le id de l'element */}
                 {components.map((component, index) => {
                     return (
-                        <div key={index} className='component'>
+                        <div key={component.id} className='component'>
                             {component.id === 1 && <Title title={component.title} isNew={true} onDelete={() => deleteComponent(index)} author={author} date="5 Juin 2023"/>}
-                            {component.id === 2 && <Paragraphe text="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eos laboriosam sunt recusandae possimus officiis qui sequi, quos vel, rerum quisquam fuga quia placeat hic, impedit alias iusto quo quam nobis!"/>}
+                            {component.id === 2 && <Paragraphe text={component.content.text} isNew={true} onDelete={() => deleteComponent(index)}/>}
                         </div>
                     );
                 })}
 
-                {/* Vérifie si on a cliquer sur le + pour ajouter un component, si oui, afficher le dropdown */}
+                {/* Vérifie si on a cliquer sur le + pour ajouter un component, si oui, afficher le dropdown et cacher le bouton '+' */}
                 {addComponent ? 
                     <>
-                        <Dropdown options={componentsOptions} value={componentToAdd.value} onChange={handleDropdownChange} className="dropdown-components" placeholder="Sélectionner un bloc"/>
-                        <button onClick={addNewComponent}>Ajouter</button>
+                        <Dropdown options={componentsOptions} value={componentToAdd.value} onChange={handleDropdownChange} className="dropdown-components" placeholder="Sélectionner un bloc"/> {/* Du moment qu'on defini la value d'un element, on est obligé de mettre un onChange aussi sinon la valeur reste statique */}
+                        <button onClick={addNewComponent}>Ajouter</button> {/* Appelle la fonction addNewComponent qui fait une copie du component vide selectionner dans le dropdown et lui sert de valeur initial pour son component respectif */}
                     </> 
                 : 
-                    <Button icon={faPlus} onClick={() => setAddComponent(true)}/>
+                    <Button icon={faPlus} onClick={() => setAddComponent(true)}/> 
                 }
             </>
             :
                 <>
                     {/* Le 'e' dans 'onChange={(e) => setAuthor(e.target.value)}' représente l'element duquel ce code s'execute, donc ici, on setAuthor sur la valeur de l'element en fesant e.target.value */}
-                    <TextInput type="text" labelText="Qui écrit ce blog ?" placeholder="Auteur" value={author} onChange={(e) => setAuthor(e.target.value)}/>
+                    <TextInput type="text" labelText="Qui écrit ce blog ?" placeholder="Auteur" value={author} onChange={(e) => setAuthor(e.target.value)}/>    {/* Dans le onChange, tu peux mettre des fonctions sans parametre sans avoir a mettre '() => ' mais dès qu'on met des parametre (en gros dès qui a des parenthese faut mettre "() => ") et si on veux faire plusieur fonction faut mettre les fonctions dans des accolades et mettre un point virgule entre les fonctions, exemple : () => {onDelete(); setIsEditing(false)} */}
+
                     <Button text="Commencer" onClick={() => author ? setIsAuthor(true) : setIsAuthor(false)}/>
                 </>
             }
