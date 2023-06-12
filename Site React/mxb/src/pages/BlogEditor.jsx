@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Navbar, Dropdown, Paragraphe, Title, Button, TextInput, TitreH2 } from '../components/indexComponents';
+import { Navbar, Dropdown, Paragraphe, Title, Button, TextInput, TitreH2, LinkList } from '../components/indexComponents';
 import '../CSS/BlogEditor.css';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
@@ -15,7 +15,7 @@ function BlogEditor() {
     const componentsData = [
         {id: 1, name: 'TitreH2', content: [{titre: ""}]},
         {id: 2, name: 'Paragraphe', content: [{texte: ""}]},
-        {id: 3, name: 'Liste de liens', content: [{listText: [],  listLink: []}]},
+        {id: 3, name: 'Liste de liens', listText: [{text: '', link: ''}, {text: '', link: ''}]},
     ];
 
     // Créer les options du dropdown donc   1) ...componentsData fait une copie du tableau componentsData   2) .map pour faire le tour des components   3) (component) sert a identifier du nom que tu veux chaque element du tableau 4) d'habitude on mets juste des parantheses '(component) => ()' mais etant donné qu'ont creer un objet(un tableau avec des champs et des valeur), Tous les objets doivent être dans des accolades donc le tableau qu'ont créer va ressembler a sa [{value: "1", label: "Title"}, {value: "2", label: "Paragraphe"}]
@@ -64,7 +64,7 @@ function BlogEditor() {
                         <div key={component.id} className='component'>
                             {component.id === 1 && <TitreH2 title={component.content.titre} isNew={true} onDelete={() => deleteComponent(index)} />}
                             {component.id === 2 && <Paragraphe text={component.content.text} isNew={true} onDelete={() => deleteComponent(index)}/>}
-                            {component.id === 3 && <Paragraphe text={component.content.text} isNew={true} onDelete={() => deleteComponent(index)}/>}
+                            {component.id === 3 && <LinkList listText={component.listText} isNew={true} onDelete={() => deleteComponent(index)}/>}
                         </div>
                     );
                 })}

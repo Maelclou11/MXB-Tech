@@ -1,27 +1,40 @@
 import { useState } from "react";
-import { Button } from '../indexComponents';
+import { Button, TextInput } from '../indexComponents';
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
 
-function LinkList({listText, listLink, isNew, onDelete}) {
+function LinkList({listText, isNew, onDelete}) {
     const [defaultListText, setDefaultListText] = useState('');
     const [defaultListLink, setDefaultListLink] = useState('');
-    const [title, setTitle] = useState('');
     const [isEditing, setIsEditing] = useState(isNew === true);
   return (
     <div className="BlogHeader blog-components-frame">
-    {!isNew ? <h1>{title}</h1> : isEditing ? '' : 
-    <div className="blog-edit-component">
-        <h1>{defaultTitle}</h1>
-        <p className="author">{author} • <span>{date}</span></p>
+    {!isNew ? 
+    <ul>
+        {listText.map((content) => (
+            <li>
+                <a href={`#${content.link}`}>{content.text}</a>
+            </li>
+        ))}
+    </ul>
+    : isEditing ? '' : 
+    <ul className="blog-edit-component">
+        {listText.map((content, index) => (
+            <li>
+                <TextInput type="text" value={content.text} onChange={(e) => {const tempArray = [...defaultListText]; tempArray[index] = e.target.value}}/>
+                <TextInput type="text" labelText="Lien (id)" value={content.link} onChange={(e) => {const tempArray = [...defaultListLink]; tempArray[index] = e.target.value}}/>
+            </li>
+        ))}
         <Button icon={faEdit} onClick={() => setIsEditing(true)} />
-    </div>
+    </ul>
     }
     {isNew && isEditing ?  
         <div className="edit-container">
-            <label htmlFor="">
-                Titre h2 :
-                <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
-            </label>
+            {listText.map((content, index) => (
+                <>
+                    <TextInput labelText="Texte :" value={content.text} onChange={(e) => {content.text = e.target.value}} />
+                    <TextInput type="text" labelText="Lien (id) :" value={content.link} onChange={(e) => {content.link = e.target.value}} />
+                </>
+            ))}
             <div className="btn-container">
                 {onDelete ? <Button text="Supprimer" className="red white" onClick={() => {onDelete(); setIsEditing(false)}}/> : ''}
                 <Button text="Sauvegarder" className="c-main" onClick={() => setIsEditing(false)}/>
