@@ -1,10 +1,10 @@
 import React from 'react';
 import "../../CSS/components.css";
 
-function TextInput({ labelText, name, type, placeholder, value, onChange, maxLength }) {
+function TextInput({ labelText, name, type, placeholder, value, onChange, maxLength, className, readOnly, max, min }) {
 
   return (
-    <div className="text-input">
+    <div className={`text-input ${className}`}>
       <label htmlFor={name}>{labelText}</label>
       <input
         type={type}
@@ -14,6 +14,9 @@ function TextInput({ labelText, name, type, placeholder, value, onChange, maxLen
         value={value}
         onChange={onChange}
         maxLength={maxLength}
+        readOnly= {readOnly ? true : false}
+        max={max}
+        min={min}
       />
     </div>
   );

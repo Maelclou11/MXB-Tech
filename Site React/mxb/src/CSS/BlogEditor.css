@@ -5,12 +5,12 @@
 .blog-content {
   display: flex;
   flex-direction: column;
-  gap: 20px;
   align-items: center;
   background: white;
-  padding: calc(1.4rem + 3vw);
+  padding: calc(1.4rem + 3vw) calc(0.2rem + 3vw);
   border-radius: 20px;
-  margin: calc(1rem + 5vw);
+  margin: calc(0.5rem + 3vw);
+  margin-top: 100px;
 }
 .blog-content .component {
   width: 100%;
@@ -20,6 +20,7 @@
 }
 .blog-content .dropdown-components {
   width: 300px;
+  margin-bottom: 2rem;
 }
 .blog-content button {
   background: var(--secondary-color-);
@@ -56,4 +57,10 @@
 }
 .blog-content .component:hover {
   box-shadow: 0 0 5px 5px var(--secondary-color-);
+}
+.btn-add-component {
+  margin-top: 2rem;
+}
+.text-input {
+  width: auto;
 }

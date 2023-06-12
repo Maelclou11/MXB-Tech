@@ -19,5 +19,6 @@ import Paragraphe from './blogs/Paragraphe';
 import Title from './blogs/Title';
 import TitreH2 from './blogs/TitreH2';
 import LinkList from './blogs/LinkList';
+import FullImage from './blogs/FullImage';
 
-export {Navbar, StatCircle, TitleLeft, TitleSection, IconBox, StepTitle, ArrowUp, DevisGratuit, Animation, QuestionFaq, HoverImage, Dropdown,Paragraphe, Title, Button, TitreH2, TextInput, TextArea, LinkList};
+export {Navbar, StatCircle, TitleLeft, TitleSection, IconBox, StepTitle, ArrowUp, DevisGratuit, Animation, QuestionFaq, HoverImage, Dropdown,Paragraphe, Title, Button, TitreH2, TextInput, TextArea, LinkList, FullImage};

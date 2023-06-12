@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../CSS/components.css';
 import logo from '../../img/Logo.png';
 import {Button} from '../indexComponents';
 
 
-function Navbar() {
-
+function Navbar({isBlurry}) {
     const toggleMenu = () => {
         document.querySelector('.menu-hamburger').classList.toggle('is-open');
         document.querySelector('.navbar').classList.toggle('is-open');
@@ -30,7 +29,7 @@ function Navbar() {
     }, []);
 
     return (
-        <nav className="navbar">
+        <nav className={`navbar ${isBlurry ? '' : 'notBlurry'}`}>
             <a href="#accueil">
                 <img src={logo} alt="Logo MXB Tech" />
             </a>

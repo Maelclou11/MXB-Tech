@@ -1,10 +1,11 @@
 import React from 'react';
 
-function TextArea({ labelText, name, placeholder, value, onChange }) {
+const TextArea = React.forwardRef(({ labelText, name, placeholder, value, onChange }, ref) => {
   return (
     <div className="text-area">
       <label htmlFor={name}>{labelText}</label>
       <textarea
+        ref={ref}
         name={name}
         id={name}
         placeholder={placeholder}
@@ -13,6 +14,6 @@ function TextArea({ labelText, name, placeholder, value, onChange }) {
       />
     </div>
   );
-}
+});
 
 export default TextArea;

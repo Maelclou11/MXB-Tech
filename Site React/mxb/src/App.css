@@ -16,6 +16,7 @@
   --main-color-hover-: #29093d;
   --secondary-color-: #dec0fd;
   --secondary-color-hover-: #ba74ff;
+  --link-color-: #9b43ff;
   --red-: #ff4949;
   --padding-main-: calc(2rem + 5vw);
   --padding-second-: calc(6rem + 4vw);
@@ -26,10 +27,15 @@
   --font-size-1-: calc(1.4rem + 0.4vw);
   --font-size-2-: calc(1.6rem + 0.8vw);
   --font-size-3-: calc(1.7rem + 1.2vw);
-  --h1-: calc(2rem + 1.5vw);
-  --h2-: calc(2rem + 0.7vmin);
+  --h1-: calc(2rem + 2vw);
+  --h2-: calc(2rem + 1vw);
   --h3-: calc(1.6rem + 2vw);
   --delay-base: 2s;
+  --space-blue-: 1.5rem;
+  --space-pink-: calc(var(--space-blue-) * 1.62);
+  --space-red-: calc(var(--space-blue-) * 2);
+  --space-green-: calc(var(--space-blue-) * 2.52);
+  --min-width-500-: 500px;
 }
 body {
   /* background: url("./img/body-bg-2-3.webp"); */
@@ -56,6 +62,14 @@ p {
 }
 .c-main {
   color: var(--bg-main-color-);
+}
+.row {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.w-100 {
+  width: 100%;
 }
 /* #endregion */
 
@@ -1245,6 +1259,9 @@ input:-webkit-autofill:active {
 /* #endregion */
 /*#region Media-600px */
 @media screen and (max-width: 600px) {
+  :root {
+    --min-width-500-: 300px;
+  }
   .home .home-content .home--text h1 {
     max-width: 340px;
     font-size: calc(3.5rem + 3vw);

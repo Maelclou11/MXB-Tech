@@ -1,21 +1,22 @@
 import React, {useState} from 'react';
-import { Navbar, Dropdown, Paragraphe, Title, Button, TextInput, TitreH2, LinkList } from '../components/indexComponents';
+import { Navbar, Dropdown, Paragraphe, Title, Button, TextInput, TitreH2, LinkList, FullImage } from '../components/indexComponents';
 import '../CSS/BlogEditor.css';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 
 function BlogEditor() {
-    const [componentToAdd, setComponentToAdd] = useState([]); // Contient le component VIDE que l'on a selectionner dans le dropdown
+    const [componentToAdd, setComponentToAdd] = useState([null]); // Contient le component VIDE que l'on a selectionner dans le dropdown
     const [components, setComponents] = useState([]);  // Liste de tous les components créés 
     const [addComponent, setAddComponent] = useState(false);  // Bool pour savoir si on a cliqué sur le + afin d'ajouter un component  (Nécessaire pour cacher le dropdown en cliquant sur le + et inversement (pour cacher le + quand on clique sur le dropdown))
-    const [author, setAuthor] = useState('');   // Le nom de l'auteur
-    const [isAuthor, setIsAuthor] = useState(false);  // Pour faire disparaitre le form d'auteur lorsqu'on enregistre un nom
+    const [author, setAuthor] = useState('Mael');   // Le nom de l'auteur
+    const [isAuthor, setIsAuthor] = useState(true);  // Pour faire disparaitre le form d'auteur lorsqu'on enregistre un nom
 
     // Dans un futur fetch de la DB
     const componentsData = [
-        {id: 1, name: 'TitreH2', content: [{titre: ""}]},
+        {id: 1, name: 'TitreH2', content: [{titre: ""}], textId: ''},
         {id: 2, name: 'Paragraphe', content: [{texte: ""}]},
-        {id: 3, name: 'Liste de liens', listText: [{text: '', link: ''}, {text: '', link: ''}]},
+        {id: 3, name: 'Liste de liens', listText: [{text: '', link: '', children: []}]},
+        {id: 4, name: 'Grande Image', imageSrc: '', alt: '', imgHeight: '', imgWidth: ''},
     ];
 
     // Créer les options du dropdown donc   1) ...componentsData fait une copie du tableau componentsData   2) .map pour faire le tour des components   3) (component) sert a identifier du nom que tu veux chaque element du tableau 4) d'habitude on mets juste des parantheses '(component) => ()' mais etant donné qu'ont creer un objet(un tableau avec des champs et des valeur), Tous les objets doivent être dans des accolades donc le tableau qu'ont créer va ressembler a sa [{value: "1", label: "Title"}, {value: "2", label: "Paragraphe"}]
@@ -34,10 +35,14 @@ function BlogEditor() {
 
     // Fait une copie du tableau actuel de components crées, et lui ajoute le component vide qui est stocké dans componentToAdd
     const addNewComponent = () => {
+        if (componentToAdd.length > 0) {
+            return;
+        }
         const tempArray = [...components];
         tempArray.push(componentToAdd);
         setComponents(tempArray);
         setAddComponent(false);
+        setComponentToAdd([null]);
     };
 
 
@@ -49,22 +54,23 @@ function BlogEditor() {
       };
 
   return (
-    <div className='blog'>
-        <Navbar />
+    <div className='BlogEditor blog'>
+        <Navbar isBlurry={false}/>
         <div className="blog-content">
             {/* Condition qui verifie si un auteur est défini, si oui on peut creer le blog, sinon il faut entrer un auteur */}
             {isAuthor ?
             <>
                 <div className='component'>
-                    <Title isNew={true} author={author} date="5 Juin 2023"/>
+                    <Title title="Ceci est le titre principale" isNew={false} author={author} date="5 Juin 2023"/>
                 </div>
                 {/* Fait le tour du tableau components qui répresentes les components qu'on crées et fait apparaitre le bon component selon le id de l'element */}
                 {components.map((component, index) => {
                     return (
                         <div key={component.id} className='component'>
-                            {component.id === 1 && <TitreH2 title={component.content.titre} isNew={true} onDelete={() => deleteComponent(index)} />}
+                            {component.id === 1 && <TitreH2 title={component.content.titre} textId={component.textId} isNew={true} onDelete={() => deleteComponent(index)} />}
                             {component.id === 2 && <Paragraphe text={component.content.text} isNew={true} onDelete={() => deleteComponent(index)}/>}
                             {component.id === 3 && <LinkList listText={component.listText} isNew={true} onDelete={() => deleteComponent(index)}/>}
+                            {component.id === 4 && <FullImage imageSrc={component.imageSrc} altImage={component.altImage} isNew={true} onDelete={() => deleteComponent(index)}/>}
                         </div>
                     );
                 })}
@@ -76,7 +82,7 @@ function BlogEditor() {
                         <button onClick={addNewComponent}>Ajouter</button> {/* Appelle la fonction addNewComponent qui fait une copie du component vide selectionner dans le dropdown et lui sert de valeur initial pour son component respectif */}
                     </> 
                 : 
-                    <Button icon={faPlus} onClick={() => setAddComponent(true)}/> 
+                    <Button icon={faPlus} onClick={() => setAddComponent(true)} className="btn-add-component"/> 
                 }
             </>
             :
@@ -88,6 +94,7 @@ function BlogEditor() {
                     {/* cela : "author ? setIsAuthor(true) : setIsAuthor(false)" sert juste a verifier que la valeur de author n'est pas nul et si elle l'est, ne pas faire disparaitre le form en cliquant donc oblige de rentrer un nom d'auteur mais en vrai jsp si on le met genre le monde s'en batte les couilles raides de qui l'a ecrit */} 
                 </>
             }
+            {/* <Button text="Voir la liste de components" onClick={() => console.log("Components : ", components)} /> */}
         </div>
     </div>
   )

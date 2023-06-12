@@ -4,9 +4,14 @@
 }
 /* #endregion */
 /* #region  TitreH2 */
-.blog-edit-component {
+.TitreH2 h2 {
   font-size: var(--h2-);
   color: var(--main-color-);
+  font-weight: 500;
+  margin-bottom: var(--space-blue-);
+}
+.title-input input {
+  min-width: var(--min-width-500-);
 }
 /* #endregion */
 /* #region  Title */
@@ -16,7 +21,10 @@
   font-weight: 400;
   font-family: "Inter", sans-serif;
   color: var(--main-color-hover-);
-  margin-bottom: 1rem;
+  margin-bottom: var(--space-pink-);
+}
+.BlogHeader .author {
+  margin-bottom: var(--space-blue-);
 }
 .blog-components-frame {
   width: 100%;
@@ -68,6 +76,84 @@
 /* #region  Paragraphe */
 .ParagrapheBlog p {
   line-height: 190%;
+  width: 100%;
+}
+.ParagrapheBlog {
+  margin-bottom: var(--space-green-);
+}
+.ParagrapheBlog .edit-container textarea {
+  margin-bottom: 1.5rem;
+  min-height: 15rem;
+}
+.ParagrapheBlog .Paragraphe a {
+  color: var(--link-color-);
+  text-decoration: none;
+}
+.ParagrapheBlog .Paragraphe a:hover {
+  text-decoration: underline;
+}
+/* #endregion */
+/* #region  LinkList */
+.LinkList {
+  font-size: var(--font-size-1-);
+  margin-left: 2rem;
+  margin-bottom: var(--space-green-);
+}
+.LinkList li {
+  margin-bottom: 2.2rem;
+}
+.child-list li {
+  margin-bottom: 1.5rem;
+}
+.LinkList .child-list li:last-child {
+  margin-bottom: 2.2rem;
+}
+.LinkList .last-item li {
+  margin-bottom: 0;
+}
+.LinkList li a,
+.LinkList li a:visited {
+  text-decoration: none;
+  color: var(--link-color-);
+}
+.LinkList li a:hover {
+  text-decoration: underline;
+}
+.child-list {
+  margin-left: 1.7rem;
+}
+.child-list-edit {
+  margin-left: calc(5% + 3rem);
+}
+.content-row .text-input {
+  width: auto;
+}
+.add-btn-container {
+  margin-left: 1rem;
+}
+/* #endregion */
+/* #region  FullImage */
+.FullImage {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: var(--space-green-);
+}
+.FullImage img {
+  object-fit: cover;
+  width: 100%;
+}
+/* #endregion */
+
+/* #region  Général Component Blog */
+.content-row {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.edit-content {
   width: 100%;
 }
 /* #endregion */

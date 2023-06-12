@@ -1,39 +1,118 @@
 import { useState } from "react";
 import { Button, TextInput } from '../indexComponents';
-import { faEdit } from '@fortawesome/free-solid-svg-icons'
+import { faEdit, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
 
 function LinkList({listText, isNew, onDelete}) {
-    const [defaultListText, setDefaultListText] = useState('');
-    const [defaultListLink, setDefaultListLink] = useState('');
+    const [defaultList, setDefaultList] = useState([{text: '', link: '', children: []}]);
+    const emptyRow = {text: '', link: '', children: []};
+    const emptyRowChildren = {text: '', link: ''};
     const [isEditing, setIsEditing] = useState(isNew === true);
+
+    const addRow = (indexToInsert) => {
+        const tempArray = [...defaultList];
+        tempArray.splice(indexToInsert + 1, 0 , emptyRow);
+        setDefaultList(tempArray);
+    };
+    const removeRow = (indexToremove) => {
+        const tempArray = [...defaultList];
+        tempArray.splice(indexToremove, 1);
+        setDefaultList(tempArray);
+    };
+    const addChildren = (index, indexChild) => {
+        const tempArray = [...defaultList];
+        tempArray[index].children.splice(indexChild + 1, 0 ,emptyRowChildren)
+        setDefaultList(tempArray);
+    };
+    const removeChildren = (index, indexChild) => {
+        const tempArray = [...defaultList];
+        tempArray[index].children.splice(indexChild, 1)
+        setDefaultList(tempArray);
+    };
+
   return (
-    <div className="BlogHeader blog-components-frame">
+    <div className="blog-components-frame">
     {!isNew ? 
-    <ul>
-        {listText.map((content) => (
-            <li>
-                <a href={`#${content.link}`}>{content.text}</a>
-            </li>
+    /* Quand il n'est pas nouveau */
+    <ul className="LinkList">
+        {listText.map((content, index) => (
+            <div key={index} className="li">
+                <li className="main-list-item">
+                    {content.link ? <a href={`#${content.link}`}>{content.text}</a> : <p>{content.text}</p>}
+                </li>
+                {content.children.length > 0 ? 
+                    <ul className="child-list">
+                        {content.children.map((content) => (
+                            <li>
+                                {content.link ? <a href={`#${content.link}`}>{content.text}</a> : <p>{content.text}</p>}
+                            </li>
+                        ))}
+                    </ul>
+                :
+                    ""
+                }
+            </div>
         ))}
     </ul>
     : isEditing ? '' : 
-    <ul className="blog-edit-component">
-        {listText.map((content, index) => (
-            <li>
-                <TextInput type="text" value={content.text} onChange={(e) => {const tempArray = [...defaultListText]; tempArray[index] = e.target.value}}/>
-                <TextInput type="text" labelText="Lien (id)" value={content.link} onChange={(e) => {const tempArray = [...defaultListLink]; tempArray[index] = e.target.value}}/>
-            </li>
+    /* Quand il est nouveau et qu'on n'est plus en mode edit */
+    <ul className="blog-edit-component LinkList">
+        {defaultList.map((content, index) => (
+            <div key={index} className={index === defaultList.length - 1 ? 'last-item' : ''}>
+                <li>
+                    {content.link ? <a href={`#${content.link}`}>{content.text}</a> : <p>{content.text}</p>}
+                </li>
+                {content.children.length > 0 ? 
+                    <ul className="child-list">
+                        {content.children.map((content) => (
+                            <li>
+                                {content.link ? <a href={`#${content.link}`}>{content.text}</a> : <p>{content.text}</p>}
+                            </li>
+                        ))}
+                    </ul>
+                :
+                    ""
+                }
+            </div>
         ))}
         <Button icon={faEdit} onClick={() => setIsEditing(true)} />
     </ul>
     }
     {isNew && isEditing ?  
+        /* Quand il est nouveau et qu'on l'edit */
         <div className="edit-container">
-            {listText.map((content, index) => (
-                <>
-                    <TextInput labelText="Texte :" value={content.text} onChange={(e) => {content.text = e.target.value}} />
-                    <TextInput type="text" labelText="Lien (id) :" value={content.link} onChange={(e) => {content.link = e.target.value}} />
-                </>
+            {defaultList.map((content, index) => (
+                <div className="content-row" key={index}>
+                    <div className="row">
+                        <TextInput type="text" labelText="Texte :" value={content.text} onChange={(e) => {const tempArray = [...defaultList]; tempArray[index].text = e.target.value; setDefaultList(tempArray)}}/>
+                        <TextInput type="text" labelText="Lien (id) :" value={content.link} onChange={(e) => {const tempArray = [...defaultList]; tempArray[index].link = e.target.value; setDefaultList(tempArray)}}/>
+                        <div className="btn-container">
+                            <Button icon={faMinus} className="c-main" onClick={() => removeRow(index)}/>
+                            {content.children.length > 0 ? '' : <Button text="Ajouter un sous-liste" className="c-main" onClick={() => addChildren(index)}/>}
+                        </div>
+                    </div>
+                    {content.children.length > 0 ? 
+                    <ul className="child-list-edit">
+                        {content.children.map((content, indexChild) => (
+                            <li key={indexChild} className="row">
+                                <div className="row">
+                                    <TextInput type="text" labelText="Texte :" value={content.text} onChange={(e) => {const tempArray = [...defaultList]; tempArray[index].children[indexChild].text = e.target.value; setDefaultList(tempArray)}}/>
+                                    <TextInput type="text" labelText="Lien (id) :" value={content.link} onChange={(e) => {const tempArray = [...defaultList]; tempArray[index].children[indexChild].link = e.target.value; setDefaultList(tempArray)}}/>
+                                </div>
+                                <div className="btn-container">
+                                    <Button icon={faPlus} className="c-main" onClick={() => addChildren(index, indexChild)}/>
+                                    <Button icon={faMinus} className="c-main" onClick={() => removeChildren(index ,indexChild)}/>
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                    :
+                        ""
+                    }
+                    <div className="add-btn-container">
+                        <Button icon={faPlus} className="c-main" onClick={() => addRow(index)}/>
+                    </div>
+                </div>
+
             ))}
             <div className="btn-container">
                 {onDelete ? <Button text="Supprimer" className="red white" onClick={() => {onDelete(); setIsEditing(false)}}/> : ''}

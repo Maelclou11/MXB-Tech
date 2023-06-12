@@ -14,6 +14,9 @@
   /* background-color: var(--bg-main-color-); */
   backdrop-filter: blur(20px);
 }
+.navbar.sticky.notBlurry {
+  background-color: var(--bg-main-color-);
+}
 .navbar img {
   max-width: calc(10rem + 7vw);
 }
@@ -618,6 +621,7 @@
   display: flex;
   flex-direction: column;
   margin: 10px 0;
+  width: 100%;
 }
 .text-input label {
   font-size: calc(var(--p-main-) - 0.3rem);

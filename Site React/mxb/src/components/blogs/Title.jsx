@@ -10,7 +10,12 @@ function Title ({title, author, date, isNew, onDelete}) {
 
     return(
         <div className="BlogHeader blog-components-frame">
-            {!isNew ? <h1>{title}</h1> : isEditing ? '' : 
+            {!isNew ? 
+            <div className="blog-edit-component">
+                <h1>{title}</h1>
+                <p className="author">{author} • <span>{date}</span></p>
+            </div>
+            : isEditing ? '' : 
             <div className="blog-edit-component">
                 <h1>{defaultTitle}</h1>
                 <p className="author">{author} • <span>{date}</span></p>
