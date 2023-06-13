@@ -74,10 +74,12 @@ function BlogEditor() {
                         <div className='w-100'>
                         <DragDropContext onDragEnd={(param) => {
                             const srcI = param.source.index;
-                            const desI = param.destination.index; 
-                            const tempArray = [...components];
-                            tempArray.splice(desI, 0, tempArray.splice(srcI, 1)[0]);
-                            setComponents(tempArray);
+                            const desI = param.destination?.index; 
+                            if(param.destination) {
+                                const tempArray = [...components];
+                                tempArray.splice(desI, 0, tempArray.splice(srcI, 1)[0]);
+                                setComponents(tempArray);
+                            }
                           }}
                         >
                         <Droppable droppableId='droppable-1'>
@@ -91,10 +93,14 @@ function BlogEditor() {
                                             <Button icon={faBars} className="btn-move" />
                                         </div>
                                         {component.id === 1 && <TitreH2 title={component.content.titre} textId={component.content.textId} isNew={component.content.isNew} onDelete={() => deleteComponent(index)} onUpdate={updateComponent} index={index} isPreview={true}/>}
+
                                         {component.id === 2 && <TitreH3 title={component.content.titre} textId={component.content.textId} isNew={component.content.isNew} onDelete={() => deleteComponent(index)} onUpdate={updateComponent} index={index} isPreview={true}/>}
-                                        {component.id === 3 && <Paragraphe text={component.content.text} isNew={component.content.isNew} onDelete={() => deleteComponent(index)}/>}
-                                        {component.id === 4 && <LinkList listText={component.content} isNew={component.content.isNew} onDelete={() => deleteComponent(index)}/>}
-                                        {component.id === 5 && <FullImage imageSrc={component.content.imageSrc} altImage={component.content.altImage} imgHeight={component.content.imgHeight} imgWidth={component.content.imgWidth} isNew={component.content.isNew} onDelete={() => deleteComponent(index)}/>}
+
+                                        {component.id === 3 && <Paragraphe text={component.content.text} isNew={component.content.isNew} onDelete={() => deleteComponent(index)} onUpdate={updateComponent} index={index} isPreview={true}/>}
+
+                                        {component.id === 4 && <LinkList listText={component.content} isNew={component.content[0].isNew} onDelete={() => deleteComponent(index)} onUpdate={updateComponent} index={index} isPreview={true}/>}
+
+                                        {component.id === 5 && <FullImage imageSrc={component.content.imageSrc} altImage={component.content.altImage} imgHeight={component.content.imgHeight} imgWidth={component.content.imgWidth} isNew={component.content.isNew} onDelete={() => deleteComponent(index)} onUpdate={updateComponent} index={index} isPreview={true}/>}
                                     </div>
                                     )}
                                     </Draggable>
@@ -126,7 +132,7 @@ function BlogEditor() {
                     {/* cela : "author ? setIsAuthor(true) : setIsAuthor(false)" sert juste a verifier que la valeur de author n'est pas nul et si elle l'est, ne pas faire disparaitre le form en cliquant donc oblige de rentrer un nom d'auteur mais en vrai jsp si on le met genre le monde s'en batte les couilles raides de qui l'a ecrit */} 
                 </>
             }
-            {/* <Button text="Voir la liste de components" onClick={() => console.log("Components : ", components)} /> */}
+            <Button text="Voir la liste de components" onClick={() => console.log("Components : ", components)} />
         </div>
     </div>
   )

@@ -4,7 +4,7 @@ import { Button, TextArea } from '../indexComponents';
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
 import DOMPurify from 'dompurify';
 
-function Paragraphe({ text, isNew, onDelete }) {
+function Paragraphe({ text, isNew, onDelete, index, onUpdate, isPreview }) {
   const [defaultText, setDefaultText] = useState(text);
   const [isEditing, setIsEditing] = useState(isNew === true);
   const textareaRef = useRef(null);
@@ -59,17 +59,22 @@ function Paragraphe({ text, isNew, onDelete }) {
 
   return (
     <div className="ParagrapheBlog blog-components-frame">
-      {!isNew ? (
-        <p className="Paragraphe">{text}</p>
+      {!isNew && !isPreview ? (
+        <p className="Paragraphe" dangerouslySetInnerHTML={{ __html: text }} />
       ) : isEditing ? (
         ''
-      ) : (
+      ) : text ? 
         <div className="blog-edit-component">
-          <p className="Paragraphe" dangerouslySetInnerHTML={{ __html: defaultText }} />
+          <p className="Paragraphe" dangerouslySetInnerHTML={{ __html: text }} />
           <Button icon={faEdit} onClick={() => setIsEditing(true)} />
         </div>
-      )}
-      {isNew && isEditing ? (
+        :
+        <div className="blog-edit-component">
+          <p className="Paragraphe" dangerouslySetInnerHTML={{ __html: defaultText }} />
+        <Button icon={faEdit} onClick={() => setIsEditing(true)} />
+        </div>
+      }
+      {isNew || isEditing ? (
         <div className="edit-container">
             <div className="row">
                 <Button text="Mettre en gras" onClick={addBold}/>
@@ -89,7 +94,7 @@ function Paragraphe({ text, isNew, onDelete }) {
                 setIsEditing(false);
               }}
             />
-            <Button text="Sauvegarder" className="c-main" onClick={handleSave} />
+            <Button text="Sauvegarder" className="c-main" onClick={() => {handleSave(); onUpdate({text: defaultText, isNew: false}, index) }} />
           </div>
         </div>
       ) : (

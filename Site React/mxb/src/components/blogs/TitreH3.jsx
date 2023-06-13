@@ -6,7 +6,7 @@ import '../../App.css';
 
 function TitreH3 ({title, textId, isNew, onDelete, index, onUpdate, isPreview}) {
     const [defaultTitle, setDefaultTitle] = useState(title);
-    const [id, setId] = useState(null);
+    const [id, setId] = useState(textId);
     const [isEditing, setIsEditing] = useState(isNew === true);
 
     return(
@@ -14,7 +14,7 @@ function TitreH3 ({title, textId, isNew, onDelete, index, onUpdate, isPreview}) 
             {!isNew && !isPreview ? <h3 id={textId}>{title}</h3> : isEditing ? '' :
             title ?
             <div className="blog-edit-component">
-                <h3 id={id}>{title}</h3>
+                <h3 id={textId}>{title}</h3>
                 <Button icon={faEdit} onClick={() => setIsEditing(true)} />
             </div> 
             :
@@ -31,7 +31,7 @@ function TitreH3 ({title, textId, isNew, onDelete, index, onUpdate, isPreview}) 
                     </div>
                     <div className="btn-container">
                         {onDelete ? <Button text="Supprimer" className="red white" onClick={() => {onDelete(); setIsEditing(false)}}/> : ''}
-                        <Button text="Sauvegarder" className="c-main" onClick={() => {setIsEditing(false); onUpdate({titre: defaultTitle, isNew: false}, index)}}/>
+                        <Button text="Sauvegarder" className="c-main" onClick={() => {setIsEditing(false); onUpdate({titre: defaultTitle, isNew: false, textId: id}, index)}}/>
                     </div>
                 </div>
             :

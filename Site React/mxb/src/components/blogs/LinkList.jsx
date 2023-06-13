@@ -2,9 +2,9 @@ import { useState } from "react";
 import { Button, TextInput } from '../indexComponents';
 import { faEdit, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
 
-function LinkList({listText, isNew, onDelete}) {
-    const [defaultList, setDefaultList] = useState([{text: '', link: '', children: []}]);
-    const emptyRow = {text: '', link: '', children: []};
+function LinkList({listText, isNew, onDelete, index, onUpdate, isPreview}) {
+    const [defaultList, setDefaultList] = useState(listText);
+    const emptyRow = {text: '', link: '', isNew: false, children: []};
     const emptyRowChildren = {text: '', link: ''};
     const [isEditing, setIsEditing] = useState(isNew === true);
 
@@ -28,11 +28,17 @@ function LinkList({listText, isNew, onDelete}) {
         tempArray[index].children.splice(indexChild, 1)
         setDefaultList(tempArray);
     };
+    const save = () => {
+        const tempArray = [...defaultList];
+        tempArray.map((content) => {
+            content.isNew = false;
+        })
+        setDefaultList(tempArray);
+    }
 
   return (
     <div className="blog-components-frame">
-    {!isNew ? 
-    /* Quand il n'est pas nouveau */
+    {!isNew && !isPreview ? 
     <ul className="LinkList">
         {listText.map((content, index) => (
             <div key={index} className="li">
@@ -53,11 +59,10 @@ function LinkList({listText, isNew, onDelete}) {
             </div>
         ))}
     </ul>
-    : isEditing ? '' : 
-    /* Quand il est nouveau et qu'on n'est plus en mode edit */
+    : isEditing ? '' : listText ?
     <ul className="blog-edit-component LinkList">
-        {defaultList.map((content, index) => (
-            <div key={index} className={index === defaultList.length - 1 ? 'last-item' : ''}>
+        {listText.map((content, index) => (
+            <div key={index} className={index === listText.length - 1 ? 'last-item' : ''}>
                 <li>
                     {content.link ? <a href={`#${content.link}`}>{content.text}</a> : <p>{content.text}</p>}
                 </li>
@@ -76,8 +81,10 @@ function LinkList({listText, isNew, onDelete}) {
         ))}
         <Button icon={faEdit} onClick={() => setIsEditing(true)} />
     </ul>
+    :
+    ''
     }
-    {isNew && isEditing ?  
+    {isNew || isEditing ?  
         /* Quand il est nouveau et qu'on l'edit */
         <div className="edit-container">
             {defaultList.map((content, index) => (
@@ -116,7 +123,7 @@ function LinkList({listText, isNew, onDelete}) {
             ))}
             <div className="btn-container">
                 {onDelete ? <Button text="Supprimer" className="red white" onClick={() => {onDelete(); setIsEditing(false)}}/> : ''}
-                <Button text="Sauvegarder" className="c-main" onClick={() => setIsEditing(false)}/>
+                <Button text="Sauvegarder" className="c-main" onClick={() => { save(); setIsEditing(false); onUpdate(defaultList, index)}}/>
             </div>
         </div>
     :
