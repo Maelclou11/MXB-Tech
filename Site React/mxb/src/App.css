@@ -29,7 +29,7 @@
   --font-size-3-: calc(1.7rem + 1.2vw);
   --h1-: calc(2rem + 2vw);
   --h2-: calc(2rem + 1vw);
-  --h3-: calc(1.6rem + 2vw);
+  --h3-: calc(1.5rem + 1vw);
   --delay-base: 2s;
   --space-blue-: 1.5rem;
   --space-pink-: calc(var(--space-blue-) * 1.62);

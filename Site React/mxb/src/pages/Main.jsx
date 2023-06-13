@@ -165,7 +165,7 @@ function Main(){
         <Animation />
         <ScrollProgressBar height="5px" bgcolor="#420983" />
         <ArrowUp />
-        <Navbar />
+        <Navbar isBlurry={true}/>
         <main>
             <div id='accueil' className="home">
                 <div className="home-content">

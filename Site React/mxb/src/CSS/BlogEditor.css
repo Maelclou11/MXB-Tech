@@ -64,3 +64,10 @@
 .text-input {
   width: auto;
 }
+.blog-content .btn-move {
+  background-color: white;
+}
+.blog-content .btn-move:hover {
+  background-color: white;
+  cursor: grab;
+}

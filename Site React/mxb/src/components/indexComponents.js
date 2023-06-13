@@ -20,5 +20,6 @@ import Title from './blogs/Title';
 import TitreH2 from './blogs/TitreH2';
 import LinkList from './blogs/LinkList';
 import FullImage from './blogs/FullImage';
+import TitreH3 from './blogs/TitreH3'
 
-export {Navbar, StatCircle, TitleLeft, TitleSection, IconBox, StepTitle, ArrowUp, DevisGratuit, Animation, QuestionFaq, HoverImage, Dropdown,Paragraphe, Title, Button, TitreH2, TextInput, TextArea, LinkList, FullImage};
+export {Navbar, StatCircle, TitleLeft, TitleSection, IconBox, StepTitle, ArrowUp, DevisGratuit, Animation, QuestionFaq, HoverImage, Dropdown,Paragraphe, Title, Button, TitreH2, TextInput, TextArea, LinkList, FullImage, TitreH3};
