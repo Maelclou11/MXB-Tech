@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, TextInput } from '../indexComponents';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
-function FullImage({isNew, imageSrc, altImage, imgHeight, imgWidth, onDelete}) {
+function FullImage({isNew, imageSrc, altImage, imgHeight, imgWidth, onDelete, index, onUpdate, isPreview }) {
     const [imagePath, setImagePath] = useState('');
     const [defaultAltImage, setDefaultAltImage] = useState('');
     const [imageHeight, setImageHeight] = useState();
@@ -27,21 +27,27 @@ function FullImage({isNew, imageSrc, altImage, imgHeight, imgWidth, onDelete}) {
 
     const saveChange = ()  => {
         setIsEditing(false);
+        onUpdate({imageSrc: useLink ? link : imagePath, alt: defaultAltImage, imgHeight: imageHeight, imgWidth: imageWidth, isNew: false}, index);
     };
   
     return (
       <div className='blog-components-frame'>
-        {!isNew ? 
+        {!isNew && !isPreview ?
         <div className="FullImage">
             <img src={imageSrc} alt={altImage} style={{height: `${imgHeight}px`, width: `${imgWidth}%`}}/> 
         </div>
-        : isEditing ? '' : 
+        : isEditing ? '' : imageSrc ?
+            <div className="blog-edit-component FullImage">
+                <img src={imageSrc} alt={altImage} style={{height: `${imgHeight}px`, width: `${imgWidth}%`}}/>
+                <Button icon={faEdit} onClick={() => setIsEditing(true)} />
+            </div>
+            :
             <div className="blog-edit-component FullImage">
                 <img src={useLink ? link : imagePath} alt={defaultAltImage} style={{height: `${imageHeight}px`, width: `${imageWidth}%`}}/>
                 <Button icon={faEdit} onClick={() => setIsEditing(true)} />
             </div>
         }
-        {isNew && isEditing ?  
+        {isNew || isEditing ?  
         <div className='edit-container'>
             <div className="edit-content">
                 <div className="row">

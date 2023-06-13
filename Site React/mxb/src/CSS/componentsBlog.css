@@ -63,10 +63,6 @@
 }
 /* #endregion */
 /* #region  TitreH2 */
-/* .TitreH2 {
-  display: flex;
-  align-items: center;
-} */
 .TitreH2 h2 {
   font-size: var(--h2-);
   color: var(--main-color-);
@@ -159,6 +155,47 @@
 .FullImage img {
   object-fit: cover;
   width: 100%;
+}
+/* #endregion */
+/* #region  ActionCode */
+.ActionCode li {
+  margin-bottom: var(--space-pink-);
+  margin-left: calc(2rem + 2.5vw);
+  font-size: var(--font-size-1-);
+}
+.ActionCode .code {
+  margin-bottom: var(--space-red-);
+  margin-left: calc(1rem + 2vw);
+  font-size: var(--font-size-0-);
+  position: relative;
+}
+.ActionCode .code.hidden {
+  height: 20rem;
+}
+.ActionCode .code pre {
+  border-radius: 15px !important;
+}
+.ActionCode .code .btn-container {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+.ActionCode .code .btn-container .Button {
+  display: block;
+  position: relative;
+  transform: none;
+}
+.ActionCode .code .btn-container .Button button {
+  background-color: rgb(87, 87, 87);
+  color: white;
+  border-radius: 5px;
+}
+.ActionCode .code .btn-container .Button button:hover {
+  background-color: rgb(53, 53, 53);
+}
+.ActionCode #code-editor {
+  width: 100% !important;
+  font-size: var(--font-size-0-) !important;
 }
 /* #endregion */
 

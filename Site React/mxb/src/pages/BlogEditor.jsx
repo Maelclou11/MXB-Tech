@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Navbar, Dropdown, Paragraphe, Title, Button, TextInput, TitreH2, LinkList, FullImage, TitreH3 } from '../components/indexComponents';
+import { Navbar, Dropdown, Paragraphe, Title, Button, TextInput, TitreH2, LinkList, FullImage, TitreH3, ActionCode } from '../components/indexComponents';
 import '../CSS/BlogEditor.css';
 import { faPlus, faBars } from '@fortawesome/free-solid-svg-icons';
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
@@ -13,11 +13,12 @@ function BlogEditor() {
 
     // Dans un futur fetch de la DB
     const componentsData = [
-        {id: 1, name: 'TitreH2', content: {titre: "", isNew: true, textId: ''}},
-        {id: 2, name: 'TitreH3', content: {titre: "", isNew: true, textId: ''}},
+        {id: 1, name: 'Titre H2', content: {titre: "", isNew: true, textId: ''}},
+        {id: 2, name: 'Titre H3', content: {titre: "", isNew: true, textId: ''}},
         {id: 3, name: 'Paragraphe', content: {texte: "", isNew: true}},
         {id: 4, name: 'Liste de liens', content: [{text: '', link: '', isNew: true, children: []}]},
         {id: 5, name: 'Grande Image', content: {imageSrc: '', alt: '', imgHeight: '', imgWidth: '', isNew: true}},
+        {id: 6, name: 'Action Code', content: {text: '', code: '', isNew: true}},
     ];
 
     // Créer les options du dropdown donc   1) ...componentsData fait une copie du tableau componentsData   2) .map pour faire le tour des components   3) (component) sert a identifier du nom que tu veux chaque element du tableau 4) d'habitude on mets juste des parantheses '(component) => ()' mais etant donné qu'ont creer un objet(un tableau avec des champs et des valeur), Tous les objets doivent être dans des accolades donc le tableau qu'ont créer va ressembler a sa [{value: "1", label: "Title"}, {value: "2", label: "Paragraphe"}]
@@ -88,8 +89,8 @@ function BlogEditor() {
                                 {components.map((component, index) => (
                                     <Draggable key={index} draggableId={'draggable-' + index} className="test" index={index}>
                                     {(provided, snapshot) => (
-                                    <div key={index} className='component' ref={provided.innerRef} {...provided.draggableProps} style={{...provided.draggableProps.style, boxShadow: snapshot.isDragging? "0 0 .6rem #666" : "0px 0px 0px 0px rgba(161, 161, 161, 0.103)", background: snapshot.isDragging? '#fff' : ''}}>
-                                        <div  {...provided.dragHandleProps}>
+                                    <div key={index} className='component' ref={provided.innerRef} {...provided.draggableProps} style={{...provided.draggableProps.style, boxShadow: snapshot.isDragging? "0 0 .6rem #666" : "", background: snapshot.isDragging? '#fff' : ''}}>
+                                        <div  {...provided.dragHandleProps} className='btn-move-container'>
                                             <Button icon={faBars} className="btn-move" />
                                         </div>
                                         {component.id === 1 && <TitreH2 title={component.content.titre} textId={component.content.textId} isNew={component.content.isNew} onDelete={() => deleteComponent(index)} onUpdate={updateComponent} index={index} isPreview={true}/>}
@@ -101,6 +102,8 @@ function BlogEditor() {
                                         {component.id === 4 && <LinkList listText={component.content} isNew={component.content[0].isNew} onDelete={() => deleteComponent(index)} onUpdate={updateComponent} index={index} isPreview={true}/>}
 
                                         {component.id === 5 && <FullImage imageSrc={component.content.imageSrc} altImage={component.content.altImage} imgHeight={component.content.imgHeight} imgWidth={component.content.imgWidth} isNew={component.content.isNew} onDelete={() => deleteComponent(index)} onUpdate={updateComponent} index={index} isPreview={true}/>}
+
+                                        {component.id === 6 && <ActionCode text={component.content.text} code={component.content.code} language={component.content.language} isNew={component.content.isNew} onDelete={() => deleteComponent(index)} onUpdate={updateComponent} index={index} isPreview={true}/>}
                                     </div>
                                     )}
                                     </Draggable>

@@ -32,9 +32,9 @@
   --h3-: calc(1.5rem + 1vw);
   --delay-base: 2s;
   --space-blue-: 1.5rem;
-  --space-pink-: calc(var(--space-blue-) * 1.62);
-  --space-red-: calc(var(--space-blue-) * 2);
-  --space-green-: calc(var(--space-blue-) * 2.52);
+  --space-pink-: calc(var(--space-blue-) * 1.7);
+  --space-red-: calc(var(--space-blue-) * 2.2);
+  --space-green-: calc(var(--space-blue-) * 2.7);
   --min-width-500-: 500px;
 }
 body {
