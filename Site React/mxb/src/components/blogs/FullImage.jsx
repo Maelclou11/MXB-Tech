@@ -39,12 +39,12 @@ function FullImage({isNew, imageSrc, altImage, imgHeight, imgWidth, onDelete, in
         : isEditing ? '' : imageSrc ?
             <div className="blog-edit-component FullImage">
                 <img src={imageSrc} alt={altImage} style={{height: `${imgHeight}px`, width: `${imgWidth}%`}}/>
-                <Button icon={faEdit} onClick={() => setIsEditing(true)} />
+                <Button icon={faEdit} className="btn-edit-component" onClick={() => setIsEditing(true)} />
             </div>
             :
             <div className="blog-edit-component FullImage">
                 <img src={useLink ? link : imagePath} alt={defaultAltImage} style={{height: `${imageHeight}px`, width: `${imageWidth}%`}}/>
-                <Button icon={faEdit} onClick={() => setIsEditing(true)} />
+                <Button icon={faEdit} className="btn-edit-component" onClick={() => setIsEditing(true)} />
             </div>
         }
         {isNew || isEditing ?  

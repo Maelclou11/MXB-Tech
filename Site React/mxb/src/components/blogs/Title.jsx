@@ -19,7 +19,7 @@ function Title ({title, author, date, isNew, onDelete}) {
             <div className="blog-edit-component">
                 <h1>{defaultTitle}</h1>
                 <p className="author">{author} • <span>{date}</span></p>
-                <Button icon={faEdit} onClick={() => setIsEditing(true)} />
+                <Button icon={faEdit} className="btn-edit-component" onClick={() => setIsEditing(true)} />
             </div>
             }
             {isNew && isEditing ?  

@@ -66,12 +66,12 @@ function Paragraphe({ text, isNew, onDelete, index, onUpdate, isPreview }) {
       ) : text ? 
         <div className="blog-edit-component">
           <p className="Paragraphe" dangerouslySetInnerHTML={{ __html: text }} />
-          <Button icon={faEdit} onClick={() => setIsEditing(true)} />
+          <Button icon={faEdit} className="btn-edit-component" onClick={() => setIsEditing(true)} />
         </div>
         :
         <div className="blog-edit-component">
           <p className="Paragraphe" dangerouslySetInnerHTML={{ __html: defaultText }} />
-        <Button icon={faEdit} onClick={() => setIsEditing(true)} />
+        <Button icon={faEdit} className="btn-edit-component" onClick={() => setIsEditing(true)} />
         </div>
       }
       {isNew || isEditing ? (

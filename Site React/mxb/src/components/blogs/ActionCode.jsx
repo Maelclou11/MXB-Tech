@@ -7,24 +7,25 @@ import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import Editor from "@monaco-editor/react";
 
 function ActionCode({text, code, language, isNew, onDelete, index, onUpdate, isPreview}) {
-    const [defaultText, setDefaultText] = useState('');
-    const [defaultCode, setDefaultCode] = useState('');
+    const [defaultText, setDefaultText] = useState(text);
+    const [defaultCode, setDefaultCode] = useState(code);
     const [isEditing, setIsEditing] = useState(isNew === true);
-    const [defaultLanguage, setDefaultLanguage] = useState('');
+    const [defaultLanguage, setDefaultLanguage] = useState(language);
     const [isShow, setIsShow] = useState(true);
+    const [copyBtnText, setCopyBtnText] = useState('Copier');
     
     const LanguageOptions = [
-        {value: 'jsx', label: 'React / jsx'},
-        {value: 'html', label: 'html'},
-        {value: 'css', label: 'css'},
-        {value: 'javascript', label: 'javascript'},
-        {value: 'bash', label: 'bash/shell'},
-        {value: 'powershell', label: 'powershell'},
+        {value: 'jsx', label: 'React'},
+        {value: 'javascript', label: 'Javascript'},
+        {value: 'html', label: 'HTML'},
+        {value: 'css', label: 'CSS'},
+        {value: 'powershell', label: 'Powershell'},
+        {value: 'json', label: 'Json'},
+        {value: 'bash', label: 'Bash/Shell'},
         {value: 'sql', label: 'sql'},
-        {value: 'json', label: 'json'},
-        {value: 'csharp', label: 'csharp'},
+        {value: 'csharp', label: 'C#'},
         {value: 'php', label: 'php'},
-        {value: 'markdown', label: 'markdown'},
+        {value: 'cpp', label: 'C++'},
         {value: 'java', label: 'java'},
         {value: 'python', label: 'python'},
         {value: 'sass', label: 'sass'},
@@ -43,6 +44,12 @@ function ActionCode({text, code, language, isNew, onDelete, index, onUpdate, isP
         .catch((error) => {
             console.error('Failed to copy code:', error);
         });
+
+        setCopyBtnText("Copié !");
+        setTimeout(() => {
+            setCopyBtnText("Copier");
+        }, 1200);
+
     }
 
     const onChange = (newValue) => {
@@ -58,11 +65,17 @@ function ActionCode({text, code, language, isNew, onDelete, index, onUpdate, isP
                         {text}
                     </li>
                 </ul>
-                <div className="code">
+                <div className={`code ${isShow ? '' : 'close'}`}>
                     <SyntaxHighlighter language={language} style={atomDark}>
                         {code}
                     </SyntaxHighlighter>
-                    <Button text="copier" className="btn-copy" onClick={() => handleCopy(code)}/>
+                    <div className="row btn-container">
+                        <Button text={copyBtnText} className="btn-copy" onClick={() => handleCopy(code)}/>
+                        <Button icon={isShow ? faMinus : faPlus} className="" onClick={() => setIsShow(!isShow)} />
+                    </div>
+                    <div className="see-more-btn">
+                        {isShow ? '' : <Button icon={faPlus} text="Tout voir " className="see-more-bottom" onClick={() => setIsShow(!isShow)} />}
+                    </div>
                 </div>
             </div>
         : 
@@ -74,16 +87,19 @@ function ActionCode({text, code, language, isNew, onDelete, index, onUpdate, isP
                         {text}
                     </li>
                 </ul>
-                <div className={`code ${isShow ? '' : 'hidden'}`}>
+                <div className={`code ${isShow ? '' : 'close'}`}>
                     <SyntaxHighlighter language={language} style={atomDark}>
                         {code}
                     </SyntaxHighlighter>
                     <div className="row btn-container">
-                        <Button text="Copier" className="" onClick={() => handleCopy(code)}/>
+                        <Button text={copyBtnText} className="" onClick={() => handleCopy(code)}/>
                         <Button icon={isShow ? faMinus : faPlus} className="" onClick={() => setIsShow(!isShow)} />
                     </div>
+                    <div className="see-more-btn">
+                        {isShow ? '' : <Button icon={faPlus} text="Tout voir " className="see-more-bottom" onClick={() => setIsShow(!isShow)} />}
+                    </div>
                 </div>
-                <Button icon={faEdit} onClick={() => setIsEditing(true)} />
+                <Button icon={faEdit} className="btn-edit-component" onClick={() => setIsEditing(true)} />
             </div>
         :
             <div className="blog-edit-component">
@@ -92,16 +108,19 @@ function ActionCode({text, code, language, isNew, onDelete, index, onUpdate, isP
                         {defaultText}
                     </li>
                 </ul>
-                <div className={`code ${isShow ? '' : 'hidden'}`}>
+                <div className={`code ${isShow ? '' : 'close'}`}>
                     <SyntaxHighlighter language={defaultLanguage.value} style={atomDark}>
                         {defaultCode}
                     </SyntaxHighlighter>
                     <div className="row btn-container">
-                        <Button text="copier" className="" onClick={() => handleCopy(defaultCode)}/>
+                        <Button text={copyBtnText} className="" onClick={() => handleCopy(defaultCode)}/>
                         <Button icon={isShow ? faMinus : faPlus} className="" onClick={() => setIsShow(!isShow)} />
                     </div>
+                    <div className="see-more-btn">
+                        {isShow ? '' : <Button icon={faPlus} text="Tout voir " className="see-more-bottom" onClick={() => setIsShow(!isShow)} />}
+                    </div>
                 </div>
-                <Button icon={faEdit} onClick={() => setIsEditing(true)} />
+                <Button icon={faEdit} className="btn-edit-component" onClick={() => setIsEditing(true)} />
             </div>
         }
         {isNew || isEditing ?  
@@ -114,7 +133,7 @@ function ActionCode({text, code, language, isNew, onDelete, index, onUpdate, isP
                             height="60vh"
                             width="100%"
                             theme="vs-dark"
-                            defaultLanguage="javascript"
+                            defaultLanguage={defaultLanguage.value === 'jsx' ? 'javascript' : defaultLanguage.value}
                             value={defaultCode}
                             onChange={onChange}
                         />

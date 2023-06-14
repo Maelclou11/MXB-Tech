@@ -15,12 +15,12 @@ function TitreH2 ({title, textId, isNew, onDelete, index, onUpdate, isPreview}) 
             title ?
             <div className="blog-edit-component">
                 <h2 id={textId}>{title}</h2>
-                <Button icon={faEdit} onClick={() => setIsEditing(true)} />
+                <Button icon={faEdit} className="btn-edit-component" onClick={() => setIsEditing(true)} />
             </div>
             :
             <div className="blog-edit-component">
                 <h2 id={id}>{defaultTitle}</h2>
-                <Button icon={faEdit} onClick={() => setIsEditing(true)} />
+                <Button icon={faEdit} className="btn-edit-component" onClick={() => setIsEditing(true)} />
             </div>
             }
             {isNew || isEditing ?  

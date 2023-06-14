@@ -79,7 +79,7 @@ function LinkList({listText, isNew, onDelete, index, onUpdate, isPreview}) {
                 }
             </div>
         ))}
-        <Button icon={faEdit} onClick={() => setIsEditing(true)} />
+        <Button icon={faEdit} className="btn-edit-component" onClick={() => setIsEditing(true)} />
     </ul>
     :
     ''
