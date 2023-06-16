@@ -59,7 +59,7 @@ function LinkList({listText, isNew, onDelete, index, onUpdate, isPreview}) {
             </div>
         ))}
     </ul>
-    : isEditing ? '' : listText ?
+    : isEditing ? '' : listText.length > 1 ?
     <ul className="blog-edit-component LinkList">
         {listText.map((content, index) => (
             <div key={index} className={index === listText.length - 1 ? 'last-item' : ''}>

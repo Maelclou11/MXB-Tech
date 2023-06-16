@@ -1,25 +1,35 @@
 import React, {useState} from 'react';
-import { Navbar, Dropdown, Paragraphe, Title, Button, TextInput, TitreH2, LinkList, FullImage, TitreH3, ActionCode, ActionImage } from '../components/indexComponents';
+import { Navbar, Dropdown, Paragraphe, Title, Button, TextInput, TitreH2, LinkList, FullImage, TitreH3, ActionCode, ActionImage, TextArea } from '../components/indexComponents';
 import '../CSS/BlogEditor.css';
 import { faPlus, faBars } from '@fortawesome/free-solid-svg-icons';
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import axios from "axios";
+import TitreH4 from '../components/blogs/TitreH4';
 
 function BlogEditor() {
     const [componentToAdd, setComponentToAdd] = useState([null]); // Contient le component VIDE que l'on a selectionner dans le dropdown
     const [components, setComponents] = useState([]);  // Liste de tous les components créés 
     const [addComponent, setAddComponent] = useState(false);  // Bool pour savoir si on a cliqué sur le + afin d'ajouter un component  (Nécessaire pour cacher le dropdown en cliquant sur le + et inversement (pour cacher le + quand on clique sur le dropdown))
-    const [author, setAuthor] = useState('Mael');   // Le nom de l'auteur
-    const [isAuthor, setIsAuthor] = useState(true);  // Pour faire disparaitre le form d'auteur lorsqu'on enregistre un nom
+    const [author, setAuthor] = useState('');   // Le nom de l'auteur
+    const [isAuthor, setIsAuthor] = useState(false);  // Pour faire disparaitre le form d'auteur lorsqu'on enregistre un nom
+    const [title, setTitle] = useState();
+    const [date, setDate] = useState('');
+    const [description, setDescription] = useState('');
+    const [isEditingDescription, setIsEditingDescription] = useState(false);
+    const [image, setImage] = useState();
+    const [altImage, setAltImage] = useState('');
+    const [blogId, setBlogId] = useState('');
 
     // Dans un futur fetch de la DB
     const componentsData = [
         {id: 1, name: 'Titre H2', content: {titre: "", isNew: true, textId: ''}},
         {id: 2, name: 'Titre H3', content: {titre: "", isNew: true, textId: ''}},
         {id: 3, name: 'Paragraphe', content: {texte: "", isNew: true}},
-        {id: 4, name: 'Liste de liens', content: [{text: '', link: '', isNew: true, children: []}]},
+        {id: 4, name: 'Liste de liens', content: [{text: '', link: '', isNew: true, children: []}, {text: '', link: '', children: []}]},
         {id: 5, name: 'Grande Image', content: {imageSrc: '', alt: '', imgHeight: '', imgWidth: '', isNew: true}},
         {id: 6, name: 'Action Code', content: {text: '', code: '', isNew: true}},
         {id: 7, name: 'Action Image', content: {text: '', imageSrc: '', alt: '', imgHeight: '', imgWidth: '', isNew: true}},
+        {id: 8, name: 'Titre H4', content: {titre: "", isNew: true, textId: ''}},
     ];
 
     // Créer les options du dropdown donc   1) ...componentsData fait une copie du tableau componentsData   2) .map pour faire le tour des components   3) (component) sert a identifier du nom que tu veux chaque element du tableau 4) d'habitude on mets juste des parantheses '(component) => ()' mais etant donné qu'ont creer un objet(un tableau avec des champs et des valeur), Tous les objets doivent être dans des accolades donc le tableau qu'ont créer va ressembler a sa [{value: "1", label: "Title"}, {value: "2", label: "Paragraphe"}]
@@ -44,6 +54,7 @@ function BlogEditor() {
         const tempArray = [...components];
         tempArray.push(componentToAdd);
         setComponents(tempArray);
+
         setAddComponent(false);
         setComponentToAdd([null]);
     };
@@ -60,17 +71,71 @@ function BlogEditor() {
         const tempArray = [...components];
         tempArray[index].content = value;
         setComponents(tempArray);
+
+        const newComponent = tempArray[index];
+        axios.put("http://localhost:3308/blog/update", newComponent).then((response) => {
+            console.log(response.data);
+        })
+        .catch((error) => {
+            console.error(error);
+        })
     };
+
+    const saveComponent = async (indexComponents) => {
+        const component = components[indexComponents];
+        axios.post("http://localhost:3308/blog/save-component", component).then((response) => {
+            console.log(response.data);
+        })
+        .catch((error) => {
+            console.error(error);
+          });
+    }
+
+    const createBlog = async () => {
+        const options = { day: 'numeric', month: 'long', year: 'numeric' };
+        const formatter = new Intl.DateTimeFormat('fr-FR', options);
+        const today = new Date();
+        setDate(formatter.format(today));
+        setIsAuthor(true);
+        console.log(author);
+        axios.post("http://localhost:3308/blog/new", {
+            title: title,
+            author: author,
+        }).then((response) => {
+            console.log("supposé recevoir le id : ", response.data.id);
+            setBlogId(response.data.id);
+        }).catch((error) => {
+            console.error(error);
+        })
+    };
+
+    const updateBlog = async () => {
+        axios.put(`http://localhost:3308/blog/save/${blogId}`, {
+            title: title,
+            description: description,
+            image: image,
+            alt_image: altImage,
+        }).then((response) => {
+            console.log(response.data);
+        }).catch((error) => {
+            console.error(error);
+        })
+    }
+
+    const saveImageInfo = (image, alt) => {
+        setImage(image);
+        setAltImage(alt)
+    };
+
 
   return (
     <div className='BlogEditor blog'>
         <Navbar isBlurry={false}/>
         <div className="blog-content">
-            {/* Condition qui verifie si un auteur est défini, si oui on peut creer le blog, sinon il faut entrer un auteur */}
             {isAuthor ?
             <>
                 <div className='component'>
-                    <Title title="Ceci est le titre principale" isNew={false} author={author} date="5 Juin 2023"/>
+                    <Title title={title} isNew={true} author={author} date={date} onSave={setTitle}/>
                 </div>
                 {/* Fait le tour du tableau components qui répresentes les components qu'on crées et fait apparaitre le bon component selon le id de l'element */}
                         <div className='w-100'>
@@ -94,7 +159,7 @@ function BlogEditor() {
                                         <div  {...provided.dragHandleProps} className='btn-move-container'>
                                             <Button icon={faBars} className="btn-move" />
                                         </div>
-                                        {component.id === 1 && <TitreH2 title={component.content.titre} textId={component.content.textId} isNew={component.content.isNew} onDelete={() => deleteComponent(index)} onUpdate={updateComponent} index={index} isPreview={true}/>}
+                                        {component.id === 1 && <TitreH2 title={component.content.titre} textId={component.content.textId} isNew={component.content.isNew} onDelete={() => deleteComponent(index)} onUpdate={updateComponent} index={index} isPreview={true} onSave={saveComponent} /> }
 
                                         {component.id === 2 && <TitreH3 title={component.content.titre} textId={component.content.textId} isNew={component.content.isNew} onDelete={() => deleteComponent(index)} onUpdate={updateComponent} index={index} isPreview={true}/>}
 
@@ -128,17 +193,31 @@ function BlogEditor() {
                 : 
                     <Button icon={faPlus} onClick={() => setAddComponent(true)} className="btn-add-component"/> 
                 }
+
+                {isEditingDescription ? 
+                    <>
+                        <TextArea value={description} labelText="Description (texte affiché sur les cartes blogs)" onChange={(e) => setDescription(e.target.value)}/>
+                        <FullImage imageSrc={image} altImage={altImage} isNew={true} onUpdate={saveImageInfo} isPreview={true} resizePossible={false} imgHeight={300} imgWidth={50} />
+                        <div className="row">
+                            <Button text="Annuler" className="save-btn" onClick={() => setIsEditingDescription(false)}/>
+                            <Button text="Enregistrer le blog" className="save-btn" onClick={updateBlog} />
+                        </div>
+                    </>
+                :
+                    <Button text={description ? 'Modifier les infos' : 'Ajouter les informations de la carte du blog'} onClick={() =>  setIsEditingDescription(true)} className="save-btn"/>
+                }
             </>
             :
                 <>
                     {/* Le 'e' dans 'onChange={(e) => setAuthor(e.target.value)}' représente l'element duquel ce code s'execute, donc ici, on setAuthor sur la valeur de l'element en fesant e.target.value */}
                     <TextInput type="text" labelText="Qui écrit ce blog ?" placeholder="Auteur" value={author} onChange={(e) => setAuthor(e.target.value)}/>    {/* Dans le onChange, tu peux mettre des fonctions sans parametre sans avoir a mettre '() => ' mais dès qu'on met des parametre (en gros dès qui a des parenthese faut mettre "() => ") et si on veux faire plusieur fonction faut mettre les fonctions dans des accolades et mettre un point virgule entre les fonctions, exemple : () => {onDelete(); setIsEditing(false)} */}
 
-                    <Button text="Commencer" onClick={() => author ? setIsAuthor(true) : setIsAuthor(false)}/>
+                    <TextInput type="text" labelText="Titre du blog" value={title} onChange={(e) => setTitle(e.target.value)}/>
+
+                    <Button text="Commencer" onClick={author && title ? createBlog : ''}/>
                     {/* cela : "author ? setIsAuthor(true) : setIsAuthor(false)" sert juste a verifier que la valeur de author n'est pas nul et si elle l'est, ne pas faire disparaitre le form en cliquant donc oblige de rentrer un nom d'auteur mais en vrai jsp si on le met genre le monde s'en batte les couilles raides de qui l'a ecrit */} 
                 </>
             }
-            <Button text="Voir la liste de components" onClick={() => console.log("Components : ", components)} />
         </div>
     </div>
   )

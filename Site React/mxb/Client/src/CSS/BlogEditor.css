@@ -79,3 +79,6 @@
   left: -50px;
   transform: translateY(-50%);
 }
+.blog-content .save-btn {
+  margin-top: 2rem;
+}

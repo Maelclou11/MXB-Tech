@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { Button, TextInput } from '../indexComponents';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
-function FullImage({isNew, imageSrc, altImage, imgHeight, imgWidth, onDelete, index, onUpdate, isPreview }) {
-    const [imagePath, setImagePath] = useState('');
-    const [defaultAltImage, setDefaultAltImage] = useState('');
-    const [imageHeight, setImageHeight] = useState();
-    const [imageWidth, setImageWidth] = useState();
+function FullImage({isNew, imageSrc, altImage, imgHeight, imgWidth, onDelete, index, onUpdate, isPreview, resizePossible }) {
+    const [imagePath, setImagePath] = useState(imageSrc);
+    const [defaultAltImage, setDefaultAltImage] = useState(altImage);
+    const [imageHeight, setImageHeight] = useState(imgHeight);
+    const [imageWidth, setImageWidth] = useState(imgWidth);
     const [isEditing, setIsEditing] = useState(isNew === true);
     const [resize, setResize] = useState(false);
     const [useLink, setUseLink] = useState(false);
@@ -27,7 +27,12 @@ function FullImage({isNew, imageSrc, altImage, imgHeight, imgWidth, onDelete, in
 
     const saveChange = ()  => {
         setIsEditing(false);
-        onUpdate({imageSrc: useLink ? link : imagePath, alt: defaultAltImage, imgHeight: imageHeight, imgWidth: imageWidth, isNew: false}, index);
+        if(!resizePossible) {
+            onUpdate(imagePath, defaultAltImage);
+            console.log(imagePath, defaultAltImage);
+        } else if (resizePossible === undefined) {
+            onUpdate({imageSrc: useLink ? link : imagePath, alt: defaultAltImage, imgHeight: imageHeight, imgWidth: imageWidth, isNew: false}, index);
+        }
     };
   
     return (
@@ -47,7 +52,7 @@ function FullImage({isNew, imageSrc, altImage, imgHeight, imgWidth, onDelete, in
                 <Button icon={faEdit} className="btn-edit-component" onClick={() => setIsEditing(true)} />
             </div>
         }
-        {isNew || isEditing ?  
+        {isNew && isEditing ?  
         <div className='edit-container'>
             <div className="edit-content">
                 <div className="row">
@@ -59,19 +64,25 @@ function FullImage({isNew, imageSrc, altImage, imgHeight, imgWidth, onDelete, in
                     <TextInput labelText="Alt de l'image :" type="text" value={defaultAltImage} onChange={(e) => setDefaultAltImage(e.target.value)}/>
                     <Button text={useLink ? 'Uploader une image' : 'Utiliser un lien comme source'} onClick={() => setUseLink(!useLink)} />
                 </div>
-                {resize ? 
-                <>
-                    <div className="row">
-                        <TextInput labelText="Hauteur de l'image :" type="range" value={imageHeight} onChange={(e) => setImageHeight(e.target.value)} max="500" min="0"/>
-                        <TextInput value={imageHeight + 'px'} readOnly={true}/>
-                    </div>
-                    <div className="row">
-                        <TextInput labelText="Largeur de l'image :" type="range" value={imageWidth} onChange={(e) => setImageWidth(e.target.value)} max="100" min="0"/>
-                        <TextInput value={imageWidth + '%'} readOnly={true}/>
-                    </div>
-                </>
+                {resizePossible === false ? 
+                    ''
                 :
-                    <Button text="Redimensioner l'image" onClick={() => setResize(true)} />
+                    <>
+                        {resize ? 
+                        <>
+                            <div className="row">
+                                <TextInput labelText="Hauteur de l'image :" type="range" value={imageHeight} onChange={(e) => setImageHeight(e.target.value)} max="500" min="0"/>
+                                <TextInput value={imageHeight + 'px'} readOnly={true}/>
+                            </div>
+                            <div className="row">
+                                <TextInput labelText="Largeur de l'image :" type="range" value={imageWidth} onChange={(e) => setImageWidth(e.target.value)} max="100" min="0"/>
+                                <TextInput value={imageWidth + '%'} readOnly={true}/>
+                            </div>
+                        </>
+                        :
+                            <Button text="Redimensioner l'image" onClick={() => setResize(true)} />
+                        }
+                    </>
                 }
 
                 {imagePath || link ? 

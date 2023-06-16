@@ -144,7 +144,7 @@ function ActionCode({text, code, language, isNew, onDelete, index, onUpdate, isP
                     </div>
                 </div>
                 :
-                <Dropdown options={LanguageOptions} value={defaultLanguage.value} onChange={handleDropdownChange} placeholder="Sélectionner le language" />
+                <Dropdown options={LanguageOptions} value={defaultLanguage} onChange={handleDropdownChange} placeholder="Sélectionner le language" />
                 }
             </>
         :
