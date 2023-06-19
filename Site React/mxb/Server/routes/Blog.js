@@ -23,15 +23,16 @@ const upload = multer({ storage: storage });
 // Route pour sauvegarder un component dans la base de données
 router.post("/save-component", async (req, res) => {
     try {
-        const component = req.body;
+        const { component, blogId } = req.body;
 
-        await Blog_Components.create({
+        const newComponent = await Blog_Components.create({
             name: component.name,
-            componentId: component.id,
-            content: JSON.stringify(component.content)
+            componentId: component.componentId,
+            content: JSON.stringify(component.content),
+            blogId: blogId,
         });
 
-        res.status(200).json(component);
+        res.status(200).json(newComponent.id);
     } catch (error) {
         res.status(500).json({ error: 'Une erreur est survenue. Veuillez réessayer plus tard.' });
         console.error(error);
@@ -56,9 +57,10 @@ router.get("/get-component/:id", async (req, res) => {
 router.put("/update", async (req, res) => {
     try {
         const { component } = req.body;
+        console.log("QUECE QUI SPQ+AASAAAAAAAAAAAA",component);
         const componentToUpdate = await Blog_Components.findByPk(component.id);
 
-        componentToUpdate.content = component.content;
+        componentToUpdate.content = JSON.stringify(component.content);
 
         await componentToUpdate.save();
         res.status(200).json(componentToUpdate);
@@ -104,7 +106,7 @@ router.post('/new', async (req,res) => {
 
 router.put('/save/:blogId', upload.single('image'), async (req, res) => {
     try {
-        const { title, description, alt_image, public } = req.body;
+        const { title, description, alt_image, public, url } = req.body;
         const { blogId } = req.params;
         /* const imagePath = req.file.path; */
 
@@ -117,6 +119,8 @@ router.put('/save/:blogId', upload.single('image'), async (req, res) => {
         blogToUpdate.description = description;
         blogToUpdate.alt_image = alt_image;
         public ? blogToUpdate.public = public : '';
+        blogToUpdate.url = url;
+        
         if (req.file) {
             console.log("LOOOOOOOOOOL");
             const imagePath = path.resolve(__dirname, '../images_blogs', req.file.filename);
@@ -132,6 +136,18 @@ router.put('/save/:blogId', upload.single('image'), async (req, res) => {
         console.error(error);
     }
 });
+
+router.get('/blog', async (req, res) => {
+  try{
+    const blogs = await Blogs.findAll({
+    })
+    res.status(200).json(blogs);
+  }
+  catch (error) {
+    res.status(500).json({ error: "Une erreur est survenue. Veuillez réessayer plus tard."});
+    console.error(error);
+  }
+})
 
 /* #endregion */
 

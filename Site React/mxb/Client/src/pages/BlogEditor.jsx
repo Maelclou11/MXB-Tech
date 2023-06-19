@@ -4,45 +4,45 @@ import '../CSS/BlogEditor.css';
 import { faPlus, faBars } from '@fortawesome/free-solid-svg-icons';
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import axios from "axios";
-import TitreH4 from '../components/blogs/TitreH4';
 
 function BlogEditor() {
     const [componentToAdd, setComponentToAdd] = useState([null]); // Contient le component VIDE que l'on a selectionner dans le dropdown
-    const [components, setComponents] = useState([]);  // Liste de tous les components créés 
+    const [components, setComponents] = useState([]);  // Liste de tous les components créés
     const [addComponent, setAddComponent] = useState(false);  // Bool pour savoir si on a cliqué sur le + afin d'ajouter un component  (Nécessaire pour cacher le dropdown en cliquant sur le + et inversement (pour cacher le + quand on clique sur le dropdown))
     const [author, setAuthor] = useState('');   // Le nom de l'auteur
     const [isAuthor, setIsAuthor] = useState(false);  // Pour faire disparaitre le form d'auteur lorsqu'on enregistre un nom
-    const [title, setTitle] = useState();
+    const [title, setTitle] = useState('');
     const [date, setDate] = useState('');
     const [description, setDescription] = useState('');
     const [isEditingDescription, setIsEditingDescription] = useState(false);
     const [image, setImage] = useState();
     const [altImage, setAltImage] = useState('');
     const [blogId, setBlogId] = useState('');
+    const [url, setUrl] = useState('');
 
     // Dans un futur fetch de la DB
     const componentsData = [
-        {id: 1, name: 'Titre H2', content: {titre: "", isNew: true, textId: ''}},
-        {id: 2, name: 'Titre H3', content: {titre: "", isNew: true, textId: ''}},
-        {id: 3, name: 'Paragraphe', content: {texte: "", isNew: true}},
-        {id: 4, name: 'Liste de liens', content: [{text: '', link: '', isNew: true, children: []}, {text: '', link: '', children: []}]},
-        {id: 5, name: 'Grande Image', content: {imageSrc: '', alt: '', imgHeight: '', imgWidth: '', isNew: true}},
-        {id: 6, name: 'Action Code', content: {text: '', code: '', isNew: true}},
-        {id: 7, name: 'Action Image', content: {text: '', imageSrc: '', alt: '', imgHeight: '', imgWidth: '', isNew: true}},
-        {id: 8, name: 'Titre H4', content: {titre: "", isNew: true, textId: ''}},
+        {componentId: 1, name: 'Titre H2', content: {titre: "", isNew: true, textId: ''}},
+        {componentId: 2, name: 'Titre H3', content: {titre: "", isNew: true, textId: ''}},
+        {componentId: 3, name: 'Paragraphe', content: {texte: "", isNew: true}},
+        {componentId: 4, name: 'Liste de liens', content: [{text: '', link: '', isNew: true, children: []}, {text: '', link: '', children: []}]},
+        {componentId: 5, name: 'Grande Image', content: {imageSrc: '', alt: '', imgHeight: '', imgWidth: '', isNew: true}},
+        {componentId: 6, name: 'Action Code', content: {text: '', code: '', isNew: true}},
+        {componentId: 7, name: 'Action Image', content: {text: '', imageSrc: '', alt: '', imgHeight: '', imgWidth: '', isNew: true}},
+        {componentId: 8, name: 'Titre H4', content: {titre: "", isNew: true, textId: ''}},
     ];
 
     // Créer les options du dropdown donc   1) ...componentsData fait une copie du tableau componentsData   2) .map pour faire le tour des components   3) (component) sert a identifier du nom que tu veux chaque element du tableau 4) d'habitude on mets juste des parantheses '(component) => ()' mais etant donné qu'ont creer un objet(un tableau avec des champs et des valeur), Tous les objets doivent être dans des accolades donc le tableau qu'ont créer va ressembler a sa [{value: "1", label: "Title"}, {value: "2", label: "Paragraphe"}]
     const componentsOptions = [
         ...componentsData.map((component) => ({
-            value: component.id,
+            value: component.componentId,
             label: component.name
         })),
     ];
 
     // Lorsqu'on change la valeur du dropdown, il stock une copie du component vide dans le state componentToAdd et par la suite nous allons modifier sa valeur en le passant comme props au components associer a ce component vide, .find fait comme .map ou .filter sauf qu'il prend le premier component qui remplis la condition et non tous les elements qui la remplisse
     const handleDropdownChange = (selectedOption) => {
-        const selectedComponent  = componentsData.find((component) => component.id === selectedOption.value)
+        const selectedComponent  = componentsData.find((component) => component.componentId === selectedOption.value)
         setComponentToAdd({...selectedComponent});
     };
 
@@ -54,6 +54,7 @@ function BlogEditor() {
         const tempArray = [...components];
         tempArray.push(componentToAdd);
         setComponents(tempArray);
+        createComponent(componentToAdd);
 
         setAddComponent(false);
         setComponentToAdd([null]);
@@ -72,8 +73,8 @@ function BlogEditor() {
         tempArray[index].content = value;
         setComponents(tempArray);
 
-        const newComponent = tempArray[index];
-        axios.put("http://localhost:3308/blog/update", newComponent).then((response) => {
+        const component = tempArray[index];
+        axios.put("http://localhost:3308/blog/update", {component}).then((response) => {
             console.log(response.data);
         })
         .catch((error) => {
@@ -81,10 +82,18 @@ function BlogEditor() {
         })
     };
 
-    const saveComponent = async (indexComponents) => {
-        const component = components[indexComponents];
-        axios.post("http://localhost:3308/blog/save-component", component).then((response) => {
+    const createComponent = async (componentToAdd) => {
+        const component = componentToAdd;
+        axios.post("http://localhost:3308/blog/save-component", {component, blogId}).then((response) => {
             console.log(response.data);
+            setComponents(prevComponents => {
+                return prevComponents.map((component, index) => {
+                  if (index === prevComponents.length - 1) {
+                    return { ...component, id: response.data };
+                  }
+                  return component;
+                });
+              });
         })
         .catch((error) => {
             console.error(error);
@@ -102,7 +111,6 @@ function BlogEditor() {
             title: title,
             author: author,
         }).then((response) => {
-            console.log("supposé recevoir le id : ", response.data.id);
             setBlogId(response.data.id);
         }).catch((error) => {
             console.error(error);
@@ -115,6 +123,7 @@ function BlogEditor() {
             description: description,
             image: image,
             alt_image: altImage,
+            url: url,
         }).then((response) => {
             console.log(response.data);
         }).catch((error) => {
@@ -159,19 +168,19 @@ function BlogEditor() {
                                         <div  {...provided.dragHandleProps} className='btn-move-container'>
                                             <Button icon={faBars} className="btn-move" />
                                         </div>
-                                        {component.id === 1 && <TitreH2 title={component.content.titre} textId={component.content.textId} isNew={component.content.isNew} onDelete={() => deleteComponent(index)} onUpdate={updateComponent} index={index} isPreview={true} onSave={saveComponent} /> }
+                                        {component.componentId === 1 && <TitreH2 title={component.content.titre} textId={component.content.textId} isNew={component.content.isNew} onDelete={() => deleteComponent(index)} onUpdate={updateComponent} index={index} isPreview={true} /> }
 
-                                        {component.id === 2 && <TitreH3 title={component.content.titre} textId={component.content.textId} isNew={component.content.isNew} onDelete={() => deleteComponent(index)} onUpdate={updateComponent} index={index} isPreview={true}/>}
+                                        {component.componentId === 2 && <TitreH3 title={component.content.titre} textId={component.content.textId} isNew={component.content.isNew} onDelete={() => deleteComponent(index)} onUpdate={updateComponent} index={index} isPreview={true}/>}
 
-                                        {component.id === 3 && <Paragraphe text={component.content.text} isNew={component.content.isNew} onDelete={() => deleteComponent(index)} onUpdate={updateComponent} index={index} isPreview={true}/>}
+                                        {component.componentId === 3 && <Paragraphe text={component.content.text} isNew={component.content.isNew} onDelete={() => deleteComponent(index)} onUpdate={updateComponent} index={index} isPreview={true}/>}
 
-                                        {component.id === 4 && <LinkList listText={component.content} isNew={component.content[0].isNew} onDelete={() => deleteComponent(index)} onUpdate={updateComponent} index={index} isPreview={true}/>}
+                                        {component.componentId === 4 && <LinkList listText={component.content} isNew={component.content[0].isNew} onDelete={() => deleteComponent(index)} onUpdate={updateComponent} index={index} isPreview={true}/>}
 
-                                        {component.id === 5 && <FullImage imageSrc={component.content.imageSrc} altImage={component.content.altImage} imgHeight={component.content.imgHeight} imgWidth={component.content.imgWidth} isNew={component.content.isNew} onDelete={() => deleteComponent(index)} onUpdate={updateComponent} index={index} isPreview={true}/>}
+                                        {component.componentId === 5 && <FullImage imageSrc={component.content.imageSrc} altImage={component.content.altImage} imgHeight={component.content.imgHeight} imgWidth={component.content.imgWidth} isNew={component.content.isNew} onDelete={() => deleteComponent(index)} onUpdate={updateComponent} index={index} isPreview={true}/>}
 
-                                        {component.id === 6 && <ActionCode text={component.content.text} code={component.content.code} language={component.content.language} isNew={component.content.isNew} onDelete={() => deleteComponent(index)} onUpdate={updateComponent} index={index} isPreview={true}/>}
+                                        {component.componentId === 6 && <ActionCode text={component.content.text} code={component.content.code} language={component.content.language} isNew={component.content.isNew} onDelete={() => deleteComponent(index)} onUpdate={updateComponent} index={index} isPreview={true}/>}
 
-                                        {component.id === 7 && <ActionImage text={component.content.text} imageSrc={component.content.imageSrc} altImage={component.content.altImage} imgHeight={component.content.imgHeight} imgWidth={component.content.imgWidth} isNew={component.content.isNew} onDelete={() => deleteComponent(index)} onUpdate={updateComponent} index={index} isPreview={true}/>}
+                                        {component.componentId === 7 && <ActionImage text={component.content.text} imageSrc={component.content.imageSrc} altImage={component.content.altImage} imgHeight={component.content.imgHeight} imgWidth={component.content.imgWidth} isNew={component.content.isNew} onDelete={() => deleteComponent(index)} onUpdate={updateComponent} index={index} isPreview={true}/>}
                                     </div>
                                     )}
                                     </Draggable>
@@ -188,7 +197,7 @@ function BlogEditor() {
                 {addComponent ? 
                     <>
                         <Dropdown options={componentsOptions} value={componentToAdd.value} onChange={handleDropdownChange} className="dropdown-components" placeholder="Sélectionner un bloc"/> {/* Du moment qu'on defini la value d'un element, on est obligé de mettre un onChange aussi sinon la valeur reste statique */}
-                        <button onClick={addNewComponent}>Ajouter</button> {/* Appelle la fonction addNewComponent qui fait une copie du component vide selectionner dans le dropdown et lui sert de valeur initial pour son component respectif */}
+                        <button onClick={() => { addNewComponent() }}>Ajouter</button> {/* Appelle la fonction addNewComponent qui fait une copie du component vide selectionner dans le dropdown et lui sert de valeur initial pour son component respectif */}
                     </> 
                 : 
                     <Button icon={faPlus} onClick={() => setAddComponent(true)} className="btn-add-component"/> 
@@ -197,6 +206,7 @@ function BlogEditor() {
                 {isEditingDescription ? 
                     <>
                         <TextArea value={description} labelText="Description (texte affiché sur les cartes blogs)" onChange={(e) => setDescription(e.target.value)}/>
+                        <TextInput value={url} labelText="URL du blog" onChange={(e) => setUrl(e.target.value)} />
                         <FullImage imageSrc={image} altImage={altImage} isNew={true} onUpdate={saveImageInfo} isPreview={true} resizePossible={false} imgHeight={300} imgWidth={50} />
                         <div className="row">
                             <Button text="Annuler" className="save-btn" onClick={() => setIsEditingDescription(false)}/>

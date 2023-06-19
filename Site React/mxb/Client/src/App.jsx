@@ -3,8 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { Route, Routes } from 'react-router-dom';
 import Main from './pages/Main';
 import BlogEditor from './pages/BlogEditor';
-import BlogTest from './pages/BlogTest'
-
+import BlogDashbord from './pages/Blog';
 
 function App(){
   const { pathname } = useLocation();  
@@ -18,7 +17,7 @@ function App(){
     <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/blogeditor" element={<BlogEditor />} />
-        <Route path="/blogtest" element={<BlogTest />} />
+        <Route path="/blogdashbord" element={<BlogDashbord />} />
     </Routes>
   )
 };

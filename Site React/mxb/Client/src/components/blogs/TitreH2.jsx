@@ -4,7 +4,7 @@ import { Button, TextInput } from '../indexComponents';
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
 import '../../App.css';
 
-function TitreH2 ({title, textId, isNew, onDelete, index, onUpdate, isPreview, onSave}) {
+function TitreH2 ({title, textId, isNew, onDelete, index, onUpdate, isPreview}) {
     const [defaultTitle, setDefaultTitle] = useState(title);
     const [id, setId] = useState(textId);
     const [isEditing, setIsEditing] = useState(isNew === true);
@@ -31,7 +31,7 @@ function TitreH2 ({title, textId, isNew, onDelete, index, onUpdate, isPreview, o
                     </div>
                     <div className="btn-container">
                         {onDelete ? <Button text="Supprimer" className="red white" onClick={() => {onDelete(); setIsEditing(false)}}/> : ''}
-                        <Button text="Sauvegarder" className="c-main" onClick={() => {setIsEditing(false); onUpdate({titre: defaultTitle, isNew: false, textId: id}, index); onSave(index)}}/>
+                        <Button text="Sauvegarder" className="c-main" onClick={() => {setIsEditing(false); onUpdate({titre: defaultTitle, isNew: false, textId: id}, index);}}/>
                     </div>
                 </div>
             :

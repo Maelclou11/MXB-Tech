@@ -27,7 +27,7 @@ function FullImage({isNew, imageSrc, altImage, imgHeight, imgWidth, onDelete, in
 
     const saveChange = ()  => {
         setIsEditing(false);
-        if(!resizePossible) {
+        if(resizePossible === false) {
             onUpdate(imagePath, defaultAltImage);
             console.log(imagePath, defaultAltImage);
         } else if (resizePossible === undefined) {

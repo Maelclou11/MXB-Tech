@@ -1,1 +1,1 @@
-GET http://localhost:3308/blog/get-component
+GET http://localhost:3308/blog/get-blog
