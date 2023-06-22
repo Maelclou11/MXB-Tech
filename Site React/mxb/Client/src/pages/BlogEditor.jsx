@@ -19,6 +19,7 @@ function BlogEditor() {
     const [altImage, setAltImage] = useState('');
     const [blogId, setBlogId] = useState('');
     const [url, setUrl] = useState('');
+    const [category, setCategory] = useState('');
 
     // Dans un futur fetch de la DB
     const componentsData = [
@@ -44,6 +45,7 @@ function BlogEditor() {
     const handleDropdownChange = (selectedOption) => {
         const selectedComponent  = componentsData.find((component) => component.componentId === selectedOption.value)
         setComponentToAdd({...selectedComponent});
+        console.log(selectedComponent)
     };
 
     // Fait une copie du tableau actuel de components crées, et lui ajoute le component vide qui est stocké dans componentToAdd
@@ -124,6 +126,7 @@ function BlogEditor() {
             image: image,
             alt_image: altImage,
             url: url,
+            category: category,
         }).then((response) => {
             console.log(response.data);
         }).catch((error) => {
@@ -136,7 +139,33 @@ function BlogEditor() {
         setAltImage(alt)
     };
 
+    const categoryData = [
+        {categoryId: 1, name: 'JavaScript'},
+        {categoryId: 2, name: 'C++'},
+        {categoryId: 3, name: 'Python'},
+        {categoryId: 4, name: 'CSharp'},
+        {categoryId: 5, name: 'React'},
+        {categoryId: 6, name: 'NodeJs'},
+        {categoryId: 7, name: 'AI'},
+        {categoryId: 8, name: 'WordPress'},
+    ]
 
+    const categoryOption = [
+        ...categoryData.map((category) => ({
+            value: category.categoryId,
+            label: category.name    
+        }))
+    ]
+
+    const handleDropdownCategory = (selectedOption) => {
+        const selectedCategory  = categoryData.find((category) => category.categoryId === selectedOption.target.value)
+        if(selectedCategory){
+            setCategory([null]);
+            console.log(category)
+        }
+        setCategory(selectedCategory)
+        console.log(category) 
+    };
   return (
     <div className='BlogEditor blog'>
         <Navbar isBlurry={false}/>
@@ -207,6 +236,7 @@ function BlogEditor() {
                     <>
                         <TextArea value={description} labelText="Description (texte affiché sur les cartes blogs)" onChange={(e) => setDescription(e.target.value)}/>
                         <TextInput value={url} labelText="URL du blog" onChange={(e) => setUrl(e.target.value)} />
+                        <Dropdown  value={category.value} options={categoryOption} onChange={handleDropdownCategory} placeholder="Choisir une catégorie"  />
                         <FullImage imageSrc={image} altImage={altImage} isNew={true} onUpdate={saveImageInfo} isPreview={true} resizePossible={false} imgHeight={300} imgWidth={50} />
                         <div className="row">
                             <Button text="Annuler" className="save-btn" onClick={() => setIsEditingDescription(false)}/>

@@ -1,0 +1,50 @@
+:root {
+    font-size: 62.5%;
+    --bg-main-color-: #080010;
+    --bg-secondary-color-: #db5afb;
+    --main-color-: #420983;
+    --main-color-hover-: #29093d;
+    --secondary-color-: #dec0fd;
+    --secondary-color-hover-: #ba74ff;
+    --link-color-: #9b43ff;
+    --red-: #ff4949;
+    --padding-main-: calc(2rem + 5vw);
+    --padding-second-: calc(6rem + 4vw);
+    --h2-main-: calc(2rem + 2.5vw);
+    --p-main-: calc(1.2rem + 0.5vw);
+    --p-main-bigger-: calc(1.2rem + 0.8vw);
+    --font-size-0-: calc(1.3rem + 0.2vw);
+    --font-size-1-: calc(1.4rem + 0.4vw);
+    --font-size-2-: calc(1.6rem + 0.8vw);
+    --font-size-3-: calc(1.7rem + 1.2vw);
+    --h1-: calc(2rem + 2vw);
+    --h2-: calc(2rem + 1vw);
+    --h3-: calc(1.5rem + 1vw);
+    --delay-base: 2s;
+    --space-blue-: 1.5rem;
+    --space-pink-: calc(var(--space-blue-) * 1.7);
+    --space-red-: calc(var(--space-blue-) * 2.2);
+    --space-green-: calc(var(--space-blue-) * 2.7);
+    --min-width-500-: 500px;
+  }
+
+.blog-content2{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+   
+}
+.blog-carte-container{
+    width: 100%;
+    padding: calc(1rem + 1vmin);
+}
+.blog-carte-container{
+    width: 300px;
+}
+.blog-carte-container h2{
+    font-size: calc(1.5rem + 1.5vmin);
+}
+.carteBlog-date p{
+    font-size: calc(0.7rem + 0.5vmin);
+}
