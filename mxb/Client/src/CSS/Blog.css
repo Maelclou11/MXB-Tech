@@ -1,0 +1,23 @@
+.blog-content2 {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.blog-carte-container {
+  width: 100%;
+  padding: calc(1rem + 1vmin);
+}
+.blog-carte-container {
+  width: 300px;
+}
+.blog-carte-container h2 {
+  font-size: calc(1.5rem + 1.5vmin);
+}
+.carteBlog-date p {
+  font-size: calc(0.7rem + 0.5vmin);
+}
+.blog-carte-container .container.image img {
+  width: 100%;
+  object-fit: cover;
+}
