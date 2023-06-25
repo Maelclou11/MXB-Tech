@@ -163,6 +163,25 @@ router.get('/blog', async (req, res) => {
   }
 })
 
+router.get('/blog/:blogId', async (req, res) => {
+  try{
+    const { blogId } = req.params;
+    const blog = await Blogs.findByPk(blogId, {
+      include: [
+        {
+          model: Blog_Components,
+          as: 'components', // Spécifiez l'alias ici
+        },
+      ],
+    })
+    res.status(200).json(blog);
+  }
+  catch (error) {
+    res.status(500).json({ error: "Une erreur est survenue. Veuillez réessayer plus tard."});
+    console.error(error);
+  }
+})
+
 /* #endregion */
 
 

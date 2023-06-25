@@ -4,8 +4,10 @@ import '../CSS/BlogEditor.css';
 import { faPlus, faBars } from '@fortawesome/free-solid-svg-icons';
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import axios from "axios";
+import { useParams } from 'react-router-dom';
 
 function BlogEditor() {
+    const existingBlogId = useParams();
     const [componentToAdd, setComponentToAdd] = useState([null]); // Contient le component VIDE que l'on a selectionner dans le dropdown
     const [components, setComponents] = useState([]);  // Liste de tous les components créés
     const [addComponent, setAddComponent] = useState(false);  // Bool pour savoir si on a cliqué sur le + afin d'ajouter un component  (Nécessaire pour cacher le dropdown en cliquant sur le + et inversement (pour cacher le + quand on clique sur le dropdown))
@@ -21,6 +23,32 @@ function BlogEditor() {
     const [blogId, setBlogId] = useState('');
     const [url, setUrl] = useState('');
     const [category, setCategory] = useState('');
+    const [hasFetch, setHasFetch] = useState(false);
+
+    if (existingBlogId.length !== 0 && !hasFetch) {
+        const blogId = existingBlogId.existingBlogId;
+        axios
+          .get(`http://localhost:3308/blog/blog/${blogId}`)
+          .then((response) => {
+            console.log(response.data);
+            const data = response.data;
+            setComponents(data.components);
+            setAuthor(data.author);
+            setIsAuthor(true);
+            setTitle(data.title);
+            setDate(data.createdAt);
+            setDescription(data.description);
+            setImagePath(data.image);
+            setImage(`http://localhost:3308/blog/${data.image}`);
+            setAltImage(data.alt_image);
+            setBlogId(data.id);
+            setUrl(data.url);
+            setHasFetch(true);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
 
     // Dans un futur fetch de la DB
     const componentsData = [

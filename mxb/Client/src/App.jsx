@@ -17,6 +17,7 @@ function App(){
     <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/blogeditor" element={<BlogEditor />} />
+        <Route path="/blogeditor/:existingBlogId" element={<BlogEditor />} />
         <Route path="/blogdashbord" element={<BlogDashbord />} />
     </Routes>
   )

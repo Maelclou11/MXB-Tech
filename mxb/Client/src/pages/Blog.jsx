@@ -36,7 +36,7 @@ function BlogDashbord() {
                             <p> Créé le {blog.createdAt}</p>
                             <p> Dernière modification le {blog.updatedAt}</p>
                         </div>
-                        <Button route={`/edit-blog/${blog.id}`} text="Modifier" />
+                        <Button route={`/blogeditor/${blog.id}`} text="Modifier" />
                     </div>
                 ))}
             </div>
