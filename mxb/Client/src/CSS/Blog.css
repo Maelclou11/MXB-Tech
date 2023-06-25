@@ -1,23 +1,143 @@
+.Blog-frame .blog-content h1 {
+  font-size: var(--h1-);
+}
 .blog-content2 {
   display: flex;
-  flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-between;
-}
-.blog-carte-container {
+  justify-content: space-evenly;
   width: 100%;
-  padding: calc(1rem + 1vmin);
+  padding: calc(3rem + 2vh) 0;
 }
 .blog-carte-container {
-  width: 300px;
+  width: 350px;
+  background: var(--bg-main-color-);
+  color: white;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  margin: 1rem 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 3px 3px 5px 5px rgba(131, 131, 131, 0.247);
+  position: relative;
 }
-.blog-carte-container h2 {
-  font-size: calc(1.5rem + 1.5vmin);
+.blog-carte-container a {
+  text-decoration: none;
+  color: inherit;
+  height: fit-content;
 }
-.carteBlog-date p {
-  font-size: calc(0.7rem + 0.5vmin);
+.blog-carte-container:hover {
+  /* transform: translateY(-10px); */
+  cursor: pointer;
+}
+.blog-carte-container:hover .container.image img {
+  transform: scale(1.1);
+}
+.blog-carte-container:hover .blog-carte-content h2 {
+  color: var(--secondary-color-hover-);
 }
 .blog-carte-container .container.image img {
   width: 100%;
+  height: 100%;
   object-fit: cover;
+  transition: all 0.3s ease;
+}
+.blog-carte-container .container.image {
+  height: 50%;
+  min-height: 180px;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+.blog-carte-container .container.image .date-created {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background: var(--secondary-color-);
+  padding: 0.5rem 0.8rem;
+  border-radius: 10px;
+  color: var(--bg-main-color-);
+  z-index: 2;
+  font-size: 13px;
+}
+.blog-carte-container .container.image .status-category {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  color: white;
+  z-index: 2;
+  font-size: 13px;
+  display: flex;
+  gap: 0.5rem;
+}
+.blog-carte-container .container.image .status-category span {
+  background: var(--main-color-);
+  padding: 0.5rem 0.8rem;
+  border-radius: 10px;
+}
+.blog-carte-content {
+  padding: calc(1rem + 1vmin);
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-between;
+}
+.blog-carte-content h2 {
+  font-size: var(--font-size-05-);
+  font-weight: 500;
+  color: var(--secondary-color-);
+  margin-bottom: calc(2rem + 0.4vh);
+  transition: all 0.3s ease;
+}
+.blog-carte-content .description-container {
+  position: relative;
+  width: 100%;
+}
+.blog-carte-content .description {
+  font-size: var(--font-size-0-);
+  margin-bottom: calc(2rem + 0.4vh);
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+.blog-carte-content .description.hide {
+  margin-bottom: 5rem;
+}
+.blog-carte-content .description-container .see-more-btn {
+  background: none;
+  color: var(--secondary-color-hover-);
+  font-weight: 300;
+  text-decoration: underline;
+  font-size: var(--font-size-0-);
+  position: absolute;
+  bottom: 25px;
+  left: 0px;
+  padding: 0;
+}
+.blog-carte-content .see-more-btn:hover {
+  color: var(--secondary-color-);
+  background: none;
+}
+.blog-carte-content .description.expanded {
+  text-overflow: none;
+  overflow: visible;
+  display: block;
+  -webkit-line-clamp: unset;
+  -webkit-box-orient: unset;
+}
+.blog-carte-content .carteBlog-date p {
+  font-size: var(--font-size-xsmall-);
+}
+.blog-carte-content .carteBlog-date {
+  margin-bottom: 1rem;
+}
+.blog-carte-content .delete-btn {
+  background: var(--red-);
+  color: white;
+}
+.blog-carte-content .delete-btn:hover {
+  background: var(--red-hover-);
 }

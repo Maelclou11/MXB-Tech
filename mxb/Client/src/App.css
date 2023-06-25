@@ -18,12 +18,15 @@
   --secondary-color-hover-: #ba74ff;
   --link-color-: #9b43ff;
   --red-: #ff4949;
+  --red-hover-: rgb(202, 55, 55);
   --padding-main-: calc(2rem + 5vw);
   --padding-second-: calc(6rem + 4vw);
   --h2-main-: calc(2rem + 2.5vw);
   --p-main-: calc(1.2rem + 0.5vw);
   --p-main-bigger-: calc(1.2rem + 0.8vw);
+  --font-size-xsmall-: calc(1rem + 0.1vw);
   --font-size-0-: calc(1.3rem + 0.2vw);
+  --font-size-05-: calc(1.4rem + 0.3vw);
   --font-size-1-: calc(1.4rem + 0.4vw);
   --font-size-2-: calc(1.6rem + 0.8vw);
   --font-size-3-: calc(1.7rem + 1.2vw);

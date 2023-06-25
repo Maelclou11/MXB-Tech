@@ -82,3 +82,10 @@
 .blog-content .save-btn {
   margin-top: 2rem;
 }
+.blog-content .back-to-dashboard {
+  align-self: flex-start;
+  margin-bottom: 1rem;
+}
+.blog-content .back-to-dashboard .Button button {
+  border-radius: 10px;
+}

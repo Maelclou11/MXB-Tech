@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { Navbar, Dropdown, Paragraphe, Title, Button, TextInput, TitreH2, LinkList, FullImage, TitreH3, ActionCode, ActionImage, TextArea } from '../components/indexComponents';
 import '../CSS/BlogEditor.css';
-import { faPlus, faBars } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faBars, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import axios from "axios";
 import { useParams } from 'react-router-dom';
@@ -32,7 +32,10 @@ function BlogEditor() {
           .then((response) => {
             console.log(response.data);
             const data = response.data;
-            setComponents(data.components);
+            setComponents(data.components.map(component => ({
+                ...component,
+                content: JSON.parse(component.content)
+              })));
             setAuthor(data.author);
             setIsAuthor(true);
             setTitle(data.title);
@@ -44,13 +47,13 @@ function BlogEditor() {
             setBlogId(data.id);
             setUrl(data.url);
             setHasFetch(true);
+
           })
           .catch((error) => {
             console.error(error);
           });
       }
 
-    // Dans un futur fetch de la DB
     const componentsData = [
         {componentId: 1, name: 'Titre H2', content: {titre: "", isNew: true, textId: ''}},
         {componentId: 2, name: 'Titre H3', content: {titre: "", isNew: true, textId: ''}},
@@ -155,7 +158,7 @@ function BlogEditor() {
         formData.append('image', image); // where image is File object
         formData.append('alt_image', altImage);
         formData.append('url', url);
-        formData.append('category', category);
+        formData.append('category', category.name);
         
         axios.put(`http://localhost:3308/blog/save/${blogId}`, formData, {
             headers: {
@@ -196,11 +199,7 @@ function BlogEditor() {
     ]
 
     const handleDropdownCategory = (selectedOption) => {
-        const selectedCategory  = categoryData.find((category) => category.categoryId === selectedOption.target.value)
-        if(selectedCategory){
-            setCategory([null]);
-            console.log(category)
-        }
+        const selectedCategory  = categoryData.find((category) => category.categoryId === selectedOption.value)
         setCategory(selectedCategory)
         console.log(category) 
     };
@@ -208,6 +207,9 @@ function BlogEditor() {
     <div className='BlogEditor blog'>
         <Navbar isBlurry={false}/>
         <div className="blog-content">
+            <div className="back-to-dashboard">
+                <Button icon={faChevronLeft} route="/blogdashboard" />
+            </div>
             {isAuthor ?
                 <>
                     <div className='component'>
@@ -293,7 +295,7 @@ function BlogEditor() {
                     <TextInput type="text" labelText="Titre du blog" value={title} onChange={(e) => setTitle(e.target.value)}/>
 
                     <Button text="Commencer" onClick={author && title ? createBlog : ''}/>
-                    <Button route='/blogdashbord' text="Blog Dashboard" />
+                    <Button route='/blogdashboard' text="Blog Dashboard" />
                     {/* cela : "author ? setIsAuthor(true) : setIsAuthor(false)" sert juste a verifier que la valeur de author n'est pas nul et si elle l'est, ne pas faire disparaitre le form en cliquant donc oblige de rentrer un nom d'auteur mais en vrai jsp si on le met genre le monde s'en batte les couilles raides de qui l'a ecrit */} 
                 </>
             }

@@ -113,7 +113,7 @@ router.post('/new', async (req,res) => {
 // Route pour sauvegarder un blog
 router.put('/save/:blogId', upload.single('image'), async (req, res) => {
     try {
-        const { title, description, alt_image, public, url, image } = req.body;
+        const { title, description, alt_image, public, url, image, category } = req.body;
         const { blogId } = req.params;
         /* const imagePath = req.file.path; */
 
@@ -127,6 +127,7 @@ router.put('/save/:blogId', upload.single('image'), async (req, res) => {
         blogToUpdate.alt_image = alt_image;
         public ? blogToUpdate.public = public : '';
         blogToUpdate.url = url;
+        blogToUpdate.category = category;
 
         if (req.file) {
           const imagePath = req.file.path.replace(/\\/g, '/');
@@ -163,6 +164,7 @@ router.get('/blog', async (req, res) => {
   }
 })
 
+// Route pour avoir le contenu d'un blog
 router.get('/blog/:blogId', async (req, res) => {
   try{
     const { blogId } = req.params;
@@ -177,6 +179,21 @@ router.get('/blog/:blogId', async (req, res) => {
     res.status(200).json(blog);
   }
   catch (error) {
+    res.status(500).json({ error: "Une erreur est survenue. Veuillez réessayer plus tard."});
+    console.error(error);
+  }
+})
+
+// Route pour supprimer un blog
+router.delete('/delete/:blogId', async (req, res) => {
+  try {
+    const { blogId } = req.params;
+
+    const blogToDelete = await Blogs.findByPk(blogId);
+
+    await blogToDelete.destroy();
+    res.status(200).json("Blog deleted !");
+  } catch (error) {
     res.status(500).json({ error: "Une erreur est survenue. Veuillez réessayer plus tard."});
     console.error(error);
   }

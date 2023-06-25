@@ -18,7 +18,7 @@ function App(){
         <Route path="/" element={<Main />} />
         <Route path="/blogeditor" element={<BlogEditor />} />
         <Route path="/blogeditor/:existingBlogId" element={<BlogEditor />} />
-        <Route path="/blogdashbord" element={<BlogDashbord />} />
+        <Route path="/blogdashboard" element={<BlogDashbord />} />
     </Routes>
   )
 };
