@@ -34,7 +34,7 @@ function FullImage({isNew, imageSrc, altImage, imgHeight, imgWidth, onDelete, in
             onUpdate(imagePath, defaultAltImage, image);
             console.log(imagePath, defaultAltImage, image);
         } else {
-            onUpdate({imageSrc: useLink ? link : image, alt: defaultAltImage, imgHeight: imageHeight, imgWidth: imageWidth, isNew: false}, index);
+            onUpdate({imageSrc: useLink ? link : image, alt: defaultAltImage, imgHeight: imageHeight, imgWidth: imageWidth, isNew: false}, index, image);
         }
     };
   

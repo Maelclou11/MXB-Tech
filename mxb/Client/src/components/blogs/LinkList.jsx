@@ -68,8 +68,8 @@ function LinkList({listText, isNew, onDelete, index, onUpdate, isPreview}) {
                 </li>
                 {content.children.length > 0 ? 
                     <ul className="child-list">
-                        {content.children.map((content) => (
-                            <li>
+                        {content.children.map((content, index) => (
+                            <li key={index}>
                                 {content.link ? <a href={`#${content.link}`}>{content.text}</a> : <p>{content.text}</p>}
                             </li>
                         ))}

@@ -11,6 +11,7 @@
 :root {
   font-size: 62.5%;
   --bg-main-color-: #080010;
+  /*   --bg-main-color-: #0e001b; */
   --bg-secondary-color-: #db5afb;
   --main-color-: #420983;
   --main-color-hover-: #29093d;
@@ -19,6 +20,7 @@
   --link-color-: #9b43ff;
   --red-: #ff4949;
   --red-hover-: rgb(202, 55, 55);
+  --green-: rgb(69, 179, 69);
   --padding-main-: calc(2rem + 5vw);
   --padding-second-: calc(6rem + 4vw);
   --h2-main-: calc(2rem + 2.5vw);
@@ -63,6 +65,12 @@ p {
 .white {
   color: white;
 }
+.secondary-color {
+  color: var(--secondary-color-);
+}
+.bg-color {
+  color: var(--bg-main-color-);
+}
 .c-main {
   color: var(--bg-main-color-);
 }
@@ -76,6 +84,72 @@ p {
 }
 .font-size-1 {
   font-size: var(--font-size-1-);
+}
+.font-weight-400 {
+  font-weight: 400;
+}
+.min-height-250 {
+  height: 250px;
+}
+.mb-2 {
+  margin-bottom: 2rem;
+}
+.mt-2 {
+  margin-top: 2rem;
+}
+.flex-grow-1 {
+  flex-grow: 1;
+}
+.success-message {
+  color: var(--green-);
+  margin-top: 2rem;
+}
+.loading {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+}
+.loading h2 {
+  font-size: var(--font-size-3-);
+  font-weight: 400;
+  color: var(--main-color-);
+}
+.loading .loading-circle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+  background: conic-gradient(
+    from 90deg at 50% 50%,
+    #29093d 0%,
+    #29093d 50%,
+    #3d0d5a 70%,
+    white 82%,
+    #3d0d5a 92%,
+    #29093d 100%
+  );
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  animation: 1.6s rotate cubic-bezier(0.8, 0.09, 0.19, 0.61) infinite reverse;
+}
+@keyframes rotate {
+  0% {
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+.loading .loading-circle .inner-circle {
+  display: block;
+  background: white;
+  height: 36px;
+  width: 36px;
+  border-radius: 50%;
 }
 /* #endregion */
 

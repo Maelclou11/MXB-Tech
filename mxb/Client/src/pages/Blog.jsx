@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Navbar, Button } from '../components/indexComponents';
+import { Navbar, Button, SkeletonBlogCard } from '../components/indexComponents';
 import axios from 'axios';
 import '../CSS/Blog.css';
 import moment from 'moment';
@@ -11,16 +11,16 @@ import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 function BlogDashbord() {
     const [blog, setBlog] = useState([]);
     const [isExtended, setIsExtended] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
     const options = { day: 'numeric', month: 'long', year: 'numeric' };
 
     useEffect(() => {
         axios.get("http://localhost:3308/blog/blog").then((response) => {
-            console.log(response.data);
             setBlog(response.data);
             response.data.map((blog, index) => {
                 return isExtended.push(false);
             });
-            console.log(isExtended);
+            setIsLoading(false);
         })
         .catch((error) => {
             console.error(error);
@@ -43,7 +43,16 @@ function BlogDashbord() {
         <div className="blog-content"> 
             <h1>Blogs informatiques</h1>
             <div className='blog-content2'>
-                {blog.map((blog, index) => (
+                {isLoading ?  
+                <>
+                    <SkeletonBlogCard/>
+                    <SkeletonBlogCard/>
+                    <SkeletonBlogCard/>
+                    <SkeletonBlogCard/>
+                </>
+                :
+                <>
+                    {blog.map((blog, index) => (
                     <div key={index} className='blog-carte-container'>
                         <div className='container image'>
                             <Link to={`/blogeditor/${blog.id}`}>
@@ -73,7 +82,10 @@ function BlogDashbord() {
                             </div>
                         </div>
                     </div>
-                ))}
+                    ))}
+                </>
+                }
+
             </div>
             <Button route='/blogeditor' text="Créer un blog" />
         </div>

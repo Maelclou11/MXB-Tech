@@ -5,23 +5,35 @@ const multer = require('multer');
 const path = require('path');
 
 
-// Pour enregistrer les images dans le dossier images_blogs
+// Pour enregistrer les images principales du blog dans le dossier images_blogs
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, './images_blogs');
-    },
-    filename: function (req, file, cb) {
-      const ext = path.extname(file.originalname);
-      cb(null, `main-image-${req.params.blogId}${ext}`)
-    }
-  });
+  destination: function (req, file, cb) {
+    cb(null, './images_blogs');
+  },
+  filename: function (req, file, cb) {
+    const ext = path.extname(file.originalname);
+    cb(null, `main-image-${req.params.blogId}${ext}`)
+  }
+});
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 25 * 1024 * 1024, // Limite de taille à 25 Mo
+  },
+});
 
-  const upload = multer({
-    storage: storage,
-    limits: {
-      fileSize: 25 * 1024 * 1024, // Limite de taille à 25 Mo
-    },
-  });
+// Pour enregistrer les images des components
+const storageOther = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './images_components');
+  },
+  filename: function (req, file, cb) {
+    const ext = path.extname(file.originalname);
+    cb(null, `image-${req.params.componentId}${ext}`)
+  }
+})
+
+const uploadOther = multer({ storage: storageOther })
 
 /* #region  Components */
 
@@ -62,7 +74,6 @@ router.get("/get-component/:id", async (req, res) => {
 router.put("/update", async (req, res) => {
     try {
         const { component } = req.body;
-        console.log("QUECE QUI SPQ+AASAAAAAAAAAAAA",component);
         const componentToUpdate = await Blog_Components.findByPk(component.id);
 
         componentToUpdate.content = JSON.stringify(component.content);
@@ -115,12 +126,8 @@ router.put('/save/:blogId', upload.single('image'), async (req, res) => {
     try {
         const { title, description, alt_image, public, url, image, category } = req.body;
         const { blogId } = req.params;
-        /* const imagePath = req.file.path; */
-
 
         const blogToUpdate = await Blogs.findByPk(blogId);
-
-
 
         blogToUpdate.title = title;
         blogToUpdate.description = description;

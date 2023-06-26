@@ -1,10 +1,13 @@
 import React, {useState} from 'react';
 import { Navbar, Dropdown, Paragraphe, Title, Button, TextInput, TitreH2, LinkList, FullImage, TitreH3, ActionCode, ActionImage, TextArea } from '../components/indexComponents';
 import '../CSS/BlogEditor.css';
-import { faPlus, faBars, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus, faBars, faChevronLeft, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import axios from "axios";
 import { useParams } from 'react-router-dom';
+import moment from 'moment';
+import 'moment/locale/fr';
 
 function BlogEditor() {
     const existingBlogId = useParams();
@@ -24,13 +27,18 @@ function BlogEditor() {
     const [url, setUrl] = useState('');
     const [category, setCategory] = useState('');
     const [hasFetch, setHasFetch] = useState(false);
+    const [isPublic, setIsPublic] = useState(false);
+    const [data, setData] = useState('');
+    const options = { day: 'numeric', month: 'long', year: 'numeric' };
+    const [isExtended, setIsExtended] = useState(false);
+    const [saveMessage, setSaveMessage] = useState();
+    const [isLoading, setIsLoading] = useState(true);
 
-    if (existingBlogId.length !== 0 && !hasFetch) {
+    if (existingBlogId.existingBlogId !== undefined && !hasFetch) {
         const blogId = existingBlogId.existingBlogId;
         axios
           .get(`http://localhost:3308/blog/blog/${blogId}`)
           .then((response) => {
-            console.log(response.data);
             const data = response.data;
             setComponents(data.components.map(component => ({
                 ...component,
@@ -39,19 +47,28 @@ function BlogEditor() {
             setAuthor(data.author);
             setIsAuthor(true);
             setTitle(data.title);
-            setDate(data.createdAt);
+            setDate(new Date(data.createdAt).toLocaleDateString('fr-FR', options));
             setDescription(data.description);
-            setImagePath(data.image);
+            setImagePath(`${data.image}`);
             setImage(`http://localhost:3308/blog/${data.image}`);
             setAltImage(data.alt_image);
             setBlogId(data.id);
             setUrl(data.url);
+            setIsPublic(data.public);
+            if (data.category) {
+                const foundCategory = categoryData.find(item => item.name === data.category);
+                foundCategory.value = foundCategory.categoryId;
+                setCategory(foundCategory);
+            }
+            setData(data);
             setHasFetch(true);
-
+            setIsLoading(false);
           })
           .catch((error) => {
             console.error(error);
           });
+      } else if (existingBlogId.existingBlogId === undefined && !hasFetch) {
+        setIsLoading(false);
       }
 
     const componentsData = [
@@ -106,10 +123,11 @@ function BlogEditor() {
         const tempArray = [...components];
         tempArray[index].content = value;
         setComponents(tempArray);
+        console.log("TEMPPPPPPPPPP",tempArray);
 
         const component = tempArray[index];
         axios.put("http://localhost:3308/blog/update", {component}).then((response) => {
-            console.log(response.data);
+            /* console.log(response.data); */
         })
         .catch((error) => {
             console.error(error);
@@ -140,7 +158,6 @@ function BlogEditor() {
         const today = new Date();
         setDate(formatter.format(today));
         setIsAuthor(true);
-        console.log(author);
         axios.post("http://localhost:3308/blog/new", {
             title: title,
             author: author,
@@ -159,14 +176,19 @@ function BlogEditor() {
         formData.append('alt_image', altImage);
         formData.append('url', url);
         formData.append('category', category.name);
+        formData.append('public', isPublic);
         
         axios.put(`http://localhost:3308/blog/save/${blogId}`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
         })
-        .then((response) => {
-            console.log(response.data);
+        .then(() => {
+            setIsEditingDescription(false);
+            setSaveMessage('Blog enregistré avec succès !');
+            setTimeout(() => {
+                setSaveMessage();
+            }, 2000)
         })
         .catch((error) => {
             console.error(error);
@@ -177,7 +199,6 @@ function BlogEditor() {
         setImage(imageToSave);
         setAltImage(altToSave);
         setImagePath(imagePathToSave);
-        console.log("ICIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII",imagePath, altImage, image);
     };
 
     const categoryData = [
@@ -199,9 +220,9 @@ function BlogEditor() {
     ]
 
     const handleDropdownCategory = (selectedOption) => {
+        console.log(category); 
         const selectedCategory  = categoryData.find((category) => category.categoryId === selectedOption.value)
-        setCategory(selectedCategory)
-        console.log(category) 
+        setCategory(selectedCategory);
     };
   return (
     <div className='BlogEditor blog'>
@@ -210,7 +231,18 @@ function BlogEditor() {
             <div className="back-to-dashboard">
                 <Button icon={faChevronLeft} route="/blogdashboard" />
             </div>
-            {isAuthor ?
+            {isLoading ? 
+            <>
+                <div className="loading">
+                    <h2>Chargement...</h2>
+                    <span className='loading-circle'>
+                        <span className='inner-circle'></span>
+                    </span>
+                </div>
+            </>
+            :
+            <>
+                {isAuthor ?
                 <>
                     <div className='component'>
                         <Title title={title} isNew={true} author={author} date={date} onSave={setTitle}/>
@@ -266,39 +298,81 @@ function BlogEditor() {
                     {addComponent ? 
                         <>
                             <Dropdown options={componentsOptions} value={componentToAdd.value} onChange={handleDropdownChange} className="dropdown-components" placeholder="Sélectionner un bloc"/> {/* Du moment qu'on defini la value d'un element, on est obligé de mettre un onChange aussi sinon la valeur reste statique */}
-                            <button onClick={() => { addNewComponent() }}>Ajouter</button> {/* Appelle la fonction addNewComponent qui fait une copie du component vide selectionner dans le dropdown et lui sert de valeur initial pour son component respectif */}
+                            <button onClick={addNewComponent}>Ajouter</button> {/* Appelle la fonction addNewComponent qui fait une copie du component vide selectionner dans le dropdown et lui sert de valeur initial pour son component respectif */}
                         </> 
                     : 
                         <Button icon={faPlus} onClick={() => setAddComponent(true)} className="btn-add-component"/> 
                     }
 
                     {isEditingDescription ? 
-                        <>
-                            <TextArea value={description} labelText="Description (texte affiché sur les cartes blogs)" onChange={(e) => setDescription(e.target.value)}/>
-                            <TextInput value={url} labelText="URL du blog" onChange={(e) => setUrl(e.target.value)} />
-                            <Dropdown  value={category.value} options={categoryOption} onChange={handleDropdownCategory} placeholder="Choisir une catégorie"  />
-                            <FullImage imageSrc={imagePath} altImage={altImage} isNew={true} onUpdate={saveImageInfo} isPreview={true} resizePossible={false} imgHeight={300} imgWidth={50} />
-                            <div className="row">
-                                <Button text="Annuler" className="save-btn" onClick={() => setIsEditingDescription(false)}/>
-                                <Button text="Enregistrer le blog" className="save-btn" onClick={updateBlog} />
+                    <>
+                        <div className="edit-detail-container">
+                            <div className="edit-details">
+                                <TextArea value={description} labelText="Description (texte affiché sur les cartes blogs)" onChange={(e) => setDescription(e.target.value)} className="min-height-250"/>
+                                <TextInput value={url} labelText="URL du blog" onChange={(e) => setUrl(e.target.value)} className="url-input" />
+                                <div className="row">
+                                    <Dropdown value={category.value} options={categoryOption} onChange={handleDropdownCategory} placeholder="Choisir une catégorie" className="dropdown" />
+                                    <Button text={isPublic ? 'Mettre Privé' : 'Mettre Public'} onClick={() => setIsPublic(!isPublic)}/>
+                                </div>
+                                <div className="component image-blog">
+                                    <FullImage imageSrc={hasFetch ? image : imagePath} altImage={altImage} isNew={hasFetch ? false : true} onUpdate={saveImageInfo} isPreview={true} resizePossible={false} /* imgHeight={300} imgWidth={50} */ />
+                                </div>
                             </div>
-                        </>
+                            <div className="preview-card">
+                                <h2 className='mb-2 font-size-1 font-weight-400 bg-color'>Preview de la carte :</h2>
+                                <div className='blog-carte-container'>
+                                    <div className='container image'>
+                                            <span className='date-created'>{new Date(data.createdAt).toLocaleDateString('fr-FR', options)}</span>
+                                            <div className="status-category">
+                                                {category ? <span className='status'>{category.name}</span> : '' }
+                                                <span className='status'>{isPublic ? <FontAwesomeIcon icon={faEye} /> : <FontAwesomeIcon icon={faEyeSlash} />}</span>
+                                            </div>
+                                            <img src={hasFetch ? image : imagePath} alt={altImage} />
+                                    </div>
+                                    <div className="blog-carte-content">
+                                        <h2>{title}</h2>
+                                        <div className="description-container">
+                                            <p className={`description ${isExtended ? 'expanded' : ''} ${description.length >= 150 ? 'hide' : ''}`}>{description}</p>
+                                            {description.length >= 150 ? <Button text={isExtended ? `Voir moins` : 'Voir plus'} onClick={() => { setIsExtended(!isExtended)}} className="see-more-btn"/> : ''}
+                                        </div>
+                                        <div className="carteBlog-date">
+                                            <p> Dernière modification {moment(data.updatedAt).locale('fr').fromNow()}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <Button text="Annuler" className="save-btn" onClick={() => setIsEditingDescription(false)}/>
+                            <Button text="Enregistrer" className="save-btn" onClick={updateBlog} />
+                            <Button text="Voir catégorie" onClick={() => console.log(category)} />
+                        </div>
+                    </>
                     :
-                        <Button text={description ? 'Modifier les infos' : 'Ajouter les informations de la carte du blog'} onClick={() =>  setIsEditingDescription(true)} className="save-btn"/>
+                    <>
+                        <div className="row">
+                            <Button text={description ? 'Modifier les détails' : 'Ajouter les informations de la carte du blog'} onClick={() =>  setIsEditingDescription(true)} className="save-btn"/>
+                            <Button text="Enregistrer le blog" className="save-btn" onClick={updateBlog} />
+                        </div>
+                        {saveMessage ? <p className='success-message '>{saveMessage}</p> : ''}
+                    </>
                     }
                 </>
-            :
+                :
                 <>
                     {/* Le 'e' dans 'onChange={(e) => setAuthor(e.target.value)}' représente l'element duquel ce code s'execute, donc ici, on setAuthor sur la valeur de l'element en fesant e.target.value */}
                     <TextInput type="text" labelText="Qui écrit ce blog ?" placeholder="Auteur" value={author} onChange={(e) => setAuthor(e.target.value)}/>    {/* Dans le onChange, tu peux mettre des fonctions sans parametre sans avoir a mettre '() => ' mais dès qu'on met des parametre (en gros dès qui a des parenthese faut mettre "() => ") et si on veux faire plusieur fonction faut mettre les fonctions dans des accolades et mettre un point virgule entre les fonctions, exemple : () => {onDelete(); setIsEditing(false)} */}
 
                     <TextInput type="text" labelText="Titre du blog" value={title} onChange={(e) => setTitle(e.target.value)}/>
 
-                    <Button text="Commencer" onClick={author && title ? createBlog : ''}/>
+                    <Button text="Commencer" onClick={() => {if(author && title) {createBlog();}}}/>
                     <Button route='/blogdashboard' text="Blog Dashboard" />
                     {/* cela : "author ? setIsAuthor(true) : setIsAuthor(false)" sert juste a verifier que la valeur de author n'est pas nul et si elle l'est, ne pas faire disparaitre le form en cliquant donc oblige de rentrer un nom d'auteur mais en vrai jsp si on le met genre le monde s'en batte les couilles raides de qui l'a ecrit */} 
                 </>
+                }
+            </>
             }
+
         </div>
     </div>
   )
