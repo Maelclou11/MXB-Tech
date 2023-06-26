@@ -8,9 +8,11 @@ import axios from "axios";
 import { useParams } from 'react-router-dom';
 import moment from 'moment';
 import 'moment/locale/fr';
+import { useNavigate } from 'react-router-dom';
 
 function BlogEditor() {
     const existingBlogId = useParams();
+    const navigate = useNavigate();
     const [componentToAdd, setComponentToAdd] = useState([null]); // Contient le component VIDE que l'on a selectionner dans le dropdown
     const [components, setComponents] = useState([]);  // Liste de tous les components créés
     const [addComponent, setAddComponent] = useState(false);  // Bool pour savoir si on a cliqué sur le + afin d'ajouter un component  (Nécessaire pour cacher le dropdown en cliquant sur le + et inversement (pour cacher le + quand on clique sur le dropdown))
@@ -36,8 +38,7 @@ function BlogEditor() {
 
     if (existingBlogId.existingBlogId !== undefined && !hasFetch) {
         const blogId = existingBlogId.existingBlogId;
-        axios
-          .get(`http://localhost:3308/blog/blog/${blogId}`)
+        axios.get(`http://localhost:3308/blog/blog/${blogId}`)
           .then((response) => {
             const data = response.data;
             setComponents(data.components.map(component => ({
@@ -49,13 +50,13 @@ function BlogEditor() {
             setTitle(data.title);
             setDate(new Date(data.createdAt).toLocaleDateString('fr-FR', options));
             setDescription(data.description);
-            setImagePath(`${data.image}`);
+            setImagePath(`http://localhost:3308/blog/${data.image}`);
             setImage(`http://localhost:3308/blog/${data.image}`);
             setAltImage(data.alt_image);
             setBlogId(data.id);
             setUrl(data.url);
             setIsPublic(data.public);
-            if (data.category) {
+            if (data.category !== 'undefined' && data.category !== '' && data.category !== undefined && data.category !== null && data.category !== 'null') {
                 const foundCategory = categoryData.find(item => item.name === data.category);
                 foundCategory.value = foundCategory.categoryId;
                 setCategory(foundCategory);
@@ -67,7 +68,8 @@ function BlogEditor() {
           .catch((error) => {
             console.error(error);
           });
-      } else if (existingBlogId.existingBlogId === undefined && !hasFetch) {
+      } else if (!hasFetch) {
+        setHasFetch(true);
         setIsLoading(false);
       }
 
@@ -114,6 +116,9 @@ function BlogEditor() {
 
     // Prend l'id du component a delete et le supprime, prevComponents représente l'état précedent de ce state (sa brain mais en vrai c'est l'etat actuel qu'o prend et on la reset dans l'accolade comme ici sa me sert a delete le components selon l'index passer en parametre, le '.filter sert a prendre tous les components qui respecte la conditions et ne met pas ceux qui la brise donc quand l'index de l'element actuel est égale a 'indexToDelete' sa ne le met pas en ensuite sa set la valeur de mon etat components a ce nouveau tableau)
     const deleteComponent = (indexToDelete) => {
+        const componentToDeleteId = components[indexToDelete].id;
+        console.log(componentToDeleteId);
+        axios.delete(`http://localhost:3308/blog/delete/${componentToDeleteId}`);
         setComponents(prevComponents => {
           return prevComponents.filter((_, index) => index !== indexToDelete);
         });
@@ -123,16 +128,26 @@ function BlogEditor() {
         const tempArray = [...components];
         tempArray[index].content = value;
         setComponents(tempArray);
-        console.log("TEMPPPPPPPPPP",tempArray);
-
+    
         const component = tempArray[index];
-        axios.put("http://localhost:3308/blog/update", {component}).then((response) => {
-            /* console.log(response.data); */
+        const data = new FormData();
+        data.append('component', JSON.stringify(component));
+        data.append('componentId', component.id);
+        if(component.content.imageSrc) {
+            data.append('image', component.content.imageSrc);
+        }
+    
+        axios.put("http://localhost:3308/blog/update", data).then((response) => {
+            const tempArray = [...components];
+            tempArray[index].content = JSON.parse(response.data.content);
+            setComponents(tempArray);
+            console.log(tempArray);
         })
         .catch((error) => {
             console.error(error);
         })
     };
+    
 
     const createComponent = async (componentToAdd) => {
         const component = componentToAdd;
@@ -152,6 +167,7 @@ function BlogEditor() {
           });
     }
 
+
     const createBlog = async () => {
         const options = { day: 'numeric', month: 'long', year: 'numeric' };
         const formatter = new Intl.DateTimeFormat('fr-FR', options);
@@ -163,6 +179,7 @@ function BlogEditor() {
             author: author,
         }).then((response) => {
             setBlogId(response.data.id);
+            navigate(`/blogeditor/${response.data.id}`);
         }).catch((error) => {
             console.error(error);
         })
@@ -175,7 +192,7 @@ function BlogEditor() {
         formData.append('image', image); // where image is File object
         formData.append('alt_image', altImage);
         formData.append('url', url);
-        formData.append('category', category.name);
+        formData.append('category', category.name ? category.name : '');
         formData.append('public', isPublic);
         
         axios.put(`http://localhost:3308/blog/save/${blogId}`, formData, {
@@ -315,7 +332,7 @@ function BlogEditor() {
                                     <Button text={isPublic ? 'Mettre Privé' : 'Mettre Public'} onClick={() => setIsPublic(!isPublic)}/>
                                 </div>
                                 <div className="component image-blog">
-                                    <FullImage imageSrc={hasFetch ? image : imagePath} altImage={altImage} isNew={hasFetch ? false : true} onUpdate={saveImageInfo} isPreview={true} resizePossible={false} /* imgHeight={300} imgWidth={50} */ />
+                                    <FullImage imageSrc={hasFetch ? image : imagePath} altImage={altImage} isNew={true} onUpdate={saveImageInfo} isPreview={true} resizePossible={false} /* imgHeight={300} imgWidth={50} */ />
                                 </div>
                             </div>
                             <div className="preview-card">
@@ -327,7 +344,7 @@ function BlogEditor() {
                                                 {category ? <span className='status'>{category.name}</span> : '' }
                                                 <span className='status'>{isPublic ? <FontAwesomeIcon icon={faEye} /> : <FontAwesomeIcon icon={faEyeSlash} />}</span>
                                             </div>
-                                            <img src={hasFetch ? image : imagePath} alt={altImage} />
+                                            <img src={imagePath} alt={altImage} />
                                     </div>
                                     <div className="blog-carte-content">
                                         <h2>{title}</h2>
@@ -345,7 +362,7 @@ function BlogEditor() {
                         <div className="row">
                             <Button text="Annuler" className="save-btn" onClick={() => setIsEditingDescription(false)}/>
                             <Button text="Enregistrer" className="save-btn" onClick={updateBlog} />
-                            <Button text="Voir catégorie" onClick={() => console.log(category)} />
+                            {/* <Button text="Voir catégorie" onClick={() => console.log(category)} /> */}
                         </div>
                     </>
                     :

@@ -15,7 +15,6 @@ function FullImage({isNew, imageSrc, altImage, imgHeight, imgWidth, onDelete, in
 
     const handleImageUpload = (event) => {
       setImage(event.target.files[0]);
-      console.log("test image", event.target.files[0]);
       const file = event.target.files[0];
       const reader = new FileReader();
   
@@ -32,9 +31,8 @@ function FullImage({isNew, imageSrc, altImage, imgHeight, imgWidth, onDelete, in
         setIsEditing(false);
         if(!resizePossible) {
             onUpdate(imagePath, defaultAltImage, image);
-            console.log(imagePath, defaultAltImage, image);
         } else {
-            onUpdate({imageSrc: useLink ? link : image, alt: defaultAltImage, imgHeight: imageHeight, imgWidth: imageWidth, isNew: false}, index, image);
+            onUpdate({imageSrc: useLink ? link : image, alt: defaultAltImage, imgHeight: imageHeight, imgWidth: imageWidth, isNew: false}, index);
         }
     };
   
@@ -95,8 +93,9 @@ function FullImage({isNew, imageSrc, altImage, imgHeight, imgWidth, onDelete, in
         
         : imageSrc ?
             <div className="blog-edit-component FullImage">
-                <img src={imageSrc} alt={altImage} style={{height: `${imgHeight}px`, width: `${imgWidth}%`}}/>
+                <img src={!resizePossible ? imagePath : `http://localhost:3308/blog/${imageSrc}`} alt={altImage} style={{height: `${imgHeight}px`, width: `${imgWidth}%`}}/>
                 <Button icon={faEdit} className="btn-edit-component" onClick={() => setIsEditing(true)} />
+                {/* <button onClick={() => console.log(imagePath)}>voir</button> */}
             </div>
             :
             <div className="blog-edit-component FullImage">
@@ -104,6 +103,7 @@ function FullImage({isNew, imageSrc, altImage, imgHeight, imgWidth, onDelete, in
                 <Button icon={faEdit} className="btn-edit-component" onClick={() => setIsEditing(true)} />
             </div>
         }
+        <button onClick={() => console.log(`isEditing: ${isEditing} || isNew: ${isNew} || isPreview: ${isPreview}`)}>Voir</button>
       </div>
     );
   };

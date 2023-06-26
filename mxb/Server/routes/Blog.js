@@ -25,11 +25,11 @@ const upload = multer({
 // Pour enregistrer les images des components
 const storageOther = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, './images_components');
+    cb(null, './images_blogs/images_components');
   },
   filename: function (req, file, cb) {
     const ext = path.extname(file.originalname);
-    cb(null, `image-${req.params.componentId}${ext}`)
+    cb(null, `image-component-${req.body.componentId}${ext}`)
   }
 })
 
@@ -71,26 +71,32 @@ router.get("/get-component/:id", async (req, res) => {
 });
 
 // Route pour mettre a jour un component
-router.put("/update", async (req, res) => {
-    try {
-        const { component } = req.body;
-        const componentToUpdate = await Blog_Components.findByPk(component.id);
+router.put("/update", uploadOther.single('image'), async (req, res) => {
+  try {
+      let component = JSON.parse(req.body.component);
+      const componentToUpdate = await Blog_Components.findByPk(component.id);
 
-        componentToUpdate.content = JSON.stringify(component.content);
+      // Set the image path if an image was uploaded
+      if (req.file) {
+        const imagePath = req.file.path.replace(/\\/g, '/');
+        component.content.imageSrc = imagePath;
+      }
 
-        await componentToUpdate.save();
-        res.status(200).json(componentToUpdate);
-    } catch(error) {
-        res.status(500).json({ error: "Une erreur est survenue. Veuillez réessayer plus tard."});
-        console.error(error);
-    }
+      componentToUpdate.content = JSON.stringify(component.content);
+
+      await componentToUpdate.save();
+      res.status(200).json(componentToUpdate);
+  } catch(error) {
+      res.status(500).json({ error: "Une erreur est survenue. Veuillez réessayer plus tard."});
+      console.error(error);
+  }
 });
 
 // Route pour supprimer un component
-router.delete("/delete", async (req, res) => {
+router.delete("/delete/:componentId", async (req, res) => {
     try {
-        const { component } = req.body;
-        const componentToDelete = await Blog_Components.findByPk(component.id);
+        const { componentId } = req.params;
+        const componentToDelete = await Blog_Components.findByPk(componentId);
 
         await componentToDelete.destroy();
         res.status(200).json("Deleted");
@@ -112,6 +118,7 @@ router.post('/new', async (req,res) => {
             title: title,
             author: author,
             description: 'description',
+            category: null,
         });
 
         res.status(200).json(newBlog)
@@ -124,7 +131,7 @@ router.post('/new', async (req,res) => {
 // Route pour sauvegarder un blog
 router.put('/save/:blogId', upload.single('image'), async (req, res) => {
     try {
-        const { title, description, alt_image, public, url, image, category } = req.body;
+        const { title, description, alt_image, public, url, category } = req.body;
         const { blogId } = req.params;
 
         const blogToUpdate = await Blogs.findByPk(blogId);
@@ -134,7 +141,7 @@ router.put('/save/:blogId', upload.single('image'), async (req, res) => {
         blogToUpdate.alt_image = alt_image;
         public ? blogToUpdate.public = public : '';
         blogToUpdate.url = url;
-        blogToUpdate.category = category;
+        category ? blogToUpdate.category = category : '';
 
         if (req.file) {
           const imagePath = req.file.path.replace(/\\/g, '/');
@@ -192,7 +199,7 @@ router.get('/blog/:blogId', async (req, res) => {
 })
 
 // Route pour supprimer un blog
-router.delete('/delete/:blogId', async (req, res) => {
+router.delete('/delete-blog/:blogId', async (req, res) => {
   try {
     const { blogId } = req.params;
 

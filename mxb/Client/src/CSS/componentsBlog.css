@@ -151,6 +151,7 @@
   border-radius: 20px;
   overflow: hidden;
   margin-bottom: var(--space-green-);
+  min-height: 100px;
 }
 .FullImage img {
   object-fit: cover;

@@ -28,7 +28,7 @@ function BlogDashbord() {
     }, [])
 
     const deleteBlog = async(blogId, index) => {
-        axios.delete(`http://localhost:3308/blog/delete/${blogId}`).then(() => {
+        axios.delete(`http://localhost:3308/blog/delete-blog/${blogId}`).then(() => {
             const updatedBlog = blog.filter((_, i) => i !== index);
             setBlog(updatedBlog);
         })
