@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { Blog_Components, Blogs } = require('../models');
+const { Blog_Components, Blogs, Comments } = require('../models');
 const multer = require('multer');
 const path = require('path');
 
@@ -214,7 +214,29 @@ router.delete('/delete-blog/:blogId', async (req, res) => {
 })
 
 /* #endregion */
+/* #region  Comments */
+router.get('/get-comments/:blogId'), async (req, res) => {
+  try{
+    const {blogId} = req.params;
+    const comments = await Comments.findAll({ where: {blogId: blogId}})
+    res.json(comments)
+  } catch (error) {
+    res.status(500).json({error: "Une erreur est survenue. Veuillez réessayer plus tard"})
+    console.error(error);
+  }
+}
 
+router.post("/create-comments", async (req, res) => {
+  try{
+    const comment = req.body
+    await Comments.create(comment)
+    res.json(comment)
+  }catch(error){
+    res.status(500).json({error: "Une erreur est survenue. Veuillez réessayer plus tard"})
+    console.error(error);
+  }
+})
+/* #endregion */
 
 
 
