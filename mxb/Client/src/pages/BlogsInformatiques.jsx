@@ -7,14 +7,14 @@ import 'moment/locale/fr';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-
+import { useParams } from 'react-router-dom';
 
 
 function BlogInformatique() {
   const [blog, setBlog] = useState([]);
   const [isExtended, setIsExtended] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const options = { day: 'numeric', month: 'long', year: 'numeric' };
+  const [isLoading, setIsLoading] = useState(true);
+  const options = { day: 'numeric', month: 'long', year: 'numeric' };
   
   useEffect(() => {
     axios.get("http://localhost:3308/blog/blog").then((response) => {
@@ -27,7 +27,7 @@ function BlogInformatique() {
     .catch((error) => {
         console.error(error);
     })
-}, [])
+  }, [])
 
 
   return (
@@ -48,7 +48,7 @@ function BlogInformatique() {
                 {blog.map((blog, index) => (
                 <div key={index} className='blog-carte-container'>
                     <div className='container image'>
-                        <Link to={`/blogeditor/${blog.title}`}>
+                        <Link to={`/bloginformatiques/${blog.url}`}>
                             <span className='date-created'>{new Date(blog.createdAt).toLocaleDateString('fr-FR', options)}</span>
                             <div className="status-category">
                                 {blog.category ? <span className='status'>{blog.category}</span> : '' }
@@ -58,7 +58,7 @@ function BlogInformatique() {
                         </Link>
                     </div>
                     <div className="blog-carte-content">
-                        <Link to={`/blogeditor/${blog.id}`}>
+                        <Link to={`/bloginformatiques/${blog.url}`}>
                             <h2>{blog.title}</h2>
                         </Link>
                         <div className="description-container">

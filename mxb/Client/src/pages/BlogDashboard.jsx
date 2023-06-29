@@ -43,7 +43,7 @@ function BlogDashbord() {
         <div className="blog-content"> 
             <h1>Blogs informatiques</h1>
             <div className='blog-content2'>
-                {isLoading ?  
+                {isLoading ?
                 <>
                     <SkeletonBlogCard/>
                     <SkeletonBlogCard/>
@@ -87,7 +87,7 @@ function BlogDashbord() {
                 }
 
             </div>
-            <Button route='/blogeditor' text="Créer un blog" />
+            <Button route='/new-blog' text="Créer un blog" />
         </div>
     </div>
   )

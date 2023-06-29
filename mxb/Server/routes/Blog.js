@@ -3,6 +3,7 @@ const router = express.Router();
 const { Blog_Components, Blogs, Comments } = require('../models');
 const multer = require('multer');
 const path = require('path');
+const { Op, literal } = require('sequelize');
 
 
 // Pour enregistrer les images principales du blog dans le dossier images_blogs
@@ -198,6 +199,40 @@ router.get('/blog/:blogId', async (req, res) => {
   }
 })
 
+
+router.get('/:url', async (req, res) => {
+  try{
+    const { url } = req.params;
+
+    console.log(`url : ${url}`);
+    
+    const blog = await Blogs.findOne({
+      where: { url: url },
+      include: {
+        model: Blog_Components,
+        as: 'components', // Spécifiez l'alias ici
+      },
+    });
+
+    res.status(200).json(blog);
+  }
+  catch (error) {
+    res.status(500).json({ error: "Une erreur est survenue. Veuillez réessayer plus tard."});
+    console.error(error);
+  }
+})
+
+/*      
+const teamTasksWithMembers = await Team_Tasks.findAll({
+  where: {
+    assignTo: {
+      [Op.like]: `%${JSON.stringify(username)}%`,
+    },
+  },
+  include: [Team_Clients, Teams],
+});
+      */
+
 // Route pour supprimer un blog
 router.delete('/delete-blog/:blogId', async (req, res) => {
   try {
@@ -360,6 +395,8 @@ app.post('/custom-field/:isTeam', protectRoute, async (req, res) => {
     }
   })
   
+
+
   // Route pour ajouter un champ personnalisé à plusieurs clients
   app.put('/clients/custom-field',[
     check('clientIds').isArray(),
@@ -402,6 +439,8 @@ app.post('/custom-field/:isTeam', protectRoute, async (req, res) => {
   });
   
 
+
+
   // Route pour ajouter une tache
   app.post('/tasks',[
     check('name').isString(),
@@ -429,6 +468,8 @@ app.post('/custom-field/:isTeam', protectRoute, async (req, res) => {
     }
   });
   
+
+
   // Route pour avoir tous les taches de l'utilisateur
   app.get('/my-tasks', protectRoute, async (req, res) => {
     try {
@@ -446,6 +487,8 @@ app.post('/custom-field/:isTeam', protectRoute, async (req, res) => {
     }
   });
   
+
+
   // Route pour supprimer une tache
   app.delete('/tasks/:id', protectRoute, async (req, res) => {
     try {
@@ -466,6 +509,8 @@ app.post('/custom-field/:isTeam', protectRoute, async (req, res) => {
       res.status(500).json({ error: 'Une erreur est survenue. Veuillez réessayer plus tard.' });
     }
   });
+  
+
   
   // Route pour acceder au details d'une tache
   app.get('/tasks/:id/:isTeam', protectRoute, async (req, res) => {
@@ -501,6 +546,9 @@ app.post('/custom-field/:isTeam', protectRoute, async (req, res) => {
     }
   });
   
+
+  
+  
   // Route pour mettre à jour une tâche
   app.put('/tasks/:taskId/:isTeam', protectRoute, async (req, res) => {
     try {
@@ -534,6 +582,8 @@ app.post('/custom-field/:isTeam', protectRoute, async (req, res) => {
     }
   });
   
+
+
   // Route pour ajouter une étape de faite à un utilisateur
   app.put('/step-update', protectRoute, async (req, res) => {
     try {
@@ -608,6 +658,8 @@ app.post('/custom-field/:isTeam', protectRoute, async (req, res) => {
     }
   });
   
+
+
   // Route pour avoir les steps_done
   app.get('/step-done', protectRoute, async (req, res) => {
     try {
@@ -624,6 +676,8 @@ app.post('/custom-field/:isTeam', protectRoute, async (req, res) => {
     }
   });
   
+  
+
   
   // Route pour avoir tous les tâches d'un user incluant celle de l'équipe
   app.get('/all-tasks', protectRoute, async (req, res) => {
