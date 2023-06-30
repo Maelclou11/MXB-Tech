@@ -1,51 +1,114 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { Paragraphe, TitreH2, LinkList, FullImage, TitreH3, ActionCode, ActionImage } from '../indexComponents';
 
-function BlogsDisplay({components, key}) {
-
-  // Créez un mapping des identifiants de composant vers les composants correspondants
-  /* const componentMapping = {
-      1: TitreH2,
-      2: TitreH3,
-      3: Paragraphe,
-      4: LinkList,
-      5: FullImage,
-      6: ActionCode,
-      7: ActionImage
-  }; */
+function BlogsDisplay({components}) {
 
   const componentMap = {
     1: { 
-        component: TitreH2,
-        getProps: (content, index) => ({ 
-            title: content.titre,
-            textId: content.textId,
-            isNew: content.isNew,
-            isPreview: true
-        })
+      component: TitreH2,
+      getProps: (content) => ({ 
+          title: content.titre,
+          textId: content.textId ? content.textId : '',
+          isNew: false,
+          isPreview: true
+      })
     },
     2: {
-        component: TitreH3,
-        getProps: (content, index, deleteComponent, updateComponent) => ({ 
-            /* Define props here */ 
-        }),
+      component: TitreH3,
+      getProps: (content) => ({ 
+        title: content.titre,
+        textId: content.textId,
+        isNew: false,
+        isPreview: false
+      }),
     },
-};
+    3: { 
+      component: Paragraphe,
+      getProps: (content) => ({ 
+          text: content.text,
+          isNew: false,
+          isPreview: true
+      })
+    },
+    4: { 
+      component: LinkList,
+      getProps: (content) => ({ 
+          listText: content,
+          isNew: false,
+          isPreview: true
+      })
+    },
+    5: { 
+      component: FullImage,
+      getProps: (content) => ({ 
+          imageSrc: content.imageSrc,
+          altImage: content.altImage,
+          imgHeight: content.imgHeight,
+          imgWidth: content.imgWidth,
+          isNew: false,
+          isPreview: false
+      })
+    },
+    6: { 
+      component: ActionCode,
+      getProps: (content) => ({ 
+          text: content.text,
+          code: content.code,
+          language: content.language,
+          isNew: false,
+          isPreview: false
+      })
+    },
+    7: { 
+      component: ActionImage,
+      getProps: (content) => ({ 
+          text: content.text,
+          imageSrc: content.imageSrc,
+          altImage: content.altImage,
+          imgHeight: content.imgHeight,
+          imgWidth: content.imgWidth,
+          isNew: false,
+          isPreview: false
+      })
+    },
+  };
 
-components.map((component, index) => {
-  // Obtenez le composant React approprié et la fonction getProps à partir de l'objet de correspondance.
-  const ComponentEntry = componentMap[component.componentId];
-  if (!ComponentEntry) {
-      // Si nous n'avons pas de composant pour ce componentId, nous pouvons choisir de rendre rien ou peut-être une sorte de composant par défaut.
-      return null;
-  }
+  components.map((component, index) => {
+    // Obtenez le composant React approprié et la fonction getProps à partir de l'objet de correspondance.
+    const ComponentEntry = componentMap[component.componentId];
+    if (!ComponentEntry) {
+        // Si nous n'avons pas de composant pour ce componentId, nous pouvons choisir de rendre rien ou peut-être une sorte de composant par défaut.
+        return null;
+    }
 
-  const { component: Component, getProps } = ComponentEntry;
+    const { component: Component, getProps } = ComponentEntry;
+    
+    const props = getProps(JSON.parse(component.content), index);
+    console.log(props);
 
-  const props = getProps(component.content, index);
+    return (<Component {...props} />);
+  });
 
-  return (<Component {...props} />);
-});}
+  return (
+    <>
+    {components.map((component, index) => {
+      // Obtenez le composant React approprié et la fonction getProps à partir de l'objet de correspondance.
+      const ComponentEntry = componentMap[component.componentId];
+      if (!ComponentEntry) {
+          // Si nous n'avons pas de composant pour ce componentId, nous pouvons choisir de rendre rien ou peut-être une sorte de composant par défaut.
+          return null;
+      }
+
+      const { component: Component, getProps } = ComponentEntry;
+      
+      const props = getProps(JSON.parse(component.content), index);
+      console.log(props);
+
+      return (<Component {...props} key={index} />);
+    })}
+  </>
+  )
+}
 
 export default BlogsDisplay;
 

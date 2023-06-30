@@ -8,11 +8,9 @@ import axios from "axios";
 import { useParams } from 'react-router-dom';
 import moment from 'moment';
 import 'moment/locale/fr';
-import { useNavigate } from 'react-router-dom';
 
 function BlogEditor() {
     const existingBlogId = useParams();
-    const navigate = useNavigate();
     const [componentToAdd, setComponentToAdd] = useState([null]); // Contient le component VIDE que l'on a selectionner dans le dropdown
     const [components, setComponents] = useState([]);  // Liste de tous les components créés
     const [addComponent, setAddComponent] = useState(false);  // Bool pour savoir si on a cliqué sur le + afin d'ajouter un component  (Nécessaire pour cacher le dropdown en cliquant sur le + et inversement (pour cacher le + quand on clique sur le dropdown))
@@ -306,7 +304,7 @@ function BlogEditor() {
                                 <Button text={isPublic ? 'Mettre Privé' : 'Mettre Public'} onClick={() => setIsPublic(!isPublic)}/>
                             </div>
                             <div className="component image-blog">
-                                <FullImage imageSrc={hasFetch ? image : imagePath} altImage={altImage} isNew={true} onUpdate={saveImageInfo} isPreview={true} resizePossible={false} /* imgHeight={300} imgWidth={50} */ />
+                                <FullImage imageSrc={image} altImage={altImage} isNew={true} onUpdate={saveImageInfo} isPreview={true} resizePossible={false} /* imgHeight={300} imgWidth={50} */ />
                             </div>
                         </div>
                         <div className="preview-card">

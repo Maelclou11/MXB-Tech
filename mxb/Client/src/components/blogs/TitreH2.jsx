@@ -37,7 +37,7 @@ function TitreH2 ({title, textId, isNew, onDelete, index, onUpdate, isPreview}) 
             :
                 ''
             }
-             <button onClick={() => console.log(`isEditing: ${isEditing} || isNew: ${isNew} || isPreview: ${isPreview}`)}>Voir</button>
+             {/* <button onClick={() => console.log(`isEditing: ${isEditing} || isNew: ${isNew} || isPreview: ${isPreview}`)}>Voir</button> */}
         </div>
     )
 }

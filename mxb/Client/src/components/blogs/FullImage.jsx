@@ -40,7 +40,7 @@ function FullImage({isNew, imageSrc, altImage, imgHeight, imgWidth, onDelete, in
       <div className='blog-components-frame'>
         {!isNew && !isPreview ?
         <div className="FullImage">
-            <img src={imageSrc} alt={altImage} style={{height: `${imgHeight}px`, width: `${imgWidth}%`}}/> 
+            <img src={`http://localhost:3308/blog/${imageSrc}`} alt={altImage} style={{height: `${imgHeight}px`, width: `${imgWidth}%`}}/> 
         </div>
         : isEditing ? 
         <div className='edit-container'>
@@ -61,7 +61,7 @@ function FullImage({isNew, imageSrc, altImage, imgHeight, imgWidth, onDelete, in
                         {resize ? 
                         <>
                             <div className="row">
-                                <TextInput labelText="Hauteur de l'image :" type="range" value={imageHeight} onChange={(e) => setImageHeight(e.target.value)} max="500" min="0"/>
+                                <TextInput labelText="Hauteur de l'image :" type="range" value={imageHeight} onChange={(e) => setImageHeight(e.target.value)} max="1000" min="0"/>
                                 <TextInput value={imageHeight + 'px'} readOnly={true}/>
                             </div>
                             <div className="row">
@@ -103,7 +103,7 @@ function FullImage({isNew, imageSrc, altImage, imgHeight, imgWidth, onDelete, in
                 <Button icon={faEdit} className="btn-edit-component" onClick={() => setIsEditing(true)} />
             </div>
         }
-        <button onClick={() => console.log(`isEditing: ${isEditing} || isNew: ${isNew} || isPreview: ${isPreview}`)}>Voir</button>
+        {/* <button onClick={() => console.log(`isEditing: ${isEditing} || isNew: ${isNew} || isPreview: ${isPreview}`)}>Voir</button> */}
       </div>
     );
   };
