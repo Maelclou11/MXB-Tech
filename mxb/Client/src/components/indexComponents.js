@@ -14,6 +14,7 @@ import Button from './basics/Button';
 import TextInput from './basics/TextInput';
 import TextArea from './basics/TextArea';
 import SkeletonBlogCard from './basics/SkeletonBlogCard';
+import Comments from './Comments';
 
 // Blog
 import Paragraphe from './blogs/Paragraphe';
@@ -25,4 +26,4 @@ import TitreH3 from './blogs/TitreH3'
 import ActionCode from './blogs/ActionCode';
 import ActionImage from './blogs/ActionImage';
 
-export {Navbar, StatCircle, TitleLeft, TitleSection, IconBox, StepTitle, ArrowUp, DevisGratuit, Animation, QuestionFaq, HoverImage, Dropdown,Paragraphe, Title, Button, TitreH2, TextInput, TextArea, LinkList, FullImage, TitreH3, ActionCode, ActionImage, SkeletonBlogCard};
+export {Navbar, StatCircle, TitleLeft, TitleSection, IconBox, StepTitle, ArrowUp, DevisGratuit, Animation, QuestionFaq, HoverImage, Dropdown,Paragraphe, Title, Button, TitreH2, TextInput, TextArea, LinkList, FullImage, TitreH3, ActionCode, ActionImage, SkeletonBlogCard, Comments};

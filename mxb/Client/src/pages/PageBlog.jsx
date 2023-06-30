@@ -23,11 +23,11 @@ function PageBlog() {
         <div>
             {hasFetch ? 
             <>
-                <BlogsDisplay components ={blogContent.components}/>
+                <BlogsDisplay components={blogContent.components} />
             </>
             :
-            ''
-            }
+            ''}
+            
         </div>
     )
 }

@@ -2,14 +2,14 @@
 
 module.exports = {
     up: async (queryInterface, Sequelize) => {
-      await queryInterface.addColumn('Comments', 'blogId', {
-        type: Sequelize.INTEGER,
+      await queryInterface.addColumn('Comments', 'username', {
+        type: Sequelize.STRING,
         allowNull: false,
       });
     },
   
     down: async (queryInterface, Sequelize) => {
-      await queryInterface.removeColumn('Comments', 'blogId');
+      await queryInterface.removeColumn('Comments', 'username');
     },
   };
   

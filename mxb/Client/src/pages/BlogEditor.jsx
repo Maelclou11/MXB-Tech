@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { Navbar, Dropdown, Paragraphe, Title, Button, TextInput, TitreH2, LinkList, FullImage, TitreH3, ActionCode, ActionImage, TextArea } from '../components/indexComponents';
+import { Navbar, Dropdown, Paragraphe, Title, Button, TextInput, TitreH2, LinkList, FullImage, TitreH3, ActionCode, ActionImage, TextArea, Comments } from '../components/indexComponents';
 import '../CSS/BlogEditor.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faBars, faChevronLeft, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
@@ -283,6 +283,7 @@ function BlogEditor() {
                             )}
                         </Droppable>
                     </DragDropContext>
+                    <Comments/>
                 </div>
 
                 {addComponent ? 
